@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Créer un compte Pilote – Web4All</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600&family=Fraunces:wght@600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <nav>
+    <span class="nav-logo">Web4All</span>
+    <div class="burger" aria-label="Menu" role="button" tabindex="0">
+      <span></span><span></span><span></span>
+    </div>
+  </nav>
+
+  <div class="page-wrapper">
+
+    <!-- ONGLETS -->
+    <div class="tabs" role="tablist">
+      <a href="creation-compte-etudiant.html" class="tab-link" role="tab" aria-selected="false">
+        <!-- Icône mortier -->
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M22 10L12 5 2 10l10 5 10-5z"/>
+          <path d="M6 12.5v4c0 1.7 2.7 3 6 3s6-1.3 6-3v-4"/>
+        </svg>
+        Étudiant
+      </a>
+      <a href="creation-compte-pilote.html" class="tab-link active" role="tab" aria-selected="true">
+        <!-- Icône personne -->
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="12" cy="8" r="4"/>
+          <path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/>
+        </svg>
+        Pilote
+      </a>
+      <a href="creation-entreprise.html" class="tab-link" role="tab" aria-selected="false">
+        <!-- Icône bâtiment -->
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <rect x="3" y="7" width="18" height="14" rx="1"/>
+          <path d="M16 7V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v2"/>
+        </svg>
+        Entreprise
+      </a>
+    </div>
+
+    <!-- FORMULAIRE -->
+    <form id="registerForm" novalidate>
+
+      <div class="fields-grid fade-in" style="animation-delay:.1s">
+
+        <div class="field">
+          <label for="nom">Nom</label>
+          <input type="text" id="nom" name="nom" placeholder="Kahlouche" required />
+        </div>
+
+        <div class="field">
+          <label for="prenom">Prénom</label>
+          <input type="text" id="prenom" name="prenom" placeholder="Faouzi" required />
+        </div>
+
+        <div class="field">
+          <label for="email">Adresse mail professionnelle</label>
+          <input type="email" id="email" name="email" placeholder="f.kahlouche@viacesi.fr" required />
+        </div>
+
+        <div class="field">
+          <label for="password">Mot de passe</label>
+          <input type="password" id="password" name="password" placeholder="••••••••••••" required />
+        </div>
+      </div>
+
+      <!-- CONSENTEMENTS -->
+      <div class="consent-block" style="animation-delay:.2s">
+        <input type="checkbox" id="consent" name="consent" required />
+        <p>
+          J'accepte les CGU et déclare avoir pris connaissance de
+          <a href="#">la politique de protection des données</a> du site web4all.com.
+        </p>
+      </div>
+
+      <!-- ACTION -->
+      <div class="actions" style="animation-delay:.3s">
+        <button type="submit" class="btn btn-primary">Créer un compte</button>
+      </div>
+
+    </form>
+
+  </div>
+
+  <script>
+    // Burger
+    const burger = document.querySelector('.burger');
+    burger.addEventListener('click', () => {
+      const spans = burger.querySelectorAll('span');
+      burger.classList.toggle('open');
+      if (burger.classList.contains('open')) {
+        spans[0].style.transform = 'rotate(45deg) translate(5px, 5px)';
+        spans[1].style.opacity = '0';
+        spans[2].style.transform = 'rotate(-45deg) translate(5px, -5px)';
+      } else {
+        spans.forEach(s => { s.style.transform = ''; s.style.opacity = ''; });
+      }
+    });
+
+    // Validation
+    document.getElementById('registerForm').addEventListener('submit', function(e) {
+      e.preventDefault();
+      const required = this.querySelectorAll('[required]');
+      let valid = true;
+      required.forEach(el => {
+        el.style.borderColor = '';
+        if (!el.value || (el.type === 'checkbox' && !el.checked)) {
+          el.style.borderColor = 'var(--error)';
+          valid = false;
+        }
+      });
+      if (valid) alert('Compte pilote créé avec succès !');
+    });
+  </script>
+
+</body>
+</html>
