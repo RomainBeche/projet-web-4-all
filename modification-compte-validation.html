@@ -3,35 +3,27 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Offre modifiée – Web4All</title>
+  <title>Informations mises à jour – Web4All</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600&family=Fraunces:wght@600;700&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-
   <nav>
     <span class="nav-logo">Web4All</span>
     <div class="burger" aria-label="Menu" role="button" tabindex="0">
       <span></span><span></span><span></span>
     </div>
   </nav>
-
   <div class="page-wrapper">
-
-    <h1 class="page-title fade-in">Offre modifiée<em></em></h1>
-
-    <p class="delete-success fade-in" style="animation-delay:.1s">
-      L'offre a été modifiée avec succès.
-    </p>
-
+    <h1 class="page-title fade-in">Informations mises à jour !</h1>
+    <p id="validation-message" class="delete-success fade-in">Vos informations ont bien été enregistrées.</p>
     <div class="actions fade-in" style="animation-delay:.2s">
-      <a href="accueil.html" class="btn btn-primary">Retour à la page d'accueil</a>
+      <a id="back-link" href="#" class="btn btn-primary">Retour à mon compte</a>
     </div>
-
   </div>
-
   <script>
+    // Burger
     const burger = document.querySelector('.burger');
     burger.addEventListener('click', () => {
       const spans = burger.querySelectorAll('span');
@@ -44,7 +36,19 @@
         spans.forEach(s => { s.style.transform = ''; s.style.opacity = ''; });
       }
     });
-  </script>
 
+    // Détection du type de compte via l'URL (?type=etudiant / pilote / entreprise)
+    const params = new URLSearchParams(window.location.search);
+    const type = params.get('type');
+    const config = {
+      etudiant:   { label: 'étudiant',   href: 'compte-etudiant.html' },
+      pilote:     { label: 'pilote',      href: 'compte-pilote.html' },
+      entreprise: { label: 'entreprise',  href: 'compte-entreprise.html' },
+    };
+    const match = config[type] || { label: '', href: '#' };
+    document.getElementById('validation-message').textContent =
+      `Vos informations${match.label ? ' (' + match.label + ')' : ''} ont bien été enregistrées.`;
+    document.getElementById('back-link').href = match.href;
+  </script>
 </body>
 </html>
