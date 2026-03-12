@@ -20,7 +20,7 @@
 
 /* ── BASE ── */
 body {
-  font-family: 'DM Sans', sans-serif;
+  font-family: 'Helvetica', sans-serif;
   background: #F7F6FF;
   color: var(--text);
   min-height: 100vh;
@@ -34,6 +34,12 @@ body {
   padding: 2rem 1.25rem 4rem;
 }
 
+/* ── HEADER */
+header {
+  height: 100vh;
+  width: 100vw;
+}
+
 /* ============================================================ *\
     Reset
 \* ============================================================ */
@@ -42,18 +48,6 @@ body {
   padding: 0;
   text-decoration: none;
   list-style: none;
-}
-
-/* ============================================================ *\
-    Base
-\* ============================================================ */
-body {
-  font-family: 'Helvetica';
-}
-
-header {
-  height: 100vh;
-  width: 100vw;
 }
 
 /* ============================================================ *\
@@ -114,6 +108,7 @@ header {
 
 .nav-links ul {
   display: flex;
+  align-items: center;
   font-size: 1rem;
 }
 
