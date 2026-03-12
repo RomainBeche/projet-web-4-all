@@ -27,20 +27,6 @@ body {
   margin-top: 96px;
 }
 
-/* ── NAV ── */
-nav {
-  position: sticky;
-  top: 0;
-  z-index: 100;
-  background: var(--white);
-  border-bottom: 1px solid var(--border);
-  padding: 0 1.5rem;
-  height: 56px;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-}
-
 /* ── LAYOUT ── */
 .page-wrapper {
   max-width: 560px;
