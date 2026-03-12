@@ -333,3 +333,232 @@ textarea[rows] { min-height: unset; }
   .page-title { font-size: 1.6rem; }
   .profile-info .profile-name { font-size: 1.25rem; }
 }
+/* ══════════════════════════════════════
+   PAGE ACCUEIL
+   ══════════════════════════════════════ */
+
+/* Bandeau hero jaune */
+.yellow-background {
+  width: 100%;
+  height: 456px;
+  background-color: #FFD84D;
+  margin: 2rem auto 1.5rem;
+  overflow: hidden;
+  padding: 2rem;
+}
+
+.titre-yellow {
+  margin-bottom: 1.5rem;
+  margin-top: 1.5rem;
+}
+
+/* Champ de recherche hero */
+.input-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+  min-width: 10rem;
+  max-width: 25rem;
+  max-height: 5rem;
+}
+
+.hero-input {
+  width: 100%;
+  padding: .75rem 3rem .75rem 1rem;
+  border-radius: var(--radius);
+  border: 1.5px solid var(--border);
+  font-family: 'DM Sans', sans-serif;
+}
+
+.arrow-btn {
+  position: absolute;
+  right: 8px;
+  background: var(--primary);
+  color: var(--white);
+  border: none;
+  border-radius: 8px;
+  width: 34px;
+  height: 34px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1rem;
+}
+
+/* Image hero */
+.yellow-background .accueil-image {
+  display: block;
+  margin: 2rem auto;
+  max-height: 250px;
+  max-width: 350px;
+  width: 100%;
+  height: auto;
+}
+
+/* Section offres à la une */
+.offres-a-la-une h2 {
+  padding-left: 2rem;
+  padding-top: 1rem;
+}
+
+/* Carte offre */
+#offre-alternance {
+  width: 100%;
+  max-width: 20rem;
+  height: 12rem;
+  background-color: #5E5CE633;
+  border-radius: 30px;
+  margin: 2rem auto 1.5rem;
+  padding: 1.2rem;
+  position: relative;
+}
+
+/* Étiquette type de contrat */
+#offre-alternance .etiquette-alternance {
+  background-color: #5E5CE6;
+  border-radius: 50px;
+  max-width: 8rem;
+  position: absolute;
+  padding: 0.6rem 0.8rem;
+}
+
+.etiquette-alternance .titre-alternance { color: var(--white); }
+
+.inner-offre-alternance { padding-top: 2.8rem; }
+
+/* Détails de l'offre (entreprise, lieu, durée) */
+.offre-detail { color: var(--muted); }
+.offre-detail--duration { padding-top: 1.5rem; }
+
+/* Bouton voir l'offre */
+.btn-offre {
+  position: absolute;
+  right: 20px;
+  bottom: 20px;
+  background: transparent;
+  color: #5A5FD6;
+  border: 3px solid #5A5FD6;
+  padding: 10px 22px;
+  font-size: 18px;
+  font-weight: 600;
+  border-radius: 40px;
+  cursor: pointer;
+  transition: background .2s, color .2s;
+}
+
+.btn-offre:hover {
+  background: #5A5FD6;
+  color: var(--white);
+}
+
+/* Indicateurs de pagination du slider */
+.slider-dots {
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+  margin-top: 10px;
+}
+
+.dot {
+  width: 10px;
+  height: 10px;
+  background: var(--border);
+  border-radius: 50%;
+  transition: background .2s;
+}
+
+.dot.active { background: #5E5CE6; }
+
+/* Conteneur centré pour les boutons d'action */
+.all-offers-wrapper {
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+}
+
+/* Boutons d'action de la page accueil */
+/* Base partagée */
+.btn-all-offers,
+.btn-my-candid,
+.btn-my-opportunity,
+.btn-see-companies {
+  background: #F1F1F5;
+  padding: 12px 28px;
+  font-size: 18px;
+  font-weight: 600;
+  border-radius: 40px;
+  cursor: pointer;
+  transition: background .2s;
+  font-family: 'DM Sans', sans-serif;
+}
+
+/* Variantes couleur par action */
+.btn-all-offers     { color: var(--muted); border: 2px solid #E0E0E8; }
+.btn-my-candid      { color: #5A5FD6;      border: 2px solid #5A5FD6; }
+.btn-my-opportunity { color: #007AFF;      border: 2px solid #007AFF; }
+.btn-see-companies  { color: #28CD41;      border: 2px solid #28CD41; }
+
+.btn-all-offers:hover,
+.btn-my-candid:hover,
+.btn-my-opportunity:hover,
+.btn-see-companies:hover { background: #E5E5EE; }
+
+/* Titres section "Pourquoi choisir Web4All ?" */
+.suivre-candidature-text {
+  color: #5A5FD6;
+  padding-left: 2rem;
+  padding-top: 1rem;
+}
+
+.section-why {
+  padding-top: 1rem;
+  padding-left: 2rem;
+}
+
+.section-why--blue  { color: #007AFF; }
+.section-why--green { color: #28CD41; }
+
+/* Paragraphes descriptifs */
+.paragraphe-1 {
+  padding-left: 2rem;
+  padding-top: 1rem;
+}
+
+/* Titre section statistiques */
+.section-stats-title {
+  padding-left: 2rem;
+  padding-top: 1rem;
+}
+
+/* Cartes statistiques */
+.container-cv {
+  width: 100%;
+  max-width: 35rem;
+  height: 15rem;
+  background-color: #5E5CE633;
+  border-radius: 30px;
+  margin: 2rem auto 1.5rem;
+  padding: 1.2rem;
+  position: relative;
+}
+
+/* Variantes de couleur de fond des cartes */
+.container-cv--blue  { background: #CCE4FF; }
+.container-cv--green { background: #D4F5D9; }
+
+/* Chiffre mis en avant */
+.stat-number {
+  padding-top: 1rem;
+  font-size: 2rem;
+}
+
+.stat-number--purple { color: #5A5FD6; }
+.stat-number--blue   { color: #007AFF; }
+.stat-number--green  { color: #28CD41; }
+
+/* Texte descriptif sous le chiffre */
+.stat-text {
+  padding-top: 2rem;
+  max-width: 25rem;
+}
