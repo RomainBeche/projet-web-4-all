@@ -21,7 +21,7 @@ $allowedPages = [
     'modification-compte-entreprise',
     'modification-compte-etudiant',
     'modification-compte-pilote',
-    'modification-compte-validation.twig',
+    'modification-compte-validation',
     'modification-offre-terminee',
     'modification-offre',
     'suppression-compte-1',
