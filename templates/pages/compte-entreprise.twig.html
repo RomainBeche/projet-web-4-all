@@ -1,0 +1,27 @@
+{% extends "base.twig.html" %}
+
+{% block title %}Mon Entreprise – Web4All{% endblock %}
+
+{% block content %}
+<div class="page-wrapper">
+
+    <div class="profile-header">
+        <div>
+            <p class="profile-name">Campus CESI</p>
+            <p class="profile-role">Entreprise</p>
+        </div>
+        <div class="profile-avatar" aria-hidden="true">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-person-fill" viewBox="0 0 16 16">
+                <path d="M3 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6"/>
+            </svg>
+        </div>
+    </div>
+
+    <nav class="account-menu" aria-label="Menu du compte">
+        <a href="?page=modification-compte-entreprise" class="account-menu-item">Mes informations</a>
+        <a href="#" class="account-menu-item">Mes annonces</a>
+        <a href="?page=suppression-compte-1" class="account-menu-item danger">Supprimer ce compte</a>
+    </nav>
+
+</div>
+{% endblock %}

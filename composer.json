@@ -1,0 +1,30 @@
+{
+    "name": "grp5/projet-web-4-all",
+    "type": "project",
+    "autoload": {
+        "psr-4": {
+            "Grp5\\ProjetWeb4All\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "DIEMUNSCH Nicolas",
+            "email": "nicolas.diemunsch@viacesi.fr"
+        },
+        {
+            "name": "LAMBERT Pierre",
+            "email": "pierre.lambert@viacesi.fr"
+        },
+        {
+            "name": "GULLY Charles",
+            "email": "charles.gully@viacesi.fr"
+        },
+        {
+            "name": "BECHE Romain",
+            "email": "romain.beche@viacesi.fr"
+        }
+    ],
+    "require": {
+        "twig/twig": "^3.0"
+    }
+}
