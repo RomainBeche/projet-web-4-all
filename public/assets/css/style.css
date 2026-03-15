@@ -659,23 +659,41 @@ textarea[rows] {
 }
 
 
-/* ── Champ de recherche hero ── */
-.input-wrapper {
-  position: relative;
-  display: flex;
+.btn-hero {
+  display: inline-flex;
   align-items: center;
-  width: 100%;
-  max-width: 25rem;
-}
-
-
-.hero-input {
-  width: 100%;
-  padding: 0.75rem 3rem 0.75rem 1rem;
-  border-radius: var(--radius);
-  border: 1.5px solid var(--border);
+  gap: 0.6rem;
+  padding: 0.85rem 1.75rem;
+  background: var(--text);
+  color: var(--white);
+  border-radius: 50px;
   font-family: var(--font-body);
   font-size: var(--fs-body);
+  font-weight: 600;
+  cursor: pointer;
+  border: none;
+  transition: background 0.2s, transform 0.15s, box-shadow 0.15s;
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+.btn-hero:hover {
+  background: #000;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.25);
+}
+
+.btn-hero:active {
+  transform: translateY(0);
+  box-shadow: none;
+}
+
+.btn-hero svg {
+  transition: transform 0.2s;
+}
+
+.btn-hero:hover svg {
+  transform: translateX(4px);
 }
 
 
@@ -816,7 +834,6 @@ textarea[rows] {
 
 
 /* ── Boutons d'action accueil — étendent .btn ── */
-.btn-all-offers,
 .btn-my-candid,
 .btn-my-opportunity,
 .btn-see-companies {
@@ -826,14 +843,20 @@ textarea[rows] {
 }
 
 
-.btn-all-offers     { color: var(--muted); border: 2px solid #E0E0E8; }
+.btn-all-offers     { 
+  color: #8E8E93;
+  border: 2px solid #8E8E93;
+  background: #F2F2F7;
+}
+
+
 .btn-my-candid      { color: #5A5FD6;      border: 2px solid #5A5FD6; }
 .btn-my-opportunity { color: #007AFF;      border: 2px solid #007AFF; }
 .btn-see-companies  { color: #28CD41;      border: 2px solid #28CD41; }
 
 
 .btn-all-offers:hover {
-  background: rgba(107, 107, 138, 0.08);
+  background: rgb(235, 235, 239);
   transform: none;
   box-shadow: none;
 }
