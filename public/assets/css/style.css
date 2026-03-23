@@ -20,8 +20,10 @@
 
 
 :root {
-  --primary:        #4B3FEE;
-  --primary-light:  #EAE8FD;
+  --primary:        #5E5CE6;
+  --primary-light:  rgba(94, 92, 230, 20%);
+  --green:          #32D74B;
+  --green-light:    rgba(50, 215, 75, 20%);
   --accent:         #F5F4FF;
   --text:           #1A1A2E;
   --muted:          #6B6B8A;
@@ -75,6 +77,7 @@ body {
   min-height: 100vh;
   margin-top: 48px;
   -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
 }
 
 
@@ -644,18 +647,47 @@ textarea[rows] {
 \* ============================================================ */
 
 
-/* ── Bandeau hero ── */
-.yellow-background {
+/* Hero section */
+.hero-header {
+  position: relative;
   width: 100%;
-  background-color: #FFD84D;
+  min-height: 500px;
   padding: 2rem;
   overflow: hidden;
 }
 
+/* Dark overlay filter */
+.hero-header::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.3);
+  z-index: 1;
+}
+
+/* Hero image */
+.hero-header .hero-image {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  z-index: 0;
+}
+
+/* Put text above the image */
+.hero-header .title,
+.hero-header .btn-hero {
+  position: relative;
+  z-index: 2;
+}
+
 /* .title déjà défini en section 8 — padding spécifique au contexte hero */
-.yellow-background .title {
+.hero-header .title {
   margin-top: 1.5rem;
   margin-bottom: 1.5rem;
+  color: white;
 }
 
 
@@ -664,8 +696,8 @@ textarea[rows] {
   align-items: center;
   gap: 0.6rem;
   padding: 0.85rem 1.75rem;
-  background: var(--text);
-  color: var(--white);
+  background: var(--white);
+  color: var(--text);
   border-radius: 50px;
   font-family: var(--font-body);
   font-size: var(--fs-body);
@@ -678,7 +710,7 @@ textarea[rows] {
 }
 
 .btn-hero:hover {
-  background: #000;
+  background: white;
   transform: translateY(-2px);
   box-shadow: 0 6px 20px rgba(0, 0, 0, 0.25);
 }
@@ -713,178 +745,162 @@ textarea[rows] {
 }
 
 
-/* ── Image hero ── */
-.yellow-background .accueil-image {
-  display: block;
-  margin: 2rem auto 0;
-  max-height: 250px;
-  max-width: 350px;
-  width: 100%;
-  height: auto;
-}
-
-
 /* ── Section offres à la une ── */
 /* h2 hérite de la règle native (section 8) */
-.offres-a-la-une h2 {
+.offres-a-la-une > h2 {
   padding: 1rem 0 0 2rem;
 }
 
+/* ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////// */
 
-/* ── Carte offre alternance ── */
-#offre-alternance {
+/* ── Carousel Swiper ── */
+.swiper {
   width: 100%;
-  max-width: 20rem;
-  height: 12rem;
-  background-color: #5E5CE633;
-  border-radius: 30px;
-  margin: 2rem auto 1.5rem;
-  padding: 1.2rem;
-  position: relative;
+  padding: 1.5rem 3rem 3rem !important;
+  overflow: hidden !important;
 }
 
-
-/* Étiquette type de contrat */
-#offre-alternance .etiquette-alternance {
-  background-color: #5E5CE6;
-  border-radius: 50px;
-  max-width: 8rem;
-  position: absolute;
-  padding: 0.6rem 0.8rem;
+.swiper-wrapper {
+  align-items: stretch;
 }
 
-
-.etiquette-alternance .titre-alternance {
-  color: var(--white);
-  font-size: var(--fs-small);
-  font-weight: 600;
+.swiper-slide {
+  width: 280px;
+  height: auto;
+  padding: 0 0.5rem
 }
 
-
-.inner-offre-alternance {
-  padding-top: 1.7rem;
+.swiper-pagination {
+  bottom: 0 !important;
 }
 
-
-/* Détails de l'offre */
-.offre-detail {
-  color: var(--muted);
-  font-size: var(--fs-small);
-  font-weight: 400;
+.swiper-pagination-bullet-active {
+  background: var(--primary) !important;
 }
 
-
-.offre-detail--duration {
-  padding-top: 1.5rem;
+.swiper-button-prev,
+.swiper-button-next {
+  color: var(--primary) !important;
+  top: calc(50% - 1rem) !important;
 }
 
-/* ── Carte offre stage ── */
-#offre-stage {
-  width: 100%;
-  max-width: 20rem;
-  height: 12rem;
-  background-color: #D6F7DB;
-  border-radius: 30px;
-  margin: 2rem auto 1.5rem;
-  padding: 1.2rem;
-  position: relative;
+.offres-a-la-une {
+  overflow: hidden;
+  padding-bottom: 2rem;
 }
 
-
-/* Étiquette type de contrat */
-#offre-stage .etiquette-stage {
-  background-color: #32D74B;
-  border-radius: 50px;
-  max-width: 8rem;
-  position: absolute;
-  padding: 0.6rem 0.8rem;
-}
-
-
-.etiquette-stage .titre-stage {
-  color: var(--white);
-  font-size: var(--fs-small);
-  font-weight: 600;
-}
-
-
-.inner-offre-stage {
-  padding-top: 1.7rem;
-}
-
-
-/* Détails de l'offre */
-.offre-detail {
-  color: var(--muted);
-  font-size: var(--fs-small);
-  font-weight: 400;
-}
-
-
-.offre-detail--duration {
-  padding-top: 1.5rem;
-}
-
-
-/* ── Bouton voir l'offre — étend .btn ── */
-.btn-offre-alternance {
-  position: absolute;
-  right: 20px;
-  bottom: 20px;
-  background: transparent;
-  color: #5A5FD6;
-  border: 2px solid #5A5FD6;
-  border-radius: 40px;
-  padding: 0.6rem 1.4rem;
-  font-size: var(--fs-body);
-  font-weight: 600;
-  cursor: pointer;
-  transition: background 0.2s, color 0.2s;
-}
-
-.btn-offre-stage {
-  position: absolute;
-  right: 20px;
-  bottom: 20px;
-  background: transparent;
-  color: #32D74B;
-  border: 2px solid #32D74B;
-  border-radius: 40px;
-  padding: 0.6rem 1.4rem;
-  font-size: var(--fs-body);
-  font-weight: 600;
-  cursor: pointer;
-  transition: background 0.2s, color 0.2s;
-}
-
-.btn-offre:hover {
-  background: #5A5FD6;
-  color: var(--white);
-}
-
-
-/* ── Pagination slider ── */
-.slider-dots {
+/* ── Carte offre ── */
+.card-link {
+  user-select: none;
   display: flex;
-  justify-content: center;
-  gap: 8px;
-  margin-top: 10px;
+  flex-direction: column;
+  background: var(--white);
+  padding: 1.25rem;
+  border-radius: var(--radius);
+  border: 2px solid transparent;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.06);
+  transition: border-color 0.2s, transform 0.2s;
+  cursor: pointer;
+  height: 100%;
+}
+
+.card-link.alternance:hover {
+  border-color: var(--primary);
+  transform: translateY(-2px);
+}
+
+.card-link.stage:hover {
+  border-color: var(--green);
+  transform: translateY(-2px);
+}
+
+/* ── Badge type de contrat ── */
+.badge {
+  display: inline-block;
+  align-self: flex-start;
+  padding: 0.35rem 0.85rem;
+  border-radius: 50px;
+  font-size: var(--fs-small);
+  font-weight: 600;
+  margin-bottom: 1rem;
+}
+
+.badge.alternance {
+  color: var(--primary);
+  background: var(--primary-light);
+}
+
+.badge.stage {
+  color: var(--green);
+  background: var(--green-light);
 }
 
 
-.dot {
-  width: 10px;
-  height: 10px;
-  background: var(--border);
+/* ── Titre de la carte ── */
+.card-title {
+  font-family: var(--font-title);
+  font-size: var(--fs-body);
+  font-weight: 600 !important;
+  color: var(--text);
+  margin: 0 0 0.5rem;
+  padding: 0;
+}
+
+
+/* ── Détails (entreprise, lieu, durée) ── */
+.offre-detail {
+  font-size: var(--fs-small);
+  color: var(--muted);
+  font-weight: 400;
+  margin-bottom: 0.15rem;
+}
+
+.offre-detail--duration {
+  margin-top: 0.75rem;
+  font-weight: 600;
+  color: var(--text);
+}
+
+
+/* ── Bouton de la carte ── */
+.card-button {
+  display: inline-block;
+  margin-left: auto;
+  padding: 0.5em 0.5em;
   border-radius: 50%;
-  transition: background 0.2s;
+  font-size: var(--fs-small);
+  font-weight: 600;
+  border: 2px solid;
+  background: transparent;
+  cursor: pointer;
+  transition: background 0.2s, color 0.2s;
 }
 
-
-.dot.active {
-  background: #5E5CE6;
+.card-button.alternance {
+  color: var(--primary);
+  border-color: var(--primary);
+  width: 36px;
+  height: 36px;
 }
 
+.card-button.stage {
+  color: var(--green);
+  border-color: var(--green);
+  width: 36px;
+  height: 36px;
+}
+
+.card-link:hover .card-button.alternance {
+  background: var(--primary);
+  color: var(--white);
+}
+
+.card-link:hover .card-button.stage {
+  background: var(--green);
+  color: var(--white);
+}
+
+/* ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////// */
 
 /* ── Conteneur centré boutons d'action ── */
 .all-offers-wrapper {
@@ -894,55 +910,110 @@ textarea[rows] {
 }
 
 
-/* ── Boutons d'action accueil — étendent .btn ── */
+/* ── Boutons d'action accueil ── */
+.btn-all-offers,
 .btn-my-candid,
 .btn-my-opportunity,
 .btn-see-companies {
-  background: none;
-  border-radius: 40px;
-  transition: background 0.2s;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  padding: 0.85rem 1.75rem;
+  border-radius: 50px;
+  font-family: var(--font-body);
+  font-size: var(--fs-body);
+  cursor: pointer;
+  border: none;
+  transition: background 0.2s, transform 0.15s, box-shadow 0.15s;
+  text-decoration: none;
+  white-space: nowrap;
 }
 
-
-.btn-all-offers     { 
-  color: #8E8E93;
-  border: 2px solid #8E8E93;
-  background: #F2F2F7;
+.btn-all-offers {
+  background: var(--text);
+  color: var(--white);
 }
 
+.btn-my-candid {
+  background: var(--primary);
+  color: var(--white);
+}
 
-.btn-my-candid      { color: #5A5FD6;      border: 2px solid #5A5FD6; }
-.btn-my-opportunity { color: #007AFF;      border: 2px solid #007AFF; }
-.btn-see-companies  { color: #28CD41;      border: 2px solid #28CD41; }
+.btn-my-opportunity {
+  background: #007AFF;
+  color: var(--white);
+}
 
+.btn-see-companies {
+  background: var(--green);
+  color: var(--white);
+}
 
 .btn-all-offers:hover {
-  background: rgb(235, 235, 239);
-  transform: none;
-  box-shadow: none;
+  background: #000;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.25);
 }
-
 
 .btn-my-candid:hover {
-  background: rgba(90, 95, 214, 0.08);
-  transform: none;
-  box-shadow: none;
+  background: var(--primary);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(90, 95, 214, 0.35);
 }
-
 
 .btn-my-opportunity:hover {
-  background: rgba(0, 122, 255, 0.08);
-  transform: none;
-  box-shadow: none;
+  background: #005FCC;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(0, 122, 255, 0.35);
 }
-
 
 .btn-see-companies:hover {
-  background: rgba(40, 205, 65, 0.08);
-  transform: none;
+  background: var(--green);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(40, 205, 65, 0.35);
+}
+
+.btn-all-offers:active,
+.btn-my-candid:active,
+.btn-my-opportunity:active,
+.btn-see-companies:active {
+  transform: translateY(0);
   box-shadow: none;
 }
 
+.feature-section {
+  display: flex;
+  gap: 2rem;
+  align-items: center;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 2rem;
+}
+
+.text-content {
+  flex: 1;
+}
+
+.feature-image {
+  flex: 1;
+  max-width: 500px;
+  height: auto;
+  border-radius: 16px; /* Adjust for desired corner radius */
+  object-fit: cover;
+}
+
+/* Mobile: Stack vertically */
+@media (max-width: 768px) {
+  .feature-section {
+    flex-direction: column;
+    text-align: center;
+  }
+  
+  .feature-image {
+    max-width: 100%;
+    order: 2; /* Image after text on mobile */
+  }
+}
 
 /* ── Sections "Pourquoi choisir Web4All ?" ──
    h2 et la base de couleur/taille sont gérés nativement ou via .title
@@ -1327,7 +1398,7 @@ textarea[rows] {
   }
 
   /* Sections textuelles : padding latéral réduit */
-  .offres-a-la-une h2,
+  .offres-a-la-une > h2,
   .suivre-candidature-text,
   .section-why,
   .section-stats-title {
