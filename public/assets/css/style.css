@@ -731,7 +731,7 @@ textarea[rows] {
 }
 
 
-/* ── Carte offre ── */
+/* ── Carte offre alternance ── */
 #offre-alternance {
   width: 100%;
   max-width: 20rem;
@@ -762,7 +762,54 @@ textarea[rows] {
 
 
 .inner-offre-alternance {
-  padding-top: 2.8rem;
+  padding-top: 1.7rem;
+}
+
+
+/* Détails de l'offre */
+.offre-detail {
+  color: var(--muted);
+  font-size: var(--fs-small);
+  font-weight: 400;
+}
+
+
+.offre-detail--duration {
+  padding-top: 1.5rem;
+}
+
+/* ── Carte offre stage ── */
+#offre-stage {
+  width: 100%;
+  max-width: 20rem;
+  height: 12rem;
+  background-color: #D6F7DB;
+  border-radius: 30px;
+  margin: 2rem auto 1.5rem;
+  padding: 1.2rem;
+  position: relative;
+}
+
+
+/* Étiquette type de contrat */
+#offre-stage .etiquette-stage {
+  background-color: #32D74B;
+  border-radius: 50px;
+  max-width: 8rem;
+  position: absolute;
+  padding: 0.6rem 0.8rem;
+}
+
+
+.etiquette-stage .titre-stage {
+  color: var(--white);
+  font-size: var(--fs-small);
+  font-weight: 600;
+}
+
+
+.inner-offre-stage {
+  padding-top: 1.7rem;
 }
 
 
@@ -780,7 +827,7 @@ textarea[rows] {
 
 
 /* ── Bouton voir l'offre — étend .btn ── */
-.btn-offre {
+.btn-offre-alternance {
   position: absolute;
   right: 20px;
   bottom: 20px;
@@ -795,6 +842,20 @@ textarea[rows] {
   transition: background 0.2s, color 0.2s;
 }
 
+.btn-offre-stage {
+  position: absolute;
+  right: 20px;
+  bottom: 20px;
+  background: transparent;
+  color: #32D74B;
+  border: 2px solid #32D74B;
+  border-radius: 40px;
+  padding: 0.6rem 1.4rem;
+  font-size: var(--fs-body);
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s, color 0.2s;
+}
 
 .btn-offre:hover {
   background: #5A5FD6;
@@ -1101,10 +1162,16 @@ textarea[rows] {
   margin-bottom: 2rem;
 }
 
+/* ============================================================ *\
+   16. FAVORIS
+\* ============================================================ */
 
+.title-favoris {
+  padding:1rem
+}
 
 /* ============================================================ *\
-   16. COMPOSANT — Onglets (tabs)
+   17. COMPOSANT — Onglets (tabs)
 \* ============================================================ */
 
 
@@ -1154,7 +1221,7 @@ textarea[rows] {
 
 
 /* ============================================================ *\
-   17. PAGE — Erreur 404
+   18. PAGE — Erreur 404
 \* ============================================================ */
 
 
@@ -1223,8 +1290,9 @@ textarea[rows] {
 
 
 
+
 /* ============================================================ *\
-   18. RESPONSIVE — max-width: 480px
+   19. RESPONSIVE — max-width: 480px
 \* ============================================================ */
 
 
@@ -1271,3 +1339,4 @@ textarea[rows] {
     padding-right: 1rem;
   }
 }
+

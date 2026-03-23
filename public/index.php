@@ -1,6 +1,8 @@
 <?php
 require_once __DIR__ . '/../vendor/autoload.php';
-
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
 $loader = new \Twig\Loader\FilesystemLoader(__DIR__ . '/../templates');
 $twig = new \Twig\Environment($loader, [
     // 'cache' => __DIR__ . '/../cache',
@@ -18,6 +20,7 @@ $allowedPages = [
     'creation-compte-validation',
     'creation-entreprise',
     'creer-offre',
+    'favoris',
     'modification-compte-entreprise',
     'modification-compte-etudiant',
     'modification-compte-pilote',

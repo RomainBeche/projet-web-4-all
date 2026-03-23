@@ -1,0 +1,39 @@
+{% extends "base.twig.html" %}
+
+{% block title %} Favoris - Web4All {% endblock %}
+
+{% block content %}
+<h1 class="title-favoris">
+    Mes favoris
+</h1>
+
+<div id="offre-alternance">
+      <div class="etiquette-alternance">
+        <h4 class="titre-alternance">Alternance</h4>
+      </div>
+      <div class="inner-offre-alternance">
+        <h3>Développeur Web Full Stack</h3>
+        <p class="offre-detail">Tech Innovation</p>
+        <p class="offre-detail">Paris, Île-de-France</p>
+        <p class="offre-detail offre-detail--duration">24 mois</p>
+      </div>
+      <button class="btn-offre-alternance">Voir l'offre</button>
+</div>
+
+<div id="offre-stage">
+      <div class="etiquette-stage">
+        <h4 class="titre-stage">Alternance</h4>
+      </div>
+      <div class="inner-offre-stage">
+        <h3>Développeur Web Full Stack</h3>
+        <p class="offre-detail">Tech Innovation</p>
+        <p class="offre-detail">Paris, Île-de-France</p>
+        <p class="offre-detail offre-detail--duration">24 mois</p>
+      </div>
+      <button class="btn-offre-stage">Voir l'offre</button>
+</div>
+
+<div class="all-offers-wrapper">
+      <button class="btn btn-all-offers">Voir toutes les offres</button>
+</div>
+{% endblock %}
