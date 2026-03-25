@@ -14,7 +14,7 @@ class Pagination {
         $this->totalPages = ceil($this->totalOffers / $this->perPage);
 
         // Sécurisation page
-        $page = isset($_GET['page']) ? (int)$_GET['page'] : 1;
+        $page = isset($_GET['p']) ? (int)$_GET['p'] : 1;
         $this->currentPage = max(1, min($this->totalPages, $page));
 
         // Découpage avec array_slice (offset, length)
@@ -35,7 +35,7 @@ class Pagination {
         if ($this->currentPage > 1) {
             $prev = $this->currentPage - 1;
             $html .= '<a href="' . htmlspecialchars($baseUrl . 'page=' . $prev) . '" class="pagination-btn"><<</a>';
-        }
+            }
 
         // Info page
         $html .= '<span class="pagination-info">Page ' . $this->currentPage . ' sur ' . $this->totalPages . '</span>';

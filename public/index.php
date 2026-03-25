@@ -38,7 +38,7 @@ if (!in_array($page, $allowedPages)) {
     $page = '404';
 }
 
-$pageFile = __DIR__ . "/templates/pages/{$page}.php";
+$pageFile = __DIR__ . "/../templates/pages/{$page}.php";
 
 if (file_exists($pageFile)) {
     // Inclut le fichier PHP directement (il gère son propre echo/output)

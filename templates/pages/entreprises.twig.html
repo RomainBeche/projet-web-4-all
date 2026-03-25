@@ -1,0 +1,43 @@
+{% extends "base.twig.html" %}
+
+{% block title %}Les entreprises – Web4All{% endblock %}
+
+{% block content %}
+<main class="page">
+    <section class="entreprises">
+
+        <header class="entreprises-header">
+            <h1>Les entreprises</h1>
+            <div class="search-wrapper">
+                <input type="search" placeholder="Bouygues Telecom..." class="search-input">
+            </div>
+        </header>
+
+        <div class="cards-container">  
+            <div class="cards-window">
+                <div class="cards-grid">  
+                    {% for offer in offers %}
+                    <article class="card">
+                        <div class="card-logo">{{ offer.Logo }}</div>
+                        <p class="card-name">{{ offer.Nom_entreprise }}</p>
+                        <p class="card-sector">{{ offer.Secteur }}</p>
+                        <div class="card-rating">
+                            {{ offer.Rating }} ★
+                            <span>{{ offer.Nombre_avis }} Avis</span>
+                        </div>
+                        <div class="card-footer">
+                            <button class="bton" onclick="window.location.href='?page=404'">
+                                Découvrir
+                            </button>
+                            <span class="offers">{{ offer.Nombre_offres }} Offres</span>
+                        </div>
+                    </article>
+                    {% endfor %}
+                </div>
+            </div>
+            {{ navLinks|raw }}
+        </div>
+
+    </section>
+</main>
+{% endblock %}
