@@ -134,6 +134,86 @@ a:visited {
 }
 
 
+/* --- Masquer le widget natif Google --- */
+#google_translate_element { display: none; }
+.goog-te-banner-frame { display: none !important; }
+.skiptranslate { display: none !important; }
+body { top: 0 !important; }
+
+/* --- Sélecteur de langue --- */
+.lang-switcher {
+  position: relative;
+}
+
+#lang-btn {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  background: none;
+  border: 1px solid currentColor;
+  border-radius: 8px;
+  padding: 5px 10px;
+  cursor: pointer;
+  color: inherit;
+  font-size: 0.85rem;
+  font-weight: 600;
+  transition: background 0.2s, opacity 0.2s;
+}
+
+#lang-btn:hover {
+  opacity: 0.75;
+}
+
+/* --- Dropdown --- */
+.lang-dropdown {
+  display: none !important;
+  position: absolute;
+  right: 0;
+  top: calc(100% + 12px);
+  border: none;
+  border-radius: 10px;
+  box-shadow: 0 8px 24px rgba(0,0,0,0.12);
+  padding: 6px;
+  list-style: none;
+  min-width: 150px;
+  background-color: rgba(255, 255, 255, 0.7);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  z-index: 9999;
+}
+
+.lang-dropdown.open {
+  display: block !important;
+  animation: fadeIn 0.15s ease;
+}
+
+.nav-links .lang-dropdown li {
+  margin: 0;
+}
+
+.lang-dropdown li button {
+  width: 100%;
+  text-align: center;
+  background: none;
+  border: none;
+  padding: 8px 12px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 0.9rem;
+  color: #1f2937;
+  transition: background 0.15s;
+}
+
+.lang-dropdown li button:hover {
+  background: #f3f4f6;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(-4px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+
 
 /* ============================================================ *\
    4. NAV LINKS — Desktop
@@ -152,7 +232,7 @@ a:visited {
 }
 
 
-.nav-links ul {
+.nav-links  ul {
   display: flex;
   align-items: center;
   font-size: var(--fs-body);

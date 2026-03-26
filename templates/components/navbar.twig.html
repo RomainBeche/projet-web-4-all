@@ -1,5 +1,5 @@
 <nav class="navbar">
-    <a href="?page=accueil" class="logo">Web4All</a>
+    <a href="?page=accueil" class="logo notranslate" translate="no">Web4All</a>
     <div id="nav-toggle">
         <div class="bar1"></div>
         <div class="bar2"></div>
@@ -13,10 +13,62 @@
         <li><a href="?page=favoris">Favoris</a></li>
         <li><a href="?page=annonces">Annonces</a></li>
         <li><a href="?page=aide">Aide &amp; Support</a></li>
-        <li><a href="?page=langue">
-            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-translate" viewBox="0 0 16 16">
-                <path d="M4.545 6.714 4.11 8H3l1.862-5h1.284L8 8H6.833l-.435-1.286zm1.634-.736L5.5 3.956h-.049l-.679 2.022z"/>
-                <path d="M0 2a2 2 0 0 1 2-2h7a2 2 0 0 1 2 2v3h3a2 2 0 0 1 2 2v7a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2v-3H2a2 2 0 0 1-2-2zm2-1a1 1 0 0 0-1 1v7a1 1 0 0 0 1 1h7a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1zm7.138 9.995q.289.451.63.846c-.748.575-1.673 1.001-2.768 1.292.178.217.451.635.555.867 1.125-.359 2.08-.844 2.886-1.494.777.665 1.739 1.165 2.93 1.472.133-.254.414-.673.629-.89-1.125-.253-2.057-.694-2.82-1.284.681-.747 1.222-1.651 1.621-2.757H14V8h-3v1.047h.765c-.318.844-.74 1.546-1.272 2.13a6 6 0 0 1-.415-.492 2 2 0 0 1-.94.31"/>
-            </svg></a></li>
+        <li class="lang-switcher">
+            <button id="lang-btn" aria-label="Changer de langue" class="notranslate" translate="no">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" viewBox="0 0 16 16">
+                    <path d="M4.545 6.714 4.11 8H3l1.862-5h1.284L8 8H6.833l-.435-1.286zm1.634-.736L5.5 3.956h-.049l-.679 2.022z"/>
+                    <path d="M0 2a2 2 0 0 1 2-2h7a2 2 0 0 1 2 2v3h3a2 2 0 0 1 2 2v7a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2v-3H2a2 2 0 0 1-2-2zm2-1a1 1 0 0 0-1 1v7a1 1 0 0 0 1 1h7a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1zm7.138 9.995q.289.451.63.846c-.748.575-1.673 1.001-2.768 1.292.178.217.451.635.555.867 1.125-.359 2.08-.844 2.886-1.494.777.665 1.739 1.165 2.93 1.472.133-.254.414-.673.629-.89-1.125-.253-2.057-.694-2.82-1.284.681-.747 1.222-1.651 1.621-2.757H14V8h-3v1.047h.765c-.318.844-.74 1.546-1.272 2.13a6 6 0 0 1-.415-.492 2 2 0 0 1-.94.31"/>
+                </svg>
+                <span id="lang-current">FR</span>
+            </button>
+            <ul class="lang-dropdown" class="notranslate" translate="no">
+                <li><button onclick="doTranslate('fr')">Français</button></li>
+                <li><button onclick="doTranslate('en')">English</button></li>
+                <li><button onclick="doTranslate('es')">Español</button></li>
+                <li><button onclick="doTranslate('de')">Deutsch</button></li>
+                <li><button onclick="doTranslate('ar')">العربية</button></li>
+            </ul>
+        </li>
     </ul>
 </div>
+<div id="google_translate_element" style="display:none;"></div>
+
+<script>
+    function googleTranslateElementInit() {
+        new google.translate.TranslateElement(
+            { pageLanguage: "fr", autoDisplay: false },
+            "google_translate_element"
+        );
+    }
+
+    function doTranslate(lang) {
+        // Mettre à jour le label affiché
+        document.getElementById('lang-current').textContent = lang.toUpperCase();
+
+        // Fermer le dropdown
+        document.querySelector('.lang-dropdown').classList.remove('open');
+
+        // Déclencher Google Translate
+        const select = document.querySelector('.goog-te-combo');
+        if (select) {
+            select.value = lang;
+            select.dispatchEvent(new Event('change'));
+        } else {
+            // Retry si le widget n'est pas encore chargé
+            setTimeout(() => doTranslate(lang), 300);
+        }
+    }
+
+    // Toggle dropdown au clic sur le bouton
+    document.getElementById('lang-btn').addEventListener('click', (e) => {
+        e.stopPropagation();
+        document.querySelector('.lang-dropdown').classList.toggle('open');
+    });
+
+    // Fermer le dropdown en cliquant ailleurs
+    document.addEventListener('click', () => {
+        document.querySelector('.lang-dropdown').classList.remove('open');
+    });
+</script>
+
+<script src="https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
