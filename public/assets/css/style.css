@@ -885,7 +885,7 @@ textarea[rows] {
 /* ── Variante : vert ── */
 .btn-green {
   --btn-bg:           var(--green);
-  --btn-hover-bg:     var(--green);
+  --btn-hover-bg:     #3bae27;
   --btn-hover-shadow: 0 6px 20px rgba(40, 205, 65, 0.35);
 }
 
