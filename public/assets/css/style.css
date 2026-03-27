@@ -2111,6 +2111,13 @@ spline-viewer {
   flex: 1;
 }
 
+.stat-number {
+  display: block;
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: #007bff;
+}
+
 .stat-label {
   font-size: 0.8rem;
   color: #666;
@@ -2282,6 +2289,8 @@ spline-viewer {
 .star-form button{
   font-family: 'DM Sans', sans-serif;
   font-size: 1.1rem;
+}
+
 }
 
 /* Boutons noir & blanc simples */
