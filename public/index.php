@@ -30,7 +30,9 @@ $allowedPages = [
     'suppression-compte-1',
     'suppression-compte-2',
     'suppression-offre',
-    'entreprises'
+    'entreprises',
+    'fiche-entreprise',
+    'evaluation'
     ];
 
 if (!in_array($page, $allowedPages)) {

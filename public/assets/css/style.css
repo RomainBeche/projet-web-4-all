@@ -1658,16 +1658,14 @@ spline-viewer {
 
 .entreprises {
   max-width: 1400px;
-  min-height: 700px;
   width: 100%;
-  padding: 1.25rem;
+  margin-top: 10rem;
+  font-family: 'DM Sans', sans-serif;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
-.entreprises-header h1 { font-size: 1.4rem; margin-bottom: 1rem; }
-.entreprises-header h2 { 
-  font-size: 1rem; 
-  margin: 1.25rem 0 0.75rem 0; 
-}
 
 .search-wrapper {
   position: relative; 
@@ -1678,7 +1676,7 @@ spline-viewer {
   padding: 0.6rem 2.5rem 0.6rem 1rem;
   border: none;
   border-radius: 999px;
-  background: #f7f7f7;
+  background: #ffffff;
   font-size: 0.9rem;
 }
 .search-icon {
@@ -1780,7 +1778,344 @@ spline-viewer {
 
 
 /* ============================================================ *\
-   21. RESPONSIVE — max-width: 480px
+   21. PAGE — Fiche entreprise
+\* ============================================================ */
+
+
+.entreprise {
+  max-width: 1400px;
+  width: 100%;
+  margin: 0 auto;
+  padding: 0 1.5rem 4rem;
+  font-family: 'DM Sans', sans-serif;
+}
+
+/* Avatar rond + nom de l’entreprise */
+.entreprise-header {
+  display: flex;
+  align-items: flex-start;
+  gap: 1.2rem;
+  padding: 1.5rem 0;
+  border-bottom: 1px solid #f0f0f0;
+  margin-bottom: 1.8rem;
+}
+
+.entreprise-avatar-wrapper {
+  flex-shrink: 0;
+}
+
+.entreprise-avatar {
+  width: 130px;
+  height: 130px;
+  border-radius: 50%;
+  overflow: hidden;
+  border: 1px solid #f0f0f0;
+  background: white;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.entreprise-avatar-placeholder {
+  background: #f5f5f5;
+  color: #777;
+  font-size: 1.1rem;
+  font-weight: 600;
+}
+
+.entreprise-avatar img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.entreprise-name-section {
+  flex-grow: 1;
+}
+
+.entreprise-title {
+  font-family: var(--font-title);
+  font-size: var(--fs-title);
+  font-weight: 700;
+  letter-spacing: -0.03em;
+  color: var(--text);
+  margin-bottom: 1rem;
+  margin-top: 0.5rem; 
+}
+
+.entreprise-sector {
+  font-size: 0.95rem;
+  color: #777;
+  margin: 0;
+}
+
+/* Lien avis simple en haut */
+
+.note-entreprise {
+  margin: 3rem 0 0;
+  text-align: right;
+}
+
+.avis-link-top {
+  margin: 7rem 1rem 1rem;
+  text-align: right;
+}
+
+.avis-link-simple {
+  color: #007bff;
+  text-decoration: underline;
+  text-decoration-thickness: 1.5px;
+  text-underline-offset: 2px;
+  font-size: 0.95rem;
+  font-weight: 500;
+  transition: color 0.2s ease;
+}
+
+.avis-link-simple:hover {
+  color: #0056b3;
+  text-decoration-thickness: 2px;
+}
+
+
+/* Section “À propos de l’entreprise” */
+.entreprise-description {
+  margin-bottom: 2.5rem;
+}
+
+.section-title {
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: #222;
+  margin-bottom: 0.8rem;
+}
+
+.entreprise-text {
+  font-size: 0.95rem;
+  line-height: 1.6;
+  color: #444;
+  margin-bottom: 1.2rem;
+  text-indent: 3em;
+  text-align: justify;
+}
+
+.entreprise-details {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 1rem;
+}
+
+.detail-block {
+  border: 1px solid #f5f5f5;
+  border-radius: 10px;
+  padding: 0.8rem 1rem;
+  background: #fafafa;
+}
+
+.detail-title {
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: #333;
+  margin: 0 0 0.3rem;
+}
+
+.detail-block p {
+  font-size: 0.85rem;
+  color: #555;
+  margin: 0;
+}
+
+.detail-block ul {
+  list-style: disc !important;
+  padding-left: 1.5rem !important;
+  margin: 0.5rem 0 0 !important;
+}
+
+.detail-block li {
+  list-style-type: disc !important;
+  font-size: 0.85rem;
+  color: #555;
+  margin-bottom: 0.2rem;
+  line-height: 1.4;
+}
+
+
+.impact-stats {
+  display: flex;
+  gap: 1rem;
+}
+
+.stat {
+  text-align: center;
+  flex: 1;
+}
+
+.stat-number {
+  display: block;
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: #007bff;
+}
+
+.stat-label {
+  font-size: 0.8rem;
+  color: #666;
+}
+
+
+
+/* Section offres de stage / alternance */
+.entreprise-offers {
+  margin-bottom: 4rem;
+}
+
+.entreprise-offers .cards-window {
+  border-radius: 10px;
+  border: 1px solid #f0f0f0;
+  background: #fafafa;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+}
+
+.entreprise-offers .cards-grid {
+  padding: 1rem;
+}
+
+/* Style de la card pour les offres */
+.card .card-location,
+.card .card-type {
+  font-size: 0.8rem;
+  color: #555;
+  margin: 0.2rem 0 6px;
+}
+
+.card .card-description {
+  font-size: 0.85rem;
+  line-height: 1.5;
+  color: #666;
+  margin-bottom: 0.5rem;
+  flex-grow: 1;
+}
+
+.card .card-footer {
+  margin-top: 0;
+  padding-top: 0.4rem;
+  border-top: 1px solid #f0f0f0;
+}
+
+
+
+/* ============================================================ *\
+   22. PAGE — Evaluation entreprise
+\* ============================================================ */
+
+
+#comment{
+    resize: none;
+    overflow: auto;
+    width: 30rem;
+    height: 7rem;
+    border-radius: 0.5rem;
+    font-size: 1rem;
+    padding: 0.5rem;
+}
+
+.comment{
+    margin-left: 10rem;
+}
+
+#bannerimage {
+  width: 90%;
+  height: 270px;
+  background-color: green;
+  background-position: center;
+  border-radius: 1rem;
+  margin-bottom: 2rem;
+  margin: 0 5rem;
+}
+
+
+/* Partie pour la notation avec étoiles */
+
+.star-rating{
+  display: inline-flex;
+  flex-direction: row-reverse;
+  gap: 6px;
+  margin-left: 10rem;
+}
+
+.star-rating input{
+  position: absolute;
+  opacity: 0;
+}
+
+.star-rating label{
+  color: #d3d3d3;
+  cursor: pointer;
+}
+
+.star-rating svg.icon{
+  width: 60px;
+  height: 60px;
+  fill: currentColor;
+  transition: .3s;
+}
+
+.star-rating input:checked ~ label{
+  color: #f5c518;
+}
+
+.star-rating label:hover,
+.star-rating label:hover ~ label{
+  color: #f5c518;
+}
+
+
+/* Partie concernant les boutons */
+.actions{
+  margin-left: 12rem;
+  margin-top: 4rem;
+  display: flex;
+  gap: 12px;
+}
+
+.star-form button{
+  font-family: 'DM Sans', sans-serif;
+  font-size: 1.1rem;
+  font-weight: 600;
+  padding: 0.85rem 1.6rem;
+  border-radius: 0.75rem;
+  border: 2px solid transparent;
+  cursor: pointer;
+
+  transition: background-color .2s ease, color .2s ease, border-color .2s ease,
+              filter .2s ease, transform .2s ease;
+}
+
+.star-form button:hover{
+  filter: brightness(1.08);
+  transform: translateY(-2px);
+}
+
+.star-form button:active{
+  transform: translateY(0);
+}
+
+.star-form button[type="reset"]{
+  background: white;
+  color: blue;
+  border-color: blue;
+}
+
+.star-form button[type="submit"]{
+  background: blue;
+  color: white;
+  border-color: blue;
+}
+
+
+
+/* ============================================================ *\
+   22. RESPONSIVE — max-width: 480px
 \* ============================================================ */
 
 
@@ -1825,5 +2160,9 @@ spline-viewer {
   .paragraphe-1 {
     padding-left: 1rem;
     padding-right: 1rem;
+  }
+
+  .cards-grid {
+    grid-template-columns: 1fr;
   }
 }

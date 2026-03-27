@@ -1,0 +1,54 @@
+{% extends "base.twig.html" %}
+
+{% block title %}Les entreprises – Web4All{% endblock %}
+
+{% block content %}
+
+
+<div id="bannerimage"></div>
+
+<h1>Nom de l'entreprise</h1>
+<h4>Domaine de l'entreprise</h4>
+<p>Note globale</p>
+
+
+<form class="star-form" method="get">
+  <div class="star-rating">
+    <input type="radio" id="note_5" name="star-rating" value="5">
+    <label for="note_5"><svg class="icon" viewBox="0 0 24 24"><use href="#star"></use></svg></label>
+
+    <input type="radio" id="note_4" name="star-rating" value="4">
+    <label for="note_4"><svg class="icon" viewBox="0 0 24 24"><use href="#star"></use></svg></label>
+
+    <input type="radio" id="note_3" name="star-rating" value="3">
+    <label for="note_3"><svg class="icon" viewBox="0 0 24 24"><use href="#star"></use></svg></label>
+
+    <input type="radio" id="note_2" name="star-rating" value="2">
+    <label for="note_2"><svg class="icon" viewBox="0 0 24 24"><use href="#star"></use></svg></label>
+
+    <input type="radio" id="note_1" name="star-rating" value="1">
+    <label for="note_1"><svg class="icon" viewBox="0 0 24 24"><use href="#star"></use></svg></label>
+  </div>
+
+  <div class="comment">
+    <textarea id="comment" name="comment" rows="6" placeholder="Partagez votre expérience avec cette entreprise ..."></textarea>
+  </div>
+
+  <div class="actions">
+    <button type="reset" title="Effacer">Effacer</button>
+    <button type="submit" title="Envoyer">Voter</button>
+</div>
+
+  
+</form>
+
+<svg xmlns="http://www.w3.org/2000/svg"
+       style="position:absolute; width:0; height:0; overflow:hidden"
+       aria-hidden="true" focusable="false">
+    <symbol id="star" viewBox="0 0 24 24">
+    <path fill="currentColor"
+        d="m10 15-5.9 3 1.1-6.5L.5 7 7 6 10 0l3 6 6.5 1-4.7 4.5 1.1 6.5z"/>
+    </symbol>
+</svg>
+
+{% endblock %}

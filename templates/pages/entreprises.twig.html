@@ -3,15 +3,13 @@
 {% block title %}Les entreprises – Web4All{% endblock %}
 
 {% block content %}
-<main class="page">
-    <section class="entreprises">
+<main class="entreprises">
+    <section>
 
-        <header class="entreprises-header">
-            <h1>Les entreprises</h1>
-            <div class="search-wrapper">
-                <input type="search" placeholder="Bouygues Telecom..." class="search-input">
-            </div>
-        </header>
+        <h1 class="title">Les entreprises</h1>
+        <div class="search-wrapper">
+            <input type="search" placeholder="Bouygues Telecom..." class="search-input">
+        </div>
 
         <div class="cards-container">  
             <div class="cards-window">
@@ -26,7 +24,7 @@
                             <span>{{ offer.Nombre_avis }} Avis</span>
                         </div>
                         <div class="card-footer">
-                            <button class="bton" onclick="window.location.href='?page=404'">
+                            <button class="bton" onclick="window.location.href='?page=fiche-entreprise'">
                                 Découvrir
                             </button>
                             <span class="offers">{{ offer.Nombre_offres }} Offres</span>
