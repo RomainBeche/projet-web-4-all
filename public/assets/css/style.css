@@ -1048,9 +1048,8 @@ textarea[rows] {
 }
 
 
-
-/* ── Section offres à la une ── */
-.offres-a-la-une > h2 {
+/* ── Section statistiques ── */
+.home-section-title {
   padding: 1rem 0 0 2rem;
 }
 
@@ -1299,13 +1298,6 @@ textarea[rows] {
 }
 
 
-
-/* ── Section statistiques ── */
-.section-stats-title {
-  padding: 1rem 0 0 2rem;
-}
-
-
 .stats-container {
   padding: 2rem;
   display: flex;
@@ -1377,7 +1369,12 @@ textarea[rows] {
 }
 
 .offers-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
   margin-bottom: 2rem;
+  gap: 1.5rem;
+  flex-wrap: wrap; 
 }
 
 .offers-grid {
@@ -1493,6 +1490,31 @@ textarea[rows] {
 .account-menu-item.danger:hover {
   color: #c0234a;
   padding-left: 0.4rem;
+}
+
+
+
+/* ============================================================ *\
+   15. PAGE — Création de compte
+\* ============================================================ */
+
+
+.register-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.1rem;
+}
+
+
+.register-form .actions {
+  margin-top: 1rem;
+  justify-content: center;
+}
+
+
+.register-form .btn-primary {
+  flex: unset;
+  padding: 0.75rem 2.5rem;
 }
 
 
@@ -1721,6 +1743,7 @@ spline-viewer {
   overflow: hidden;
   transition: border-color 0.2s, box-shadow 0.2s;
   width: 100%;
+  min-width: 280px;
 }
 
 .search:focus-within {
@@ -1765,22 +1788,15 @@ spline-viewer {
   background: none;
   border: none;
   cursor: pointer;
-  color: var(--primary);
+  color: var(--primary-light);
   transition: color 0.5s;
   align-self: stretch;
 }
 
 .search__button:hover {
-  color: #2f08bc;
+  color: var(--primary);
   transition: 0.5s;
 }
-
-
-/* .favorites-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-  gap: 1.5rem;
-} */
 
 .entreprises-empty {
   text-align: center;
@@ -1789,7 +1805,13 @@ spline-viewer {
   margin-top: 4rem;
 }
 
-/* @media (max-width: 600px) {
+/* .favorites-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 1.5rem;
+}
+
+@media (max-width: 600px) {
   .favorites-grid {
     grid-template-columns: 1fr;
   }
@@ -1886,15 +1908,27 @@ spline-viewer {
 }
 
 
-@media (max-width: 600px) {
-  .entreprises-header {
-    flex-direction: column;
-    align-items: flex-start;
+@media (max-width: 1500px) {
+  .cards-grid {
+    grid-template-columns: repeat(4, 1fr);
   }
+}
 
-  .search-wrapper {
-    width: 100%;
-    max-width: 100%;
+@media (max-width: 1300px) {
+  .cards-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+@media (max-width: 1000px) {
+  .cards-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 800px) {
+  .cards-grid {
+    grid-template-columns: 1fr;
   }
 }
 
@@ -2006,7 +2040,7 @@ spline-viewer {
   margin-bottom: 2.5rem;
 }
 
-.section-title {
+.entreprise-section-title {
   font-size: 1.2rem;
   font-weight: 600;
   color: #222;
@@ -2133,106 +2167,126 @@ spline-viewer {
 
 
 #comment{
-    resize: none;
-    overflow: auto;
-    width: 30rem;
-    height: 7rem;
-    border-radius: 0.5rem;
-    font-size: 1rem;
-    padding: 0.5rem;
+  resize: none;
+  overflow: auto;
+  width: 30rem;
+  height: 7rem;
+  border-radius: 0.5rem;
+  font-size: 1rem;
+  padding: 0.5rem;
 }
 
-.comment{
-    margin-left: 10rem;
+/* Layout général de la page entreprise */
+.page-entreprise {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0.5rem;
+  font-family: 'DM Sans', sans-serif;
 }
 
+/* Bannière */
 #bannerimage {
-  width: 90%;
-  height: 270px;
-  background-color: green;
+  width: 100%;
+  height: 260px;
+  background-color: #2f7a32;
   background-position: center;
   border-radius: 1rem;
-  margin-bottom: 2rem;
-  margin: 0 5rem;
 }
 
+.global-rating {
+  display: inline-flex;
+  flex-direction: row-reverse;
+  gap: 0.3rem;
+  margin: 6.5rem 0 0;
+}
 
-/* Partie pour la notation avec étoiles */
+.global-rating label {
+  color: #d3d3d3;
+}
 
-.star-rating{
+.global-rating svg.icon {
+  width: 3rem;
+  height: 3rem;
+  fill: currentColor;
+}
+
+.rating {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 1.2rem;
+  margin-top: 2rem;
+  margin-bottom: 0.5rem;
+}
+
+/* Formulaire : alignement vertical propre */
+.star-form {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  align-items: flex-start;
+}
+
+/* Commentaire */
+.comment textarea#comment {
+  resize: none;
+  width: 32rem;
+  max-width: 100%;
+  height: 7rem;
+  border-radius: 0.5rem;
+  font-size: 1rem;
+  padding: 0.75rem 0.9rem;
+  border: 1px solid #d3d3d3;
+  outline: none;
+  transition: border-color .2s ease, box-shadow .2s ease;
+}
+
+.comment textarea#comment:focus {
+  border-color: #111;
+  box-shadow: 0 0 0 1px #1111;
+}
+
+/* Notation étoiles */
+.star-rating {
   display: inline-flex;
   flex-direction: row-reverse;
   gap: 6px;
-  margin-left: 10rem;
 }
 
-.star-rating input{
+.star-rating input {
   position: absolute;
   opacity: 0;
 }
 
-.star-rating label{
+.star-rating label {
   color: #d3d3d3;
   cursor: pointer;
 }
 
-.star-rating svg.icon{
-  width: 60px;
-  height: 60px;
+.star-rating svg.icon {
+  width: 48px;
+  height: 48px;
   fill: currentColor;
-  transition: .3s;
+  transition: color .25s ease, transform .15s ease;
 }
 
-.star-rating input:checked ~ label{
+.star-rating input:checked ~ label {
   color: #f5c518;
 }
 
 .star-rating label:hover,
-.star-rating label:hover ~ label{
+.star-rating label:hover ~ label {
   color: #f5c518;
-}
-
-
-/* Partie concernant les boutons */
-.actions{
-  margin-left: 12rem;
-  margin-top: 4rem;
-  display: flex;
-  gap: 12px;
+  transform: translateY(-1px);
 }
 
 .star-form button{
   font-family: 'DM Sans', sans-serif;
   font-size: 1.1rem;
-  font-weight: 600;
-  padding: 0.85rem 1.6rem;
-  border-radius: 0.75rem;
-  border: 2px solid transparent;
-  cursor: pointer;
-
-  transition: background-color .2s ease, color .2s ease, border-color .2s ease,
-              filter .2s ease, transform .2s ease;
 }
 
-.star-form button:hover{
-  filter: brightness(1.08);
-  transform: translateY(-2px);
-}
-
-.star-form button:active{
-  transform: translateY(0);
-}
-
-.star-form button[type="reset"]{
-  background: white;
-  color: blue;
-  border-color: blue;
-}
-
-.star-form button[type="submit"]{
-  background: blue;
-  color: white;
-  border-color: blue;
+/* Boutons noir & blanc simples */
+.actions {
+  display: flex;
+  gap: 0.75rem;
 }
 
 

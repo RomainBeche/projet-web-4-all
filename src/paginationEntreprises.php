@@ -34,8 +34,8 @@ class Pagination {
         // Précédent
         if ($this->currentPage > 1) {
             $prev = $this->currentPage - 1;
-            $html .= '<a href="' . htmlspecialchars($baseUrl . 'page=' . $prev) . '" class="pagination-btn"><<</a>';
-            }
+            $html .= '<a href="' . htmlspecialchars($baseUrl . 'p=' . $prev) . '" class="pagination-btn"><<</a>';
+        }
 
         // Info page
         $html .= '<span class="pagination-info">Page ' . $this->currentPage . ' sur ' . $this->totalPages . '</span>';
@@ -43,12 +43,13 @@ class Pagination {
         // Suivant
         if ($this->currentPage < $this->totalPages) {
             $next = $this->currentPage + 1;
-            $html .= '<a href="' . htmlspecialchars($baseUrl . 'page=' . $next) . '" class="pagination-btn">>></a>';
+            $html .= '<a href="' . htmlspecialchars($baseUrl . 'p=' . $next) . '" class="pagination-btn">>></a>';
         }
 
         $html .= '</div>';
         return $html;
-    }
+}
+
 
     // Getters utiles
     public function getCurrentPage(): int { return $this->currentPage; }

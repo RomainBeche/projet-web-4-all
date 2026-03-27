@@ -3,101 +3,107 @@
 {% block title %}Modifier une offre – Web4All{% endblock %}
 
 {% block content %}
-<div class="page-wrapper">
+<main class="page-wrapper">
 
-    <h1 class="title">Modifier une offre</h1>
+
+  <section aria-labelledby="offer-title">
+
+    <h1 id="offer-title" class="title">Modifier une offre</h1>
 
     <form id="offerForm" novalidate>
 
-        <section class="form-section">
-            <p class="section-title">Informations générales</p>
-            <div class="fields-grid">
+      <div class="form-section">
+        <h2 class="section-title">Informations générales</h2>
+        <div class="fields-grid">
 
-                <div class="field">
-                    <label for="nom">Nom de l'offre <span class="required">*</span></label>
-                    <input type="text" id="nom" name="nom" required />
-                </div>
+          <div class="field">
+            <label for="nom">Nom de l'offre <span class="required">*</span></label>
+            <input type="text" id="nom" name="nom" required />
+          </div>
 
-                <div class="field">
-                    <label for="description">Description de l'offre <span class="required">*</span></label>
-                    <textarea id="description" name="description" rows="5" required></textarea>
-                </div>
+          <div class="field">
+            <label for="description">Description de l'offre <span class="required">*</span></label>
+            <textarea id="description" name="description" rows="5" required></textarea>
+          </div>
 
-                <div class="field">
-                    <label for="duree">Durée de la mission (jours) <span class="required">*</span></label>
-                    <input type="number" id="duree" name="duree" min="1" required />
-                </div>
+          <div class="field">
+            <label for="duree">Durée de la mission (jours) <span class="required">*</span></label>
+            <input type="number" id="duree" name="duree" min="1" required />
+          </div>
 
-                <div class="field">
-                    <label for="type">Type de contrat <span class="required">*</span></label>
-                    <div class="select-wrapper">
-                        <select id="type" name="type" required>
-                            <option value="" disabled selected>-- Sélectionnez --</option>
-                            <option>Stage</option>
-                            <option>Alternance</option>
-                            <option>CDD</option>
-                            <option>CDI</option>
-                        </select>
-                    </div>
-                </div>
-
-                <div class="field">
-                    <label for="competences">Domaine de compétences <span class="required">*</span></label>
-                    <div class="select-wrapper">
-                        <select id="competences" name="competences" required>
-                            <option value="" disabled selected>-- Sélectionnez --</option>
-                            <option>Développement web</option>
-                            <option>Data / IA</option>
-                            <option>Cybersécurité</option>
-                            <option>Réseau &amp; Systèmes</option>
-                            <option>Marketing digital</option>
-                        </select>
-                    </div>
-                </div>
-
-                <div class="field">
-                    <label for="niveau">Niveau d'études requis <span class="required">*</span></label>
-                    <div class="select-wrapper">
-                        <select id="niveau" name="niveau" required>
-                            <option value="" disabled selected>-- Sélectionnez --</option>
-                            <option>Bac</option>
-                            <option>Bac +2</option>
-                            <option>Bac +3</option>
-                            <option>Bac +4</option>
-                            <option>Bac +5</option>
-                        </select>
-                    </div>
-                </div>
-
-                <div class="field">
-                    <label for="localisation">Localisation (ville) <span class="required">*</span></label>
-                    <input type="text" id="localisation" name="localisation" required />
-                </div>
-
-                <div class="field">
-                    <label for="remuneration">Rémunération (taux horaire) <span class="required">*</span></label>
-                    <input type="number" id="remuneration" name="remuneration" min="0" step="0.01" required />
-                </div>
-
+          <div class="field">
+            <label for="type">Type de contrat <span class="required">*</span></label>
+            <div class="select-wrapper">
+              <select id="type" name="type" required>
+                <option value="" disabled selected>-- Sélectionnez --</option>
+                <option>Stage</option>
+                <option>Alternance</option>
+                <option>CDD</option>
+                <option>CDI</option>
+              </select>
             </div>
-        </section>
+          </div>
 
-        <div class="consent-block">
-            <input type="checkbox" id="consent" name="consent" required />
-            <p>
-                J'accepte les CGU et déclare avoir pris connaissance de la
-                <a href="#">politique de protection des données</a> du site web4all.com.
-            </p>
-        </div>
+          <div class="field">
+            <label for="competences">Domaine de compétences <span class="required">*</span></label>
+            <div class="select-wrapper">
+              <select id="competences" name="competences" required>
+                <option value="" disabled selected>-- Sélectionnez --</option>
+                <option>Développement web</option>
+                <option>Data / IA</option>
+                <option>Cybersécurité</option>
+                <option>Réseau &amp; Systèmes</option>
+                <option>Marketing digital</option>
+              </select>
+            </div>
+          </div>
 
-        <div class="actions">
-            <button type="submit" class="btn btn-primary">Mettre à jour l'offre</button>
-            <button type="button" class="btn btn-outline-primary" onclick="history.back()">Annuler</button>
+          <div class="field">
+            <label for="niveau">Niveau d'études requis <span class="required">*</span></label>
+            <div class="select-wrapper">
+              <select id="niveau" name="niveau" required>
+                <option value="" disabled selected>-- Sélectionnez --</option>
+                <option>Bac</option>
+                <option>Bac +2</option>
+                <option>Bac +3</option>
+                <option>Bac +4</option>
+                <option>Bac +5</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="field">
+            <label for="localisation">Localisation (ville) <span class="required">*</span></label>
+            <input type="text" id="localisation" name="localisation" required />
+          </div>
+
+          <div class="field">
+            <label for="remuneration">Rémunération (taux horaire) <span class="required">*</span></label>
+            <input type="number" id="remuneration" name="remuneration" min="0" step="0.01" required />
+          </div>
+
         </div>
+      </div>
+
+      <div class="consent-block">
+        <input type="checkbox" id="consent" name="consent" required />
+        <p>
+          J'accepte les CGU et déclare avoir pris connaissance de la
+          <a href="#">politique de protection des données</a> du site web4all.com.
+        </p>
+      </div>
+
+      <div class="actions">
+        <button type="submit" class="btn btn-primary">Mettre à jour l'offre</button>
+        <button type="button" class="btn btn-outline-primary" onclick="history.back()">Annuler</button>
+      </div>
 
     </form>
 
-</div>
+  </section>
+
+
+</main>
 
 {% block scripts %}
 <script>

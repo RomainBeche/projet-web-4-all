@@ -3,17 +3,23 @@
 {% block title %}Compte supprimé – Web4All{% endblock %}
 
 {% block content %}
-<div class="page-wrapper">
+<main class="page-wrapper">
 
-    <h1 class="title fade-in">Compte supprimé</h1>
+
+  <section aria-labelledby="delete-title">
+
+    <h1 id="delete-title" class="title fade-in">Compte supprimé</h1>
 
     <p class="success fade-in">
-        Le compte a été supprimé avec succès.
+      Le compte a été supprimé avec succès.
     </p>
 
     <div class="actions fade-in">
-        <button onclick="window.location.href='?page=logout'" class="btn btn-primary">Retour à la page de connexion</button>
+      <a href="?page=accueil" class="btn btn-primary">Retour à la page de connexion</a>
     </div>
 
-</div>
+  </section>
+
+
+</main>
 {% endblock %}

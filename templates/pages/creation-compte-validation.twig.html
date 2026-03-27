@@ -3,17 +3,23 @@
 {% block title %}Compte créé – Web4All{% endblock %}
 
 {% block content %}
-<div class="page-wrapper">
+<main class="page-wrapper">
 
-    <h1 class="title fade-in">Compte créé</h1>
+
+  <section aria-labelledby="success-title">
+
+    <h1 id="success-title" class="title fade-in">Compte créé</h1>
 
     <p class="success fade-in" style="animation-delay:.1s">
-        Le compte a été créé avec succès.
+      Le compte a été créé avec succès.
     </p>
 
-    <div class="actions fade-in" style="animation-delay:.2s">
-        <a href="?page=accueil" class="btn btn-primary">Retour à l'accueil</a>
+    <div class="actions fade-in">
+        <button onclick="window.location.href='?page=accueil'" class="btn btn-primary">Retour à l'accueil</a>
     </div>
 
-</div>
+  </section>
+
+
+</main>
 {% endblock %}

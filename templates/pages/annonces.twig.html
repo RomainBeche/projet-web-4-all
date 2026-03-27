@@ -1,42 +1,71 @@
 {% extends "base.twig.html" %}
 
-{% block title %} Favoris - Web4All {% endblock %}
+{% block title %}Favoris — Web4All{% endblock %}
 
 {% block content %}
-<div class="offers-page">
+<main class="offers-page">
 
-    <h1 class="title offers-header">Un stage, une alternance ? <strong>À bout de doigts !</strong></h1>
 
-    {% set annonces = [
-        { type: 'alternance', titre: 'Développeur Web Full Stack',  entreprise: 'Tech Innovation', lieu: 'Paris, Île-de-France',        duree: '24 mois' },
-        { type: 'alternance', titre: 'Ingénieur Cybersécurité',     entreprise: 'SecureNet',       lieu: 'Lyon, Auvergne-Rhône-Alpes',  duree: '12 mois' },
-        { type: 'stage',      titre: 'Data Analyst',                entreprise: 'DataCorp',        lieu: 'Bordeaux, Nouvelle-Aquitaine', duree: '6 mois'  },
-        { type: 'alternance', titre: 'Administrateur Réseaux',      entreprise: 'NetSystems',      lieu: 'Toulouse, Occitanie',         duree: '24 mois' },
-        { type: 'stage',      titre: 'Développeur Mobile iOS',      entreprise: 'AppStudio',       lieu: 'Paris, Île-de-France',        duree: '6 mois'  }
-    ] %}
+  <section class="offers-header" aria-labelledby="offers-title">
+
+    <h1 id="offers-title" class="title">Un stage, une alternance ? <strong>À bout de doigts !</strong></h1>
+
+    <div class="search-wrapper">
+      <div class="search" role="search">
+        <input type="text" id="search-input" class="search__input" placeholder="Bouygues Telecom...">
+        <button class="search__button" aria-label="Lancer la recherche">
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16" aria-hidden="true">
+            <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001q.044.06.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1 1 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0"/>
+          </svg>
+        </button>
+      </div>
+    </div>
+
+  </section>
+
+
+  {% set annonces = [
+      { type: 'alternance', titre: 'Développeur Web Full Stack',  entreprise: 'Tech Innovation', lieu: 'Paris, Île-de-France',        duree: '24 mois' },
+      { type: 'alternance', titre: 'Ingénieur Cybersécurité',     entreprise: 'SecureNet',       lieu: 'Lyon, Auvergne-Rhône-Alpes',  duree: '12 mois' },
+      { type: 'stage',      titre: 'Data Analyst',                entreprise: 'DataCorp',        lieu: 'Bordeaux, Nouvelle-Aquitaine', duree: '6 mois'  },
+      { type: 'alternance', titre: 'Administrateur Réseaux',      entreprise: 'NetSystems',      lieu: 'Toulouse, Occitanie',         duree: '24 mois' },
+      { type: 'stage',      titre: 'Développeur Mobile iOS',      entreprise: 'AppStudio',       lieu: 'Paris, Île-de-France',        duree: '6 mois'  }
+  ] %}
+
+
+  <section aria-labelledby="offers-title">
 
     {% if annonces is empty %}
-        <p class="offers-empty">Aucune offre disponible pour l'instant... Revenez bientôt !</p>
+
+      <p class="offers-empty">Aucune offre disponible pour l'instant… Revenez bientôt !</p>
+
     {% else %}
-        <div class="offers-grid">
-            {% for annonce in annonces %}
+
+      <ul class="offers-grid" role="list">
+        {% for annonce in annonces %}
+        <li>
+          <article>
             <a href="#" class="card-link {{ annonce.type }}">
-                <p class="badge {{ annonce.type }}">
-                    {{ annonce.type|capitalize }}
-                </p>
-                <h2 class="card-title">{{ annonce.titre }}</h2>
-                <p class="offre-detail">{{ annonce.entreprise }}</p>
-                <p class="offre-detail">{{ annonce.lieu }}</p>
-                <p class="offre-detail offre-detail--duration">{{ annonce.duree }}</p>
-                <div class="card-button {{ annonce.type }}">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
-                        <path fill-rule="evenodd" d="M1 8a.5.5 0 0 1 .5-.5h11.793l-3.147-3.146a.5.5 0 0 1 .708-.708l4 4a.5.5 0 0 1 0 .708l-4 4a.5.5 0 0 1-.708-.708L13.293 8.5H1.5A.5.5 0 0 1 1 8"/>
-                    </svg>
-                </div>
+              <p class="badge {{ annonce.type }}">{{ annonce.type|capitalize }}</p>
+              <h2 class="card-title">{{ annonce.titre }}</h2>
+              <p class="offre-detail">{{ annonce.entreprise }}</p>
+              <p class="offre-detail">{{ annonce.lieu }}</p>
+              <p class="offre-detail offre-detail--duration">{{ annonce.duree }}</p>
+              <div class="card-button {{ annonce.type }}" aria-hidden="true">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16" aria-hidden="true">
+                  <path fill-rule="evenodd" d="M1 8a.5.5 0 0 1 .5-.5h11.793l-3.147-3.146a.5.5 0 0 1 .708-.708l4 4a.5.5 0 0 1 0 .708l-4 4a.5.5 0 0 1-.708-.708L13.293 8.5H1.5A.5.5 0 0 1 1 8"/>
+                </svg>
+              </div>
             </a>
-            {% endfor %}
-        </div>
+          </article>
+        </li>
+        {% endfor %}
+      </ul>
+
     {% endif %}
 
-</div>
+  </section>
+
+
+</main>
 {% endblock %}

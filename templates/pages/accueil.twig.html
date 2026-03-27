@@ -1,141 +1,159 @@
 {% extends "base.twig.html" %}
 
+
 {% block title %}Accueil – Web4All{% endblock %}
+
 
 {% block head %}
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@12/swiper-bundle.min.css" />
 {% endblock %}
 
+
 {% block content %}
-
-<div class="hero-header">
-  <h1 class="title">
-    Trouvez votre prochaine opportunité dès <strong>aujourd'hui</strong> !
-  </h1>
-
-  <button onclick="window.location.href='?page=annonces'" class="btn btn-white">
-    Afficher les offres
-    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
-      <path fill-rule="evenodd" d="M1 8a.5.5 0 0 1 .5-.5h11.793l-3.147-3.146a.5.5 0 0 1 .708-.708l4 4a.5.5 0 0 1 0 .708l-4 4a.5.5 0 0 1-.708-.708L13.293 8.5H1.5A.5.5 0 0 1 1 8"/>
-    </svg>
-  </button>
-
-  <img src="/assets/images/hero-image.png" class="hero-image" alt="hero image accueil">
-</div>
+<main>
 
 
-{% set annonces = [
-    { type: 'alternance', titre: 'Développeur Web Full Stack',  entreprise: 'Tech Innovation', lieu: 'Paris, Île-de-France', duree: '24 mois' },
-    { type: 'alternance', titre: 'Ingénieur Cybersécurité',     entreprise: 'SecureNet',       lieu: 'Lyon, Auvergne-Rhône-Alpes', duree: '12 mois' },
-    { type: 'stage',      titre: 'Data Analyst',                entreprise: 'DataCorp',        lieu: 'Bordeaux, Nouvelle-Aquitaine', duree: '6 mois' },
-    { type: 'alternance', titre: 'Administrateur Réseaux',      entreprise: 'NetSystems',      lieu: 'Toulouse, Occitanie', duree: '24 mois' },
-    { type: 'stage',      titre: 'Développeur Mobile iOS',      entreprise: 'AppStudio',       lieu: 'Paris, Île-de-France', duree: '6 mois' }
-] %}
+  <section class="hero-header" aria-labelledby="hero-title">
 
-<div class="offres-a-la-une">
+    <h1 id="hero-title" class="title">Trouvez votre prochaine opportunité dès <strong>aujourd'hui</strong> !</h1>
 
-    <h2>Offres à la une</h2>
+    <button onclick="window.location.href='?page=annonces'" class="btn btn-white">
+      Afficher les offres
+      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+        <path fill-rule="evenodd" d="M1 8a.5.5 0 0 1 .5-.5h11.793l-3.147-3.146a.5.5 0 0 1 .708-.708l4 4a.5.5 0 0 1 0 .708l-4 4a.5.5 0 0 1-.708-.708L13.293 8.5H1.5A.5.5 0 0 1 1 8"/>
+      </svg>
+    </button>
+
+    <img src="/assets/images/hero-image.png" class="hero-image" alt="Illustration page d'accueil Web4All">
+
+  </section>
+
+
+
+  {% set annonces = [
+      { type: 'alternance', titre: 'Développeur Web Full Stack',  entreprise: 'Tech Innovation', lieu: 'Paris, Île-de-France', duree: '24 mois' },
+      { type: 'alternance', titre: 'Ingénieur Cybersécurité',     entreprise: 'SecureNet',       lieu: 'Lyon, Auvergne-Rhône-Alpes', duree: '12 mois' },
+      { type: 'stage',      titre: 'Data Analyst',                entreprise: 'DataCorp',        lieu: 'Bordeaux, Nouvelle-Aquitaine', duree: '6 mois' },
+      { type: 'alternance', titre: 'Administrateur Réseaux',      entreprise: 'NetSystems',      lieu: 'Toulouse, Occitanie', duree: '24 mois' },
+      { type: 'stage',      titre: 'Développeur Mobile iOS',      entreprise: 'AppStudio',       lieu: 'Paris, Île-de-France', duree: '6 mois' }
+  ] %}
+
+
+  <section class="offres-a-la-une" aria-labelledby="offres-title">
+
+    <h2 id="offres-title" class="home-section-title">Offres à la une</h2>
 
     <div class="swiper">
-        <div class="swiper-wrapper">
-            {% for annonce in annonces|slice(0, 5) %}
-            <div class="swiper-slide">
-                <a href="#" class="card-link {{ annonce.type }}">
-                    <p class="badge {{ annonce.type }}">
-                        {{ annonce.type|capitalize }}
-                    </p>
-                    <h2 class="card-title">{{ annonce.titre }}</h2>
-                    <p class="offre-detail">{{ annonce.entreprise }}</p>
-                    <p class="offre-detail">{{ annonce.lieu }}</p>
-                    <p class="offre-detail offre-detail--duration">{{ annonce.duree }}</p>
-                    <div class="card-button {{ annonce.type }}">
-                      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
-                        <path fill-rule="evenodd" d="M1 8a.5.5 0 0 1 .5-.5h11.793l-3.147-3.146a.5.5 0 0 1 .708-.708l4 4a.5.5 0 0 1 0 .708l-4 4a.5.5 0 0 1-.708-.708L13.293 8.5H1.5A.5.5 0 0 1 1 8"/>
-                      </svg>
-                    </div>
-                </a>
+      <div class="swiper-wrapper">
+        {% for annonce in annonces|slice(0, 5) %}
+        <article class="swiper-slide">
+          <a href="#" class="card-link {{ annonce.type }}">
+            <p class="badge {{ annonce.type }}">
+              {{ annonce.type|capitalize }}
+            </p>
+            <h3 class="card-title">{{ annonce.titre }}</h3>
+            <p class="offre-detail">{{ annonce.entreprise }}</p>
+            <p class="offre-detail">{{ annonce.lieu }}</p>
+            <p class="offre-detail offre-detail--duration">{{ annonce.duree }}</p>
+            <div class="card-button {{ annonce.type }}" aria-hidden="true">
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+                <path fill-rule="evenodd" d="M1 8a.5.5 0 0 1 .5-.5h11.793l-3.147-3.146a.5.5 0 0 1 .708-.708l4 4a.5.5 0 0 1 0 .708l-4 4a.5.5 0 0 1-.708-.708L13.293 8.5H1.5A.5.5 0 0 1 1 8"/>
+              </svg>
             </div>
-            {% endfor %}
+          </a>
+        </article>
+        {% endfor %}
+      </div>
+      <div class="swiper-pagination"></div>
+      <div class="swiper-button-prev"></div>
+      <div class="swiper-button-next"></div>
+    </div>
+
+    <div class="all-offers-wrapper">
+      <button onclick="window.location.href='?page=annonces'" class="btn">Voir toutes les offres</button>
+    </div>
+
+  </section>
+
+
+
+  <section aria-labelledby="why-title">
+
+    <h2 id="why-title" class="home-section-title">Pourquoi choisir <strong>Web4All</strong> ?</h2>
+
+    <div class="feature-section">
+      <div class="text-content">
+        <h3 class="suivre-candidature-text">Suivez votre candidature</h3>
+        <p class="paragraphe-1">
+          Enfin de la visibilité en direct étape par étape. Postulez et dès que
+          nous avons du nouveau sur l'avancement de votre candidature, vous êtes prévenu !
+        </p>
+        <div class="all-offers-wrapper">
+          <button class="btn btn-primary">Voir mes candidatures</button>
         </div>
-        <div class="swiper-pagination"></div>
-        <div class="swiper-button-prev"></div>
-        <div class="swiper-button-next"></div>
+      </div>
+      <img src="/assets/images/suivi-candidature.png" alt="Suivi de candidature" class="feature-image">
     </div>
 
-    <div class="all-offers-wrapper">
-        <button onclick="window.location.href='?page=annonces'" class="btn">Voir toutes les offres</button>
+    <div class="feature-section">
+      <img src="/assets/images/offres.png" alt="Des offres qui ne cachent rien" class="feature-image">
+      <div class="text-content">
+        <h3 class="section-why section-why--blue">Des offres qui ne cachent rien</h3>
+        <p class="paragraphe-1">
+          Salaire, télétravail… N'avancez plus dans l'inconnu pour choisir votre futur job.
+        </p>
+        <div class="all-offers-wrapper">
+          <button onclick="window.location.href='?page=annonces'" class="btn btn-blue">Trouver mon opportunité</button>
+        </div>
+      </div>
     </div>
 
-</div>
-
-
-
-<h2 class="section-stats-title">Pourquoi choisir <strong>Web4All</strong> ?</h2>
-
-<section class="feature-section">
-  <div class="text-content">
-    <h3 class="suivre-candidature-text">Suivez votre candidature</h3>
-    <p class="paragraphe-1">
-      Enfin de la visibilité en direct étape par étape. Postulez et dès que
-      nous avons du nouveau sur l'avancement de votre candidature, vous êtes prévenu !
-    </p>
-    <div class="all-offers-wrapper">
-      <button class="btn btn-primary">Voir mes candidatures</button>
+    <div class="feature-section">
+      <div class="text-content">
+        <h3 class="section-why section-why--green">Des entreprises transparentes</h3>
+        <p class="paragraphe-1">
+          Process de recrutement, délai de réponse, avantages… Vous méritez de vraies réponses, pas de perdre du temps.
+        </p>
+        <div class="all-offers-wrapper">
+          <button onclick="window.location.href='?page=entreprises'" class="btn btn-green">Voir les entreprises</button>
+        </div>
+      </div>
+      <img src="/assets/images/entreprises-transparentes.png" alt="Des entreprises transparentes" class="feature-image">
     </div>
-  </div>
-  <img src="/assets/images/suivi-candidature.png" alt="Suivi de candidature" class="feature-image">
-</section>
 
-<section class="feature-section"> 
-  <img src="/assets/images/offres.png" alt="Des offres qui ne cachent rien" class="feature-image">
-  <div class="text-content">
-    <h3 class="section-why section-why--blue">Des offres qui ne cachent rien</h3>
-    <p class="paragraphe-1">
-      Salaire, télétravail… N'avancez plus dans l'inconnu pour choisir votre futur job.
-    </p>
-    <div class="all-offers-wrapper">
-        <button onclick="window.location.href='?page=annonces'" class="btn btn-blue">Trouver mon opportunité</button>
+  </section>
+
+
+
+  <section aria-labelledby="stats-title">
+
+    <h2 id="stats-title" class="home-section-title">Préparez-vous à <strong>décrocher votre job !</strong></h2>
+
+    <div class="stats-container">
+      <div class="stat-container">
+        <p class="stat-number stat-number--purple">155 000</p>
+        <p class="stat-text">CV lus en moyenne chaque jour, <strong>soyez le prochain à être vu !</strong></p>
+      </div>
+      <div class="stat-container stat-container--blue">
+        <p class="stat-number stat-number--blue">780 452</p>
+        <p class="stat-text">offres en ce moment, <strong>on vous envoie celles qui collent ?</strong></p>
+      </div>
+      <div class="stat-container stat-container--green">
+        <p class="stat-number stat-number--green">92%</p>
+        <p class="stat-text">des candidats qui postulent <strong>obtiennent une réponse dans les 72h.</strong></p>
+      </div>
     </div>
-  </div>
-</section>
 
-<section class="feature-section">
-  <div class="text-content">
-    <h3 class="section-why section-why--green">Des entreprises transparentes</h3>
-    <p class="paragraphe-1">
-        Process de recrutement, délai de réponse, avantages… Vous méritez de vraies réponses, pas de perdre du temps.
-    </p>
-    <div class="all-offers-wrapper">
-        <button onclick="window.location.href='?page=entreprises'" class="btn btn-green">Voir les entreprises</button>
-    </div>
-  </div>
-  <img src="/assets/images/entreprises-transparentes.png" alt="Des entreprises transparentes" class="feature-image">
-</section>
+  </section>
 
 
-<h2 class="section-stats-title">Préparez-vous à <strong>décrocher votre job !</strong></h2>
+</main>
 
-<div class="stats-container">
-  <div class="stat-container">
-      <p class="stat-number stat-number--purple">155 000</p>
-      <p class="stat-text">CV lus en moyenne chaque jour, <strong>soyez le prochain à être vu !</strong></p>
-  </div>
-
-  <div class="stat-container stat-container--blue">
-      <p class="stat-number stat-number--blue">780 452</p>
-      <p class="stat-text">offres en ce moment, <strong>on vous envoie celles qui collent ?</strong></p>
-  </div>
-
-  <div class="stat-container stat-container--green">
-      <p class="stat-number stat-number--green">92%</p>
-      <p class="stat-text">des candidats qui postulent <strong>obtiennent une réponse dans les 72h.</strong></p>
-  </div>
-</div>
-
-{% endblock %}
 
 {% block scripts %}
 <script src="https://cdn.jsdelivr.net/npm/swiper@12/swiper-bundle.min.js"></script>
+
+
 <script>
   const swiper = new Swiper('.swiper', {
       slidesPerView: 'auto',
@@ -156,4 +174,7 @@
       },
   });
 </script>
+{% endblock %}
+
+
 {% endblock %}

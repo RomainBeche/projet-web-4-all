@@ -3,39 +3,45 @@
 {% block title %}Mes informations – Web4All{% endblock %}
 
 {% block content %}
-<div class="page-wrapper">
+<main class="page-wrapper">
 
-    <h1 class="title fade-in">Mes informations</h1>
+
+  <section aria-labelledby="update-title">
+
+    <h1 id="update-title" class="title fade-in">Mes informations</h1>
 
     <form id="updateForm" class="update-form" novalidate>
 
-        <div class="field fade-in" style="animation-delay:.1s">
-            <label for="nom">Nom</label>
-            <input type="text" id="nom" name="nom" placeholder="Nom" value="CESI" required />
-        </div>
+      <div class="field fade-in" style="animation-delay:.1s">
+        <label for="nom">Nom</label>
+        <input type="text" id="nom" name="nom" placeholder="Nom" value="CESI" required />
+      </div>
 
-        <div class="field fade-in" style="animation-delay:.15s">
-            <label for="email">Adresse mail de l'entreprise</label>
-            <input type="email" id="email" name="email" placeholder="contact@exemple.com" value="cesi@viacesi.com" required />
-        </div>
+      <div class="field fade-in" style="animation-delay:.15s">
+        <label for="email">Adresse mail de l'entreprise</label>
+        <input type="email" id="email" name="email" placeholder="contact@exemple.com" value="cesi@viacesi.com" required />
+      </div>
 
-        <div class="field fade-in" style="animation-delay:.2s">
-            <label for="password">Mot de passe</label>
-            <input type="password" id="password" name="password" placeholder="••••••••••••" value="••••••••••••" />
-        </div>
+      <div class="field fade-in" style="animation-delay:.2s">
+        <label for="password">Mot de passe</label>
+        <input type="password" id="password" name="password" placeholder="••••••••••••" value="••••••••••••" />
+      </div>
 
-        <div class="field fade-in" style="animation-delay:.25s">
-            <label for="siren">Numéro SIREN</label>
-            <input type="text" id="siren" name="siren" placeholder="000 000 000 00000" value="667 000 123 93270" required />
-        </div>
+      <div class="field fade-in" style="animation-delay:.25s">
+        <label for="siren">Numéro SIREN</label>
+        <input type="text" id="siren" name="siren" placeholder="000 000 000 00000" value="667 000 123 93270" required />
+      </div>
 
-        <div class="actions fade-in" style="animation-delay:.3s">
-            <button type="submit" class="btn btn-primary">Mettre à jour</button>
-        </div>
+      <div class="actions fade-in" style="animation-delay:.3s">
+        <button type="submit" class="btn btn-primary">Mettre à jour</button>
+      </div>
 
     </form>
 
-</div>
+  </section>
+
+
+</main>
 
 {% block scripts %}
 <script>

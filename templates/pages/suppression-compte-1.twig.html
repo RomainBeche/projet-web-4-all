@@ -3,19 +3,24 @@
 {% block title %}Suppression du compte – Web4All{% endblock %}
 
 {% block content %}
-<div class="page-wrapper">
+<main class="page-wrapper">
 
-    <h1 class="title fade-in">Suppression du compte</h1>
+
+  <section aria-labelledby="delete-title">
+
+    <h1 id="delete-title" class="title fade-in">Suppression du compte</h1>
 
     <p class="warning fade-in">
-        L'action sera irréversible, êtes-vous sûrs que vous souhaitez supprimer ce compte ?
+      L'action sera irréversible, êtes-vous sûrs que vous souhaitez supprimer ce compte ?
     </p>
 
     <div class="actions fade-in">
-       <button id="back-link" onclick="window.location.href='?page=accueil'" class="btn btn-primary">Non, annuler</button>
-        <button onclick="window.location.href='?page=suppression-compte-2'" class="btn btn-secondary">Oui, supprimer</button>
+      <a href="?page=accueil" class="btn btn-primary">Non, annuler</a>
+      <a href="?page=suppression-compte-2" class="btn btn-secondary">Oui, supprimer</a>
     </div>
 
-</div>
+  </section>
 
+
+</main>
 {% endblock %}

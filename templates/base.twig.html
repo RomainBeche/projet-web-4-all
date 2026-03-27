@@ -12,10 +12,8 @@
 <body>
     {{ include('components/navbar.twig.html') }}
 
-    <main>
-        {% block content %}{% endblock %}
-    </main>
-
+    {% block content %}{% endblock %}
+    
     <script>
         const navLinks = document.querySelector(".nav-links");
         const navbar = document.querySelector(".navbar");

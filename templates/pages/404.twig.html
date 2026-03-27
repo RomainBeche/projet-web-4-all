@@ -3,18 +3,16 @@
 {% block title %}Page introuvable — Web4All{% endblock %}
 
 {% block content %}
-<div class="error-404">
-
-    <div class="error-404-content">
-        <h1 class="title error-404-header">Erreur 404 - Page introuvable 🫤</h1>
+<main class="error-404">
+    <section class="error-404-content">
+        <h1 class="title error-404-header">Erreur 404 - Page introuvable</h1>
         <button onclick="window.location.href='?page=accueil'" class="btn btn-yellow">Retour à l'accueil</button>
-    </div>
+    </section>
 
-    <div id="error-404-3Dcontainer">
+    <div id="error-404-3Dcontainer" aria-hidden="true">
         <script type="module" src="https://unpkg.com/@splinetool/viewer@1.12.72/build/spline-viewer.js"></script>
         <spline-viewer url="https://prod.spline.design/JiYdN3gwFsJ2dp2N/scene.splinecode"></spline-viewer>
     </div>
 
-</div>
-
+</main>
 {% endblock %}
