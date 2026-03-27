@@ -10,24 +10,10 @@ $pdo = new PDO(
 
 // Créer la table entreprise
 $pdo->exec("
-    CREATE TABLE IF NOT EXISTS entreprise (
-        id SERIAL PRIMARY KEY,
-        nom VARCHAR(100) NOT NULL,
-        ville VARCHAR(100),
-        secteur VARCHAR(100),
-        created_at TIMESTAMP DEFAULT NOW()
-    )
+    SELECT * FROM compte;
 ");
-echo "Table créée\n";
+echo "Tous les comptes\n";
 
-// Insérer des exemples
-$pdo->exec("
-    INSERT INTO entreprise (nom, ville, secteur) VALUES
-    ('Google', 'Paris', 'Tech'),
-    ('Airbus', 'Toulouse', 'Aéronautique'),
-    ('Carrefour', 'Massy', 'Distribution')
-");
-echo "Données insérées\n";
 
 // Récupérer tous les éléments
 $stmt = $pdo->query("SELECT * FROM entreprise");
