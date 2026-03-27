@@ -214,7 +214,6 @@ body { top: 0 !important; }
 }
 
 
-
 /* ============================================================ *\
    4. NAV LINKS — Desktop
 \* ============================================================ */
@@ -553,6 +552,10 @@ body { top: 0 !important; }
   .nav-links.mobile-menu ul li:nth-child(4) { transition-delay: 0.5s; }
   .nav-links.mobile-menu ul li:nth-child(5) { transition-delay: 0.6s; }
   .nav-links.mobile-menu ul li:nth-child(6) { transition-delay: 0.7s; }
+
+  .lang-dropdown {
+    right: auto;
+  }
 }
 
 
@@ -1365,7 +1368,41 @@ textarea[rows] {
 
 
 /* ============================================================ *\
-   14. PAGE — Compte étudiant
+   14. PAGE — Annonces
+\* ============================================================ */
+
+.offers-page {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 2rem;
+}
+
+.offers-header {
+  margin-bottom: 2rem;
+}
+
+.offers-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 1.5rem;
+}
+
+.offers-empty {
+  text-align: center;
+  color: var(--muted);
+  font-size: var(--fs-body);
+  margin-top: 4rem;
+}
+
+@media (max-width: 600px) {
+  .offers-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+
+/* ============================================================ *\
+   15. PAGE — Compte étudiant
 \* ============================================================ */
 
 
@@ -1487,7 +1524,7 @@ textarea[rows] {
 
 
 /* ============================================================ *\
-   16. PAGE — Suppression de compte
+   17. PAGE — Suppression de compte
 \* ============================================================ */
 
 
@@ -1507,7 +1544,7 @@ textarea[rows] {
 }
 
 /* ============================================================ *\
-   17. PAGE — Favoris
+   18. PAGE — Favoris
 \* ============================================================ */
 
 .favorites-page {
@@ -1541,7 +1578,7 @@ textarea[rows] {
 
 
 /* ============================================================ *\
-   18. COMPOSANT — Onglets (tabs)
+   19. COMPOSANT — Onglets (tabs)
 \* ============================================================ */
 
 
@@ -1591,7 +1628,7 @@ textarea[rows] {
 
 
 /* ============================================================ *\
-   19. PAGE — Erreur 404
+   20. PAGE — Erreur 404
 \* ============================================================ */
 
 
@@ -1652,7 +1689,7 @@ spline-viewer {
 
 
 /* ============================================================ *\
-   20. PAGE — Liste entreprises
+   21. PAGE — Liste entreprises
 \* ============================================================ */
 
 
@@ -1778,6 +1815,7 @@ spline-viewer {
 
 
 /* ============================================================ *\
+<<<<<<< Updated upstream
    21. PAGE — Fiche entreprise
 \* ============================================================ */
 
@@ -2115,6 +2153,8 @@ spline-viewer {
 
 
 /* ============================================================ *\
+=======
+>>>>>>> Stashed changes
    22. RESPONSIVE — max-width: 480px
 \* ============================================================ */
 
@@ -2135,18 +2175,6 @@ spline-viewer {
 
   .error-404__title {
     font-size: 1.25rem;
-  }
-
-  /* Hero : image masquée sur très petit écran pour libérer
-     de l'espace vertical */
-  .yellow-background .accueil-image {
-    max-height: 180px;
-  }
-
-  /* Cartes stats pleine largeur avec marges réduites */
-  .container-cv {
-    width: calc(100% - 2rem);
-    margin: 1.5rem auto;
   }
 
   /* Sections textuelles : padding latéral réduit */

@@ -1,0 +1,42 @@
+{% extends "base.twig.html" %}
+
+{% block title %} Favoris - Web4All {% endblock %}
+
+{% block content %}
+<div class="offers-page">
+
+    <h1 class="title offers-header">Un stage, une alternance ? <strong>À bout de doigts !</strong></h1>
+
+    {% set annonces = [
+        { type: 'alternance', titre: 'Développeur Web Full Stack',  entreprise: 'Tech Innovation', lieu: 'Paris, Île-de-France',        duree: '24 mois' },
+        { type: 'alternance', titre: 'Ingénieur Cybersécurité',     entreprise: 'SecureNet',       lieu: 'Lyon, Auvergne-Rhône-Alpes',  duree: '12 mois' },
+        { type: 'stage',      titre: 'Data Analyst',                entreprise: 'DataCorp',        lieu: 'Bordeaux, Nouvelle-Aquitaine', duree: '6 mois'  },
+        { type: 'alternance', titre: 'Administrateur Réseaux',      entreprise: 'NetSystems',      lieu: 'Toulouse, Occitanie',         duree: '24 mois' },
+        { type: 'stage',      titre: 'Développeur Mobile iOS',      entreprise: 'AppStudio',       lieu: 'Paris, Île-de-France',        duree: '6 mois'  }
+    ] %}
+
+    {% if annonces is empty %}
+        <p class="offers-empty">Aucune offre disponible pour l'instant... Revenez bientôt !</p>
+    {% else %}
+        <div class="offers-grid">
+            {% for annonce in annonces %}
+            <a href="#" class="card-link {{ annonce.type }}">
+                <p class="badge {{ annonce.type }}">
+                    {{ annonce.type|capitalize }}
+                </p>
+                <h2 class="card-title">{{ annonce.titre }}</h2>
+                <p class="offre-detail">{{ annonce.entreprise }}</p>
+                <p class="offre-detail">{{ annonce.lieu }}</p>
+                <p class="offre-detail offre-detail--duration">{{ annonce.duree }}</p>
+                <div class="card-button {{ annonce.type }}">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+                        <path fill-rule="evenodd" d="M1 8a.5.5 0 0 1 .5-.5h11.793l-3.147-3.146a.5.5 0 0 1 .708-.708l4 4a.5.5 0 0 1 0 .708l-4 4a.5.5 0 0 1-.708-.708L13.293 8.5H1.5A.5.5 0 0 1 1 8"/>
+                    </svg>
+                </div>
+            </a>
+            {% endfor %}
+        </div>
+    {% endif %}
+
+</div>
+{% endblock %}
