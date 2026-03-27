@@ -1805,6 +1805,8 @@ spline-viewer {
   margin-top: 4rem;
 }
 
+/* ///////////////////////////////////////////////////////////////////////////////////////////// */
+
 /* .favorites-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
@@ -1908,17 +1910,6 @@ spline-viewer {
 }
 
 
-<<<<<<< Updated upstream
-@media (max-width: 600px) {
-  .entreprises-header {
-    flex-direction: column;
-    align-items: flex-start;
-  }
-
-  .search-wrapper {
-    width: 100%;
-    max-width: 100%;
-=======
 @media (max-width: 1500px) {
   .cards-grid {
     grid-template-columns: repeat(4, 1fr);
@@ -1940,9 +1931,10 @@ spline-viewer {
 @media (max-width: 800px) {
   .cards-grid {
     grid-template-columns: 1fr;
->>>>>>> Stashed changes
   }
 }
+
+/* ///////////////////////////////////////////////////////////////////////////////////////////// */
 
 
 
@@ -2171,7 +2163,6 @@ spline-viewer {
 \* ============================================================ */
 
 
-<<<<<<< Updated upstream
 #comment{
   resize: none;
   overflow: auto;
@@ -2184,14 +2175,14 @@ spline-viewer {
 
 .comment{
   margin-left: 10rem;
-=======
+}
+
 /* Layout général de la page entreprise */
 .page-entreprise {
   max-width: 1200px;
   margin: 0 auto;
   padding: 0.5rem;
   font-family: 'DM Sans', sans-serif;
->>>>>>> Stashed changes
 }
 
 /* Bannière */
@@ -2288,11 +2279,11 @@ spline-viewer {
   transform: translateY(-1px);
 }
 
-<<<<<<< Updated upstream
 .star-form button{
   font-family: 'DM Sans', sans-serif;
   font-size: 1.1rem;
-=======
+}
+
 /* Boutons noir & blanc simples */
 .actions {
   display: flex;
@@ -2302,7 +2293,6 @@ spline-viewer {
 .star-form button {
   font-family: inherit;
   font-size: 1rem;
->>>>>>> Stashed changes
   font-weight: 600;
   padding: 0.7rem 1.6rem;
   border-radius: 999px;
