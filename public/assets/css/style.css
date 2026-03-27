@@ -1908,17 +1908,6 @@ spline-viewer {
 }
 
 
-<<<<<<< Updated upstream
-@media (max-width: 600px) {
-  .entreprises-header {
-    flex-direction: column;
-    align-items: flex-start;
-  }
-
-  .search-wrapper {
-    width: 100%;
-    max-width: 100%;
-=======
 @media (max-width: 1500px) {
   .cards-grid {
     grid-template-columns: repeat(4, 1fr);
@@ -1940,7 +1929,6 @@ spline-viewer {
 @media (max-width: 800px) {
   .cards-grid {
     grid-template-columns: 1fr;
->>>>>>> Stashed changes
   }
 }
 
@@ -2119,6 +2107,13 @@ spline-viewer {
   flex: 1;
 }
 
+.stat-number {
+  display: block;
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: #007bff;
+}
+
 .stat-label {
   font-size: 0.8rem;
   color: #666;
@@ -2171,7 +2166,6 @@ spline-viewer {
 \* ============================================================ */
 
 
-<<<<<<< Updated upstream
 #comment{
   resize: none;
   overflow: auto;
@@ -2182,16 +2176,12 @@ spline-viewer {
   padding: 0.5rem;
 }
 
-.comment{
-  margin-left: 10rem;
-=======
 /* Layout général de la page entreprise */
 .page-entreprise {
   max-width: 1200px;
   margin: 0 auto;
   padding: 0.5rem;
   font-family: 'DM Sans', sans-serif;
->>>>>>> Stashed changes
 }
 
 /* Bannière */
@@ -2288,44 +2278,16 @@ spline-viewer {
   transform: translateY(-1px);
 }
 
-<<<<<<< Updated upstream
 .star-form button{
   font-family: 'DM Sans', sans-serif;
   font-size: 1.1rem;
-=======
+}
+
 /* Boutons noir & blanc simples */
 .actions {
   display: flex;
   gap: 0.75rem;
 }
-
-.star-form button {
-  font-family: inherit;
-  font-size: 1rem;
->>>>>>> Stashed changes
-  font-weight: 600;
-  padding: 0.7rem 1.6rem;
-  border-radius: 999px;
-  border: 1px solid #111;
-  cursor: pointer;
-  background: #fff;
-  color: #111;
-  transition: background-color .18s ease, color .18s ease,
-              box-shadow .18s ease, transform .18s ease;
-}
-
-.star-form button:hover {
-  background: #111;
-  color: #fff;
-  transform: translateY(-1px);
-  box-shadow: 0 6px 16px rgba(0,0,0,.12);
-}
-
-.star-form button:active {
-  transform: translateY(0);
-  box-shadow: 0 2px 8px rgba(0,0,0,.16);
-}
-
 
 
 
