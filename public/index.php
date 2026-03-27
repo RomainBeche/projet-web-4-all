@@ -14,6 +14,7 @@ $allowedPages = [
     'accueil',
     'login',
     'logout',
+    'deconnexion',
     'annonces',
     'compte-entreprise',
     'compte-etudiant',
