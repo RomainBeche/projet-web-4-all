@@ -8,6 +8,10 @@ class OffersController extends Controller
 {
     public function index(): void
     {
-        $this->render('pages/annonces.twig.html');
+        require_once __DIR__ . '/../../src/Models/Annonces.php';
+
+        $this->render('pages/annonces.twig.html', [
+            'annonces' => $annonces,
+        ]);
     }
 }

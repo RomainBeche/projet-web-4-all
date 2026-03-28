@@ -2,24 +2,39 @@
 
 use Grp5\ProjetWeb4All\Controllers\{
     HomeController,
-    OffersController,
-    CompaniesController,
-    RegistrationController,
     AccountController,
+    RegistrationController,
     FavoritesController,
+    OffersController,
+    OfferDetailsController,
+    CompaniesController,
+    CompanyDetailsController,
+
 };
 
 return [
     'accueil' => ['controller' => HomeController::class, 'action' => 'index'],
-    'annonces' => ['controller' => OffersController::class, 'action' => 'index'],
-    'entreprises' => ['controller' => CompaniesController::class, 'action' => 'index'],
-    'creation-compte' => ['controller' => RegistrationController::class, 'action' => 'index'],
+
     'compte' => ['controller' => AccountController::class, 'action' => 'index'],
-    'favoris' => ['controller' => FavoritesController::class, 'action' => 'index'],
     'modification-compte' => ['controller' => AccountController::class, 'action' => 'edit'],
+    'modification-compte-validation' => ['controller' => AccountController::class, 'action' => 'editValidation'],
     'deconnexion' => ['controller' => AccountController::class, 'action' => 'logout'],
     'suppression-compte' => ['controller' => AccountController::class, 'action' => 'delete'],
-    'modification-compte-validation' => ['controller' => AccountController::class, 'action' => 'editValidation'],
+    
+    'creation-compte' => ['controller' => RegistrationController::class, 'action' => 'index'],
+    
+    'favoris' => ['controller' => FavoritesController::class, 'action' => 'index'],
+
+    'annonces' => ['controller' => OffersController::class, 'action' => 'index'],
+    'detail-annonce' => ['controller' => OfferDetailsController::class, 'action' => 'index'],
+    
+    'entreprises' => ['controller' => CompaniesController::class, 'action' => 'index'],
+    'detail-entreprise' => ['controller' => CompanyDetailsController::class, 'action' => 'index'],
+    'detail-annonce' => ['controller' => OfferDetailsController::class, 'action' => 'index'],
+    'toggle-favori' => ['controller' => OfferDetailsController::class, 'action' => 'toggleFavorite'],
+    'toggle-rappel' => ['controller' => OfferDetailsController::class, 'action' => 'toggleReminder'],
+
+
 
     /*'login' => ['controller' => AuthController::class, 'action' => 'login'],
     'logout' => ['controller' => AuthController::class, 'action' => 'logout'],

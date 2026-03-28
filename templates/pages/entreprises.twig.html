@@ -8,8 +8,11 @@
   <section aria-labelledby="entreprises-title">
 
     <div class="entreprises-header">
+
       <h1 id="entreprises-title" class="title">Les entreprises</h1>
+
       <div class="search-wrapper">
+
         <div class="search" role="search">
           <input type="text" id="search-entreprise" class="search__input" placeholder="Bouygues Telecom...">
           <button class="search__button" aria-label="Lancer la recherche">
@@ -18,13 +21,17 @@
             </svg>
           </button>
         </div>
+
       </div>
+
     </div>
 
     {% if entreprises is empty %}
       <p class="entreprises-empty">Aucune entreprise disponible pour l'instant… Revenez bientôt !</p>
+
     {% else %}
       <div class="cards-container">
+
           <ul class="cards-grid" role="list">
             {% for entreprise in entreprises %}
             <li>
@@ -37,7 +44,7 @@
                   <span>{{ entreprise.Nombre_avis }} avis</span>
                 </p>
                 <div class="entreprise-card-footer">
-                  <a href="?page=fiche-entreprise" class="bton">Découvrir</a>
+                  <a href="?page=detail-entreprise&id={{ entreprise.id }}" class="bton">Découvrir</a>
                   <span class="offers">{{ entreprise.Nombre_offres }} offres</span>
                 </div>
               </article>
@@ -45,6 +52,7 @@
             {% endfor %}
           </ul>
         {{ navLinks|raw }}
+        
       </div>
     {% endif %}
 

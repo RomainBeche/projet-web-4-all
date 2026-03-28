@@ -1,0 +1,165 @@
+{% extends "base.twig.html" %}
+
+{% block title %}Détail de l'offre – Web4All{% endblock %}
+
+{% block content %}
+<main class="offer-page">
+
+
+    <section class="offer-header" aria-labelledby="offer-title">
+
+        <div class="offer-views">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16" aria-hidden="true">
+                <path d="M10.5 8a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0"/>
+                <path d="M0 8s3-5.5 8-5.5S16 8 16 8s-3 5.5-8 5.5S0 8 0 8m8 3.5a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7"/>
+            </svg>
+            <span>{{ annonce.vues }}</span>
+        </div>
+
+        <div class="offer-actions">
+
+        <button
+            class="action-icon {{ annonce.isFavorite ? 'active-favorite' }}"
+            id="btn-favori"
+            data-id="{{ annonce.id }}"
+            data-active="{{ annonce.isFavorite ? 'true' : 'false' }}"
+            aria-label="Ajouter aux favoris">
+            {% if annonce.isFavorite %}
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16" aria-hidden="true">
+                <path fill-rule="evenodd" d="M8 1.314C12.438-3.248 23.534 4.735 8 15-7.534 4.736 3.562-3.248 8 1.314"/>
+            </svg>
+            {% else %}
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16" aria-hidden="true">
+                <path d="m8 2.748-.717-.737C5.6.281 2.514.878 1.4 3.053c-.523 1.023-.641 2.5.314 4.385.92 1.815 2.834 3.989 6.286 6.357 3.452-2.368 5.365-4.542 6.286-6.357.955-1.886.838-3.362.314-4.385C13.486.878 10.4.28 8.717 2.01zM8 15C-7.333 4.868 3.279-3.04 7.824 1.143q.09.083.176.171a3 3 0 0 1 .176-.17C12.72-3.042 23.333 4.867 8 15"/>
+            </svg>
+            {% endif %}
+        </button>
+
+        <button
+            class="action-icon {{ annonce.hasReminder ? 'active-reminder' }}"
+            id="btn-rappel"
+            data-id="{{ annonce.id }}"
+            data-active="{{ annonce.hasReminder ? 'true' : 'false' }}"
+            aria-label="Activer le rappel">
+            {% if annonce.hasReminder %}
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16" aria-hidden="true">
+                <path d="M5.164 14H15c-1.5-1-2-5.902-2-7q0-.396-.06-.776zm6.288-10.617A5 5 0 0 0 8.995 2.1a1 1 0 1 0-1.99 0A5 5 0 0 0 3 7c0 .898-.335 4.342-1.278 6.113zM10 15a2 2 0 1 1-4 0zm-9.375.625a.53.53 0 0 0 .75.75l14.75-14.75a.53.53 0 0 0-.75-.75z"/>
+            </svg>
+            {% else %}
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16" aria-hidden="true">
+                <path d="M8 16a2 2 0 0 0 2-2H6a2 2 0 0 0 2 2M8 1.918l-.797.161A4 4 0 0 0 4 6c0 .628-.134 2.197-.459 3.742-.16.767-.376 1.566-.663 2.258h10.244c-.287-.692-.502-1.49-.663-2.258C12.134 8.197 12 6.628 12 6a4 4 0 0 0-3.203-3.92zM14.22 12c.223.447.481.801.78 1H1c.299-.199.557-.553.78-1C2.68 10.2 3 6.88 3 6c0-2.42 1.72-4.44 4.005-4.901a1 1 0 1 1 1.99 0A5 5 0 0 1 13 6c0 .88.32 4.2 1.22 6"/>
+            </svg>
+            {% endif %}
+        </button>
+
+        </div>
+
+    </section>
+
+
+    <section aria-labelledby="offer-title">
+        <h1 id="offer-title" class="title offer-title">{{ annonce.titre }}</h1>
+        <p class="offer-header-company">{{ annonce.entreprise }}</p>
+    </section>
+
+
+    <section aria-label="Tags de l'offre">
+        <ul class="offer-tags" role="list">
+        {% for tag in annonce.tags %}
+            <li class="offer-tag">{{ tag }}</li>
+        {% endfor %}
+        </ul>
+    </section>
+
+
+    <section class="offer-content" aria-label="Contenu principal de l'offre">
+
+
+        <div class="offer-description">
+
+            <div class="offer-description-header" role="tablist">
+
+                <button class="offer-tab active" role="tab" aria-selected="true">Le job</button>
+
+                <a
+                    href="?page=detail-entreprise&nom={{ annonce.entreprise|url_encode }}"
+                    class="offer-tab"
+                    role="tab"
+                    aria-selected="false">
+                    {{ annonce.entreprise }}
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-up-right" viewBox="0 0 16 16">
+                        <path fill-rule="evenodd" d="M14 2.5a.5.5 0 0 0-.5-.5h-6a.5.5 0 0 0 0 1h4.793L2.146 13.146a.5.5 0 0 0 .708.708L13 3.707V8.5a.5.5 0 0 0 1 0z"/>
+                    </svg>
+                </a>
+
+            </div>
+
+            <div class="offer-description-body">
+                <p>{{ annonce.description }}</p>
+                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+                <p>Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+
+                <div class="offer-apply">
+                    <a href="?page=postuler&id={{ annonce.id }}" class="btn btn-primary">Postuler à cette offre</a>
+                </div>
+            </div>
+
+        </div>
+
+
+        <div class="offer-map-wrapper">
+            <iframe
+                class="offer-map"
+                src="https://www.google.com/maps?q={{ annonce.lieu|url_encode }}&output=embed"
+                width="100%"
+                height="100%"
+                style="border: 0;"
+                allowfullscreen=""
+                loading="lazy"
+                referrerpolicy="no-referrer-when-downgrade"
+                title="Localisation : {{ annonce.lieu }}">
+            </iframe>
+        </div>
+
+
+    </section>
+
+
+</main>
+
+{% block scripts %}
+<script>
+const svgs = {
+  heartFull:  `<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16" aria-hidden="true"><path fill-rule="evenodd" d="M8 1.314C12.438-3.248 23.534 4.735 8 15-7.534 4.736 3.562-3.248 8 1.314"/></svg>`,
+  heartEmpty: `<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16" aria-hidden="true"><path d="m8 2.748-.717-.737C5.6.281 2.514.878 1.4 3.053c-.523 1.023-.641 2.5.314 4.385.92 1.815 2.834 3.989 6.286 6.357 3.452-2.368 5.365-4.542 6.286-6.357.955-1.886.838-3.362.314-4.385C13.486.878 10.4.28 8.717 2.01zM8 15C-7.333 4.868 3.279-3.04 7.824 1.143q.09.083.176.171a3 3 0 0 1 .176-.17C12.72-3.042 23.333 4.867 8 15"/></svg>`,
+  bellOn:     `<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16" aria-hidden="true"><path d="M8 16a2 2 0 0 0 2-2H6a2 2 0 0 0 2 2M8 1.918l-.797.161A4 4 0 0 0 4 6c0 .628-.134 2.197-.459 3.742-.16.767-.376 1.566-.663 2.258h10.244c-.287-.692-.502-1.49-.663-2.258C12.134 8.197 12 6.628 12 6a4 4 0 0 0-3.203-3.92zM14.22 12c.223.447.481.801.78 1H1c.299-.199.557-.553.78-1C2.68 10.2 3 6.88 3 6c0-2.42 1.72-4.44 4.005-4.901a1 1 0 1 1 1.99 0A5 5 0 0 1 13 6c0 .88.32 4.2 1.22 6"/></svg>`,
+  bellOff:    `<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16" aria-hidden="true"><path d="M5.164 14H15c-1.5-1-2-5.902-2-7q0-.396-.06-.776zm6.288-10.617A5 5 0 0 0 8.995 2.1a1 1 0 1 0-1.99 0A5 5 0 0 0 3 7c0 .898-.335 4.342-1.278 6.113zM10 15a2 2 0 1 1-4 0zm-9.375.625a.53.53 0 0 0 .75.75l14.75-14.75a.53.53 0 0 0-.75-.75z"/></svg>`,
+};
+
+function setupToggle(btnId, endpoint, activeClass, svgOn, svgOff) {
+  const btn = document.getElementById(btnId);
+  if (!btn) return;
+
+  btn.addEventListener('click', async () => {
+    const id = btn.dataset.id;
+    try {
+      const res  = await fetch(`?page=${endpoint}`, {
+        method:  'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body:    JSON.stringify({ id: parseInt(id) }),
+      });
+      const data = await res.json();
+      btn.classList.toggle(activeClass, data.active);
+      btn.innerHTML = data.active ? svgOn : svgOff;
+    } catch (err) {
+      console.error('Erreur toggle :', err);
+    }
+  });
+}
+
+setupToggle('btn-favori', 'toggle-favori', 'active-favorite', svgs.heartFull, svgs.heartEmpty);
+setupToggle('btn-rappel', 'toggle-rappel', 'active-reminder', svgs.bellOff,   svgs.bellOn);
+</script>
+{% endblock %}
+
+{% endblock %}

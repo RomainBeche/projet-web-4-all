@@ -9,6 +9,7 @@ session_start();
 $_SESSION['user_id']     = 1;
 $_SESSION['user_nom']    = 'DIEMUNSH';
 $_SESSION['user_prenom'] = 'Nicolas';
+$_SESSION['user_email'] = 'nicolas.diemunsch@viacesi.fr';
 $_SESSION['user_role']   = 'etudiant'; // 'etudiant', 'pilote'
 
 

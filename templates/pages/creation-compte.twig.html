@@ -12,7 +12,9 @@
 
 
   <section aria-label="Type de compte">
+
     <div class="tabs" role="tablist">
+
       <a href="?page=creation-compte&type=etudiant" class="tab-link {{ not is_pilote ? 'active' }}" role="tab" aria-selected="{{ not is_pilote ? 'true' : 'false' }}">
         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-mortarboard-fill" viewBox="0 0 16 16" aria-hidden="true">
           <path d="M8.211 2.047a.5.5 0 0 0-.422 0l-7.5 3.5a.5.5 0 0 0 .025.917l7.5 3a.5.5 0 0 0 .372 0L14 7.14V13a1 1 0 0 0-1 1v2h3v-2a1 1 0 0 0-1-1V6.739l.686-.275a.5.5 0 0 0 .025-.917z"/>
@@ -20,17 +22,22 @@
         </svg>
         Étudiant
       </a>
+
       <a href="?page=creation-compte&type=pilote" class="tab-link {{ is_pilote ? 'active' }}" role="tab" aria-selected="{{ is_pilote ? 'true' : 'false' }}">
         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-person-fill" viewBox="0 0 16 16" aria-hidden="true">
           <path d="M3 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6"/>
         </svg>
         Pilote
       </a>
+
     </div>
+
   </section>
 
 
   <section aria-label="Formulaire d'inscription {{ type }}">
+    
+
     <form id="registerForm" class="register-form" novalidate>
 
       <div class="fields-grid fade-in" style="animation-delay:.1s">
@@ -65,6 +72,8 @@
       </div>
 
     </form>
+
+
   </section>
 
 

@@ -23,16 +23,6 @@
 
   </section>
 
-
-  {% set annonces = [
-      { type: 'alternance', titre: 'Développeur Web Full Stack',  entreprise: 'Tech Innovation', lieu: 'Paris, Île-de-France',        duree: '24 mois' },
-      { type: 'alternance', titre: 'Ingénieur Cybersécurité',     entreprise: 'SecureNet',       lieu: 'Lyon, Auvergne-Rhône-Alpes',  duree: '12 mois' },
-      { type: 'stage',      titre: 'Data Analyst',                entreprise: 'DataCorp',        lieu: 'Bordeaux, Nouvelle-Aquitaine', duree: '6 mois'  },
-      { type: 'alternance', titre: 'Administrateur Réseaux',      entreprise: 'NetSystems',      lieu: 'Toulouse, Occitanie',         duree: '24 mois' },
-      { type: 'stage',      titre: 'Développeur Mobile iOS',      entreprise: 'AppStudio',       lieu: 'Paris, Île-de-France',        duree: '6 mois'  }
-  ] %}
-
-
   <section aria-labelledby="offers-title">
 
     {% if annonces is empty %}
@@ -45,7 +35,7 @@
         {% for annonce in annonces %}
         <li>
           <article>
-            <a href="#" class="card-link {{ annonce.type }}">
+            <a href="?page=detail-annonce&id={{ annonce.id }}" class="card-link {{ annonce.type }}">
               <p class="badge {{ annonce.type }}">{{ annonce.type|capitalize }}</p>
               <h2 class="card-title">{{ annonce.titre }}</h2>
               <p class="offre-detail">{{ annonce.entreprise }}</p>

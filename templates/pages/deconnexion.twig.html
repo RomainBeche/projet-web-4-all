@@ -3,7 +3,7 @@
 {% block title %}Deconnexion – Web4All{% endblock %}
 
 {% block content %}
-<div class="page-wrapper">
+<main class="page-wrapper">
 
     <h1 class="title fade-in">Se déconnecter</h1>
 
@@ -12,10 +12,9 @@
     </p>
 
     <div class="actions fade-in">
-       <button id="back-link" onclick="window.location.href='?page=accueil'" class="btn btn-primary">Non</button>
-        <button onclick="window.location.href='?page=logout'" class="btn btn-secondary">Oui</button>
+        <a id="back-link" href="?page=accueil" class="btn btn-primary">Non</button>
+        <a href="?page=logout" class="btn btn-secondary">Oui</button>
     </div>
 
-</div>
-
+</main>
 {% endblock %}

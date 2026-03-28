@@ -87,9 +87,6 @@ header {
 }
 
 
-a:visited {
-  color: inherit;
-}
 
 
 /* ============================================================ *\
@@ -1410,6 +1407,208 @@ textarea[rows] {
 }
 
 
+
+/* ============================================================ *\
+   14. PAGE — Detail Annonce
+\* ============================================================ */
+
+.offer-page {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 2rem;
+}
+
+.offer-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 2rem;
+  gap: 1.5rem;
+  flex-wrap: wrap;
+}
+
+.offer-views {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 7.5px 10px;
+  background: var(--white);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.06);
+  border-radius: var(--radius);
+  color: var(--muted);
+}
+
+.offer-actions {
+  display: flex;
+  gap: 1.5rem;
+}
+
+.action-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: var(--white);
+  border: none;
+  color: var(--muted);
+  cursor: pointer;
+  transition: background 0.2s, color 0.2s;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.06);
+}
+
+.action-icon:hover {
+  background: var(--primary);
+  color: var(--white);
+}
+
+.action-icon.active-favorite {
+  color: var(--primary);
+}
+
+.action-icon.active-favorite:hover {
+  background: var(--primary);
+  color: var(--white);
+}
+
+.action-icon.active-reminder {
+  color: var(--error);
+}
+
+.action-icon.active-reminder:hover {
+  background: var(--error);
+  color: var(--white);
+}
+
+.offer-title {
+  margin-bottom: 0.5rem;
+}
+
+.offer-header-company {
+  font-size: 0.95rem;
+  color: var(--muted);
+  margin: 0;
+}
+
+.offer-tags {
+  display: flex;
+  list-style: none;
+  padding: 0;
+  margin: 1.5rem 0 1rem;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+}
+
+.offer-tag {
+  display: flex;
+  align-items: center;
+  padding: 6px 12px;
+  background: var(--white);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.06);
+  border-radius: var(--radius);
+  color: var(--muted);
+  font-size: var(--fs-small);
+}
+
+/* ── Layout description + map ── */
+
+.offer-content {
+  display: flex;
+  gap: 2rem;
+  align-items: flex-start;
+  margin-top: 1.5rem;
+}
+
+.offer-description {
+  flex: 1;
+  min-width: 0; /* évite le débordement flex */
+}
+
+/* ── Tabs description / entreprise ── */
+
+.offer-description-header {
+  display: flex;
+  gap: 1.5rem;
+  border-bottom: 2px solid var(--border);
+  margin-bottom: 1.5rem;
+}
+
+.offer-tab {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.6rem 0.25rem;
+  font-size: var(--fs-body);
+  font-weight: 500;
+  color: var(--muted);
+  text-decoration: none;
+  border-bottom: 2px solid transparent;
+  margin-bottom: -2px;
+  transition: color 0.2s, border-color 0.2s;
+  background: none;
+  border-top: none;
+  border-left: none;
+  border-right: none;
+  cursor: pointer;
+}
+
+.offer-tab.active {
+  color: var(--primary);
+  border-bottom-color: var(--primary);
+}
+
+.offer-tab:hover:not(.active) {
+  color: var(--primary);
+}
+
+/* ── Texte description ── */
+
+.offer-description-body {
+  color: var(--text);
+  font-size: var(--fs-body);
+  line-height: 1.75;
+}
+
+.offer-description-body p + p {
+  margin-top: 1rem;
+}
+
+.offer-apply {
+  margin-top: 2rem;
+}
+
+/* ── Map ── */
+
+.offer-map-wrapper {
+  width: 380px;
+  flex-shrink: 0;
+  aspect-ratio: 3 / 4;
+  border-radius: var(--radius);
+  overflow: hidden;
+}
+
+.offer-map {
+  width: 100%;
+  height: 100%;
+  display: block;
+  border: none;
+}
+
+/* ── Responsive ── */
+
+@media (max-width: 900px) {
+  .offer-content {
+    flex-direction: column;
+  }
+
+  .offer-map-wrapper {
+    width: 100%;
+    aspect-ratio: 16 / 9;
+  }
+}
+
+
 /* ============================================================ *\
    15. PAGE — Compte étudiant
 \* ============================================================ */
@@ -1931,47 +2130,38 @@ spline-viewer {
    21. PAGE — Fiche entreprise
 \* ============================================================ */
 
-
-.entreprise {
+.entreprise-page {
   max-width: 1400px;
-  width: 100%;
   margin: 0 auto;
-  padding: 0 1.5rem 4rem;
-  font-family: 'DM Sans', sans-serif;
+  padding: 2rem;
 }
 
-/* Avatar rond + nom de l’entreprise */
+/* ── Header ── */
+
 .entreprise-header {
   display: flex;
   align-items: flex-start;
-  gap: 1.2rem;
-  padding: 1.5rem 0;
-  border-bottom: 1px solid #f0f0f0;
-  margin-bottom: 1.8rem;
-}
-
-.entreprise-avatar-wrapper {
-  flex-shrink: 0;
+  gap: 1.5rem;
+  padding-bottom: 1.5rem;
+  border-bottom: 1px solid var(--border);
+  margin-bottom: 2rem;
 }
 
 .entreprise-avatar {
-  width: 130px;
-  height: 130px;
+  width: 100px;
+  height: 100px;
   border-radius: 50%;
   overflow: hidden;
-  border: 1px solid #f0f0f0;
-  background: white;
-  box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+  border: 1px solid var(--border);
+  background: var(--white);
+  box-shadow: 0 1px 10px rgba(0, 0, 0, 0.05);
   display: flex;
   align-items: center;
   justify-content: center;
-}
-
-.entreprise-avatar-placeholder {
-  background: #f5f5f5;
-  color: #777;
+  flex-shrink: 0;
   font-size: 1.1rem;
   font-weight: 600;
+  color: var(--muted);
 }
 
 .entreprise-avatar img {
@@ -1985,110 +2175,121 @@ spline-viewer {
 }
 
 .entreprise-title {
-  font-family: var(--font-title);
-  font-size: var(--fs-title);
-  font-weight: 700;
-  letter-spacing: -0.03em;
-  color: var(--text);
-  margin-bottom: 1rem;
-  margin-top: 0.5rem; 
+  margin: 0.5rem 0 0.4rem;
 }
 
 .entreprise-sector {
   font-size: 0.95rem;
-  color: #777;
+  font-weight: 400;
+  color: var(--muted);
   margin: 0;
 }
 
-/* Lien avis simple en haut */
+/* ── Étoiles + lien avis (colonne, alignés à droite) ── */
 
-.note-entreprise {
-  margin: 3rem 0 0;
-  text-align: right;
+.entreprise-rating-block {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 0.5rem;
+  margin-left: auto;
+  flex-shrink: 0;
+  align-self: flex-end;
 }
 
-.avis-link-top {
-  margin: 7rem 1rem 1rem;
-  text-align: right;
+.star-form {
+  display: flex;
+}
+
+.global-rating {
+  display: flex;
+  gap: 0.2rem;
+}
+
+.global-rating .icon {
+  width: 18px;
+  height: 18px;
+  color: var(--primary);
 }
 
 .avis-link-simple {
-  color: #007bff;
+  color: var(--primary);
   text-decoration: underline;
   text-decoration-thickness: 1.5px;
   text-underline-offset: 2px;
-  font-size: 0.95rem;
+  font-size: 0.9rem;
   font-weight: 500;
-  transition: color 0.2s ease;
+  transition: text-decoration-thickness 0.2s;
 }
 
 .avis-link-simple:hover {
-  color: #0056b3;
-  text-decoration-thickness: 2px;
+  text-decoration-thickness: 2.5px;
 }
 
+/* ── Description ── */
 
-/* Section “À propos de l’entreprise” */
 .entreprise-description {
   margin-bottom: 2.5rem;
 }
 
 .entreprise-section-title {
-  font-size: 1.2rem;
+  font-size: 1.1rem;
   font-weight: 600;
-  color: #222;
+  color: var(--text);
   margin-bottom: 0.8rem;
 }
 
 .entreprise-text {
   font-size: 0.95rem;
-  line-height: 1.6;
-  color: #444;
-  margin-bottom: 1.2rem;
-  text-indent: 3em;
+  line-height: 1.7;
+  color: var(--text);
+  margin-bottom: 1.5rem;
   text-align: justify;
 }
 
+/* ── Blocs détails ── */
+
 .entreprise-details {
-  display: grid;
-  grid-template-columns: 1fr 1fr 1fr;
-  gap: 1rem;
+  display: flex;
+  gap: 1.5rem;
+  flex-wrap: wrap;
+  margin-bottom: 2rem;
 }
 
 .detail-block {
-  border: 1px solid #f5f5f5;
-  border-radius: 10px;
-  padding: 0.8rem 1rem;
-  background: #fafafa;
+  flex: 1;
+  min-width: 200px;
+  border-radius: var(--radius);
+  padding: 1rem 1.2rem;
+  background: var(--white);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.06);
 }
 
 .detail-title {
   font-size: 0.9rem;
   font-weight: 600;
-  color: #333;
-  margin: 0 0 0.3rem;
+  color: var(--text);
+  margin: 0 0 0.6rem;
 }
 
-.detail-block p {
+.detail-block p,
+.detail-block li {
   font-size: 0.85rem;
-  color: #555;
-  margin: 0;
+  color: var(--muted);
+  line-height: 1.5;
 }
 
 .detail-block ul {
-  list-style: disc !important;
-  padding-left: 1.5rem !important;
-  margin: 0.5rem 0 0 !important;
+  list-style: disc;
+  padding-left: 1.2rem;
+  margin: 0;
 }
 
 .detail-block li {
-  list-style-type: disc !important;
-  font-size: 0.85rem;
-  color: #555;
-  margin-bottom: 0.2rem;
-  line-height: 1.4;
+  margin-bottom: 0.3rem;
 }
 
+/* ── Stats impact ── */
 
 .impact-stats {
   display: flex;
@@ -2104,144 +2305,110 @@ spline-viewer {
   display: block;
   font-size: 1.1rem;
   font-weight: 700;
-  color: #007bff;
+  color: var(--primary);
 }
 
 .stat-label {
   font-size: 0.8rem;
-  color: #666;
+  color: var(--muted);
 }
 
+/* ── Offres ── */
 
-
-/* Section offres de stage / alternance */
 .entreprise-offers {
   margin-bottom: 4rem;
 }
 
 .entreprise-offers .cards-window {
-  border-radius: 10px;
-  border: 1px solid #f0f0f0;
+  border-radius: var(--radius);
+  border: 1px solid var(--border);
   background: #fafafa;
-  box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.06);
 }
 
 .entreprise-offers .cards-grid {
   padding: 1rem;
 }
 
-/* Style de la card pour les offres */
 .card .card-location,
 .card .card-type {
   font-size: 0.8rem;
-  color: #555;
+  color: var(--muted);
   margin: 0.2rem 0 6px;
 }
 
 .card .card-description {
   font-size: 0.85rem;
   line-height: 1.5;
-  color: #666;
+  color: var(--muted);
   margin-bottom: 0.5rem;
   flex-grow: 1;
 }
 
-.card .card-footer {
-  margin-top: 0;
-  padding-top: 0.4rem;
-  border-top: 1px solid #f0f0f0;
+/* ── Responsive ── */
+
+@media (max-width: 600px) {
+  .entreprise-header {
+    flex-wrap: wrap;
+  }
+
+  .entreprise-rating-block {
+    width: 100%;
+    align-items: flex-start;
+    margin-left: 0;
+  }
+
+  .entreprise-details {
+    flex-direction: column;
+  }
 }
 
 
 
 /* ============================================================ *\
-   22. PAGE — Evaluation entreprise
+   22. PAGE — Évaluation entreprise
 \* ============================================================ */
 
-
-#comment{
-  resize: none;
-  overflow: auto;
-  width: 30rem;
-  height: 7rem;
-  border-radius: 0.5rem;
-  font-size: 1rem;
-  padding: 0.5rem;
-}
-
-.comment{
-  margin-left: 10rem;
-}
-
-/* Layout général de la page entreprise */
-.page-entreprise {
-  max-width: 1200px;
+.evaluation-page {
+  max-width: 800px;
   margin: 0 auto;
-  padding: 0.5rem;
-  font-family: 'DM Sans', sans-serif;
+  padding: 2rem;
 }
 
-/* Bannière */
-#bannerimage {
+/* ── Bannière ── */
+
+.evaluation-banner {
   width: 100%;
-  height: 260px;
+  height: 200px;
   background-color: #2f7a32;
   background-position: center;
-  border-radius: 1rem;
+  background-size: cover;
+  border-radius: var(--radius);
+  margin-bottom: 2rem;
 }
 
-.global-rating {
-  display: inline-flex;
-  flex-direction: row-reverse;
-  gap: 0.3rem;
-  margin: 6.5rem 0 0;
-}
+/* ── Formulaire ── */
 
-.global-rating label {
-  color: #d3d3d3;
-}
-
-.global-rating svg.icon {
-  width: 3rem;
-  height: 3rem;
-  fill: currentColor;
-}
-
-.rating {
-  font-family: 'DM Sans', sans-serif;
-  font-size: 1.2rem;
-  margin-top: 2rem;
-  margin-bottom: 0.5rem;
-}
-
-/* Formulaire : alignement vertical propre */
 .star-form {
   display: flex;
   flex-direction: column;
+  gap: 1.5rem;
+}
+
+.star-form-group {
+  display: flex;
+  flex-direction: column;
   gap: 0.5rem;
-  align-items: flex-start;
 }
 
-/* Commentaire */
-.comment textarea#comment {
-  resize: none;
-  width: 32rem;
-  max-width: 100%;
-  height: 7rem;
-  border-radius: 0.5rem;
-  font-size: 1rem;
-  padding: 0.75rem 0.9rem;
-  border: 1px solid #d3d3d3;
-  outline: none;
-  transition: border-color .2s ease, box-shadow .2s ease;
+.star-form-label {
+  font-size: var(--fs-body);
+  font-weight: 600;
+  color: var(--text);
 }
 
-.comment textarea#comment:focus {
-  border-color: #111;
-  box-shadow: 0 0 0 1px #1111;
-}
+/* ── Notation étoiles ── */
 
-/* Notation étoiles */
 .star-rating {
   display: inline-flex;
   flex-direction: row-reverse;
@@ -2251,18 +2418,20 @@ spline-viewer {
 .star-rating input {
   position: absolute;
   opacity: 0;
+  width: 0;
+  height: 0;
 }
 
 .star-rating label {
-  color: #d3d3d3;
+  color: var(--border);
   cursor: pointer;
+  transition: color 0.2s, transform 0.15s;
 }
 
 .star-rating svg.icon {
-  width: 48px;
-  height: 48px;
+  width: 40px;
+  height: 40px;
   fill: currentColor;
-  transition: color .25s ease, transform .15s ease;
 }
 
 .star-rating input:checked ~ label {
@@ -2272,45 +2441,63 @@ spline-viewer {
 .star-rating label:hover,
 .star-rating label:hover ~ label {
   color: #f5c518;
-  transform: translateY(-1px);
+  transform: translateY(-2px);
 }
 
-.star-form button{
-  font-family: 'DM Sans', sans-serif;
-  font-size: 1.1rem;
+/* ── Commentaire ── */
+
+.star-form textarea {
+  resize: none;
+  width: 100%;
+  height: 8rem;
+  border-radius: var(--radius);
+  font-family: var(--font-body);
+  font-size: var(--fs-body);
+  color: var(--text);
+  padding: 0.75rem 0.9rem;
+  border: 1.5px solid var(--border);
+  outline: none;
+  transition: border-color 0.2s, box-shadow 0.2s;
+  background: var(--white);
 }
 
+.star-form textarea:focus {
+  border-color: var(--primary);
+  box-shadow: 0 0 0 3px rgba(75, 63, 238, 0.12);
+}
 
-/* Boutons noir & blanc simples */
-.actions {
+/* ── Actions ── */
+
+.star-form-actions {
   display: flex;
   gap: 0.75rem;
+  flex-wrap: wrap;
 }
 
-.star-form button {
-  font-family: inherit;
-  font-size: 1rem;
-  font-weight: 600;
-  padding: 0.7rem 1.6rem;
-  border-radius: 999px;
-  border: 1px solid #111;
-  cursor: pointer;
-  background: #fff;
-  color: #111;
-  transition: background-color .18s ease, color .18s ease,
-              box-shadow .18s ease, transform .18s ease;
-}
+/* ── Responsive ── */
 
-.star-form button:hover {
-  background: #111;
-  color: #fff;
-  transform: translateY(-1px);
-  box-shadow: 0 6px 16px rgba(0,0,0,.12);
-}
+@media (max-width: 600px) {
+  .evaluation-page {
+    padding: 1rem;
+  }
 
-.star-form button:active {
-  transform: translateY(0);
-  box-shadow: 0 2px 8px rgba(0,0,0,.16);
+  .evaluation-banner {
+    height: 140px;
+  }
+
+  .star-rating svg.icon {
+    width: 32px;
+    height: 32px;
+  }
+
+  .star-form-actions {
+    flex-direction: column;
+  }
+
+  .star-form-actions .btn {
+    width: 100%;
+    text-align: center;
+  }
 }
 
 
