@@ -4,49 +4,51 @@
 
 {% block content %}
 <main class="entreprises-page">
-    <section>
-        <div class="entreprises-header">
-            <h1 class="title">Les entreprises</h1>
-            <div class="search-wrapper">
-                <div class="search">
-                    <input type="text" class="search__input" placeholder="Bouygues Telecom...">
-                    <button class="search__button">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
-                            <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001q.044.06.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1 1 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0"/>
-                        </svg>
-                    </button>
-                </div>
-            </div>
-        </div>
 
-        {% if entreprises is empty %}
-            <p class="entreprises-empty">Aucune entreprise disponible pour l'instant... Revenez bientôt !</p>
-        {% else %}
-            <div class="cards-container">  
-                <div class="cards-window">
-                    <div class="cards-grid">
-                        {% for entreprise in entreprises %}
-                        <article class="card">
-                            <div class="card-logo">{{ entreprise.Logo }}</div>
-                            <p class="card-name">{{ entreprise.Nom_entreprise }}</p>
-                            <p class="card-sector">{{ entreprise.Secteur }}</p>
-                            <div class="card-rating">
-                                {{ entreprise.Rating }} ★
-                                <span>{{ entreprise.Nombre_avis }} Avis</span>
-                            </div>
-                            <div class="card-footer">
-                                <button class="bton" onclick="window.location.href='?page=fiche-entreprise'">
-                                    Découvrir
-                                </button>
-                                <span class="offers">{{ entreprise.Nombre_offres }} Offres</span>
-                            </div>
-                        </article>
-                        {% endfor %}
-                    </div>
+  <section aria-labelledby="entreprises-title">
+
+    <div class="entreprises-header">
+      <h1 id="entreprises-title" class="title">Les entreprises</h1>
+      <div class="search-wrapper">
+        <div class="search" role="search">
+          <input type="text" id="search-entreprise" class="search__input" placeholder="Bouygues Telecom...">
+          <button class="search__button" aria-label="Lancer la recherche">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16" aria-hidden="true">
+              <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001q.044.06.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1 1 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0"/>
+            </svg>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    {% if entreprises is empty %}
+      <p class="entreprises-empty">Aucune entreprise disponible pour l'instant… Revenez bientôt !</p>
+    {% else %}
+      <div class="cards-container">
+          <ul class="cards-grid" role="list">
+            {% for entreprise in entreprises %}
+            <li>
+              <article class="card">
+                <div class="card-logo" aria-hidden="true">{{ entreprise.Logo }}</div>
+                <h2 class="card-name">{{ entreprise.Nom_entreprise }}</h2>
+                <p class="card-sector">{{ entreprise.Secteur }}</p>
+                <p class="card-rating">
+                  {{ entreprise.Rating }} ★
+                  <span>{{ entreprise.Nombre_avis }} avis</span>
+                </p>
+                <div class="entreprise-card-footer">
+                  <a href="?page=fiche-entreprise" class="bton">Découvrir</a>
+                  <span class="offers">{{ entreprise.Nombre_offres }} offres</span>
                 </div>
-                {{ navLinks|raw }}
-            </div>
-        {% endif %}
-    </section>
+              </article>
+            </li>
+            {% endfor %}
+          </ul>
+        {{ navLinks|raw }}
+      </div>
+    {% endif %}
+
+  </section>
+
 </main>
 {% endblock %}

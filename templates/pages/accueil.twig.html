@@ -10,7 +10,7 @@
 
 
 {% block content %}
-<main>
+<main class="accueil-page">
 
 
   <section class="hero-header" aria-labelledby="hero-title">
@@ -35,7 +35,10 @@
       { type: 'alternance', titre: 'Ingénieur Cybersécurité',     entreprise: 'SecureNet',       lieu: 'Lyon, Auvergne-Rhône-Alpes', duree: '12 mois' },
       { type: 'stage',      titre: 'Data Analyst',                entreprise: 'DataCorp',        lieu: 'Bordeaux, Nouvelle-Aquitaine', duree: '6 mois' },
       { type: 'alternance', titre: 'Administrateur Réseaux',      entreprise: 'NetSystems',      lieu: 'Toulouse, Occitanie', duree: '24 mois' },
-      { type: 'stage',      titre: 'Développeur Mobile iOS',      entreprise: 'AppStudio',       lieu: 'Paris, Île-de-France', duree: '6 mois' }
+      { type: 'stage',      titre: 'Développeur Mobile iOS',      entreprise: 'AppStudio',       lieu: 'Paris, Île-de-France', duree: '6 mois' },
+      { type: 'alternance', titre: 'Développeur Web Full Stack',  entreprise: 'Tech Innovation', lieu: 'Paris, Île-de-France', duree: '24 mois' },
+      { type: 'alternance', titre: 'Ingénieur Cybersécurité',     entreprise: 'SecureNet',       lieu: 'Lyon, Auvergne-Rhône-Alpes', duree: '12 mois' },
+      { type: 'stage',      titre: 'Data Analyst',                entreprise: 'DataCorp',        lieu: 'Bordeaux, Nouvelle-Aquitaine', duree: '6 mois' },
   ] %}
 
 
@@ -45,7 +48,7 @@
 
     <div class="swiper">
       <div class="swiper-wrapper">
-        {% for annonce in annonces|slice(0, 5) %}
+        {% for annonce in annonces|slice(0, 8) %}
         <article class="swiper-slide">
           <a href="#" class="card-link {{ annonce.type }}">
             <p class="badge {{ annonce.type }}">

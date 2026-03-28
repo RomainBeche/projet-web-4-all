@@ -16,7 +16,7 @@ class CompaniesController extends Controller
         $this->render('pages/entreprises.twig.html', [
             'currentPage' => 'entreprises',
             'entreprises' => $pagination->getCurrentEntreprises(),
-            'navLinks'    => $pagination->getNavigationLinks(),
+            'navLinks'    => $pagination->getNavigationLinks('?page=entreprises&')
         ]);
     }
 }
