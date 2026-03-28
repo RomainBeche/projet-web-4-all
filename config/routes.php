@@ -16,8 +16,11 @@ return [
     'creation-compte' => ['controller' => RegistrationController::class, 'action' => 'index'],
     'compte' => ['controller' => AccountController::class, 'action' => 'index'],
     'favoris' => ['controller' => FavoritesController::class, 'action' => 'index'],
-    
-    
+    'modification-compte' => ['controller' => AccountController::class, 'action' => 'edit'],
+    'deconnexion' => ['controller' => AccountController::class, 'action' => 'logout'],
+    'suppression-compte' => ['controller' => AccountController::class, 'action' => 'delete'],
+    'modification-compte-validation' => ['controller' => AccountController::class, 'action' => 'editValidation'],
+
     /*'login' => ['controller' => AuthController::class, 'action' => 'login'],
     'logout' => ['controller' => AuthController::class, 'action' => 'logout'],
     'annonces' => ['controller' => OfferController::class, 'action' => 'list'],

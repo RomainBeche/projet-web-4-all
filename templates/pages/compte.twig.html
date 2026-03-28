@@ -25,7 +25,7 @@
   <nav class="account-menu" aria-label="Menu du compte">
 
     {# Commun à tous les rôles #}
-    <a href="?page=modification-compte-{{ user_role }}" class="account-menu-item">Mes informations</a>
+    <a href="?page=modification-compte" class="account-menu-item">Mes informations</a>
 
     {# Spécifique étudiant #}
     {% if user_role == 'etudiant' %}
@@ -39,7 +39,7 @@
     {% endif %}
 
     {# Commun à tous les rôles #}
-    <a href="#" class="account-menu-item danger">Déconnexion</a>
+    <a href="?page=deconnexion" class="account-menu-item danger">Déconnexion</a>
     <a href="?page=suppression-compte-1" class="account-menu-item danger">Supprimer ce compte</a>
 
   </nav>

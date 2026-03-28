@@ -27,9 +27,8 @@
     const params = new URLSearchParams(window.location.search);
     const type = params.get('type');
     const config = {
-        etudiant:   { label: 'étudiant',   href: '?page=compte-etudiant' },
-        pilote:     { label: 'pilote',      href: '?page=compte-pilote' },
-        entreprise: { label: 'entreprise',  href: '?page=compte-entreprise' }
+        etudiant:   { label: 'étudiant',   href: '?page=compte'},
+        pilote:     { label: 'pilote',      href: '?page=compte' },
     };
     const match = config[type] || { label: '', href: '#' };
     document.getElementById('validation-message').textContent =
