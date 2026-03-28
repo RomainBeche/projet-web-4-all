@@ -1,5 +1,5 @@
 <?php
-
+ob_start();
 session_start();
 
 
@@ -38,3 +38,4 @@ $router = new Router($routes);
 $page = $_GET['page'] ?? 'accueil';
 
 $router->route($page);
+ob_end_flush();

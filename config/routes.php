@@ -22,6 +22,7 @@ return [
     'suppression-compte-2' => ['controller' => AccountController::class, 'action' => 'delete'],
     'modification-compte-validation' => ['controller' => AccountController::class, 'action' => 'editValidation'],
     'login' => ['controller' => AccountController::class,'action' => 'login'],
+    'logout' => ['controller' => AccountController::class, 'action' => 'logout'],
     /*
     'annonces' => ['controller' => OfferController::class, 'action' => 'list'],
     'detail-annonce' => ['controller' => OfferController::class, 'action' => 'detail'],

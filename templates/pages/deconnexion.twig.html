@@ -13,7 +13,9 @@
 
     <div class="actions fade-in">
        <button id="back-link" onclick="window.location.href='?page=accueil'" class="btn btn-primary">Non</button>
-        <button onclick="window.location.href='?page=logout'" class="btn btn-secondary">Oui</button>
+       <form method="POST" action="/?page=logout">
+        <button type="submit" class="btn btn-secondary">Oui</button>
+       </form>
     </div>
 
 </div>
