@@ -19,4 +19,12 @@ abstract class Controller
     {
         echo $this->templateEngine->render($view, $data);
     }
+
+    protected function requireLogin(): void
+{
+    if (!isset($_SESSION['user_id'])) {
+        header('Location: /?page=login');
+        exit;
+    }
+}
 }

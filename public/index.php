@@ -1,17 +1,19 @@
 <?php
-
+ob_start();
 session_start();
 
 
 
 
 // Simulation temporaire (à supprimer quand la BDD sera prêt)
+// CHARLES : LIGNES A SUPPRIMER SI ON TEST LE LOGIN FFS.
+/*
 $_SESSION['user_id']     = 1;
 $_SESSION['user_nom']    = 'DIEMUNSH';
 $_SESSION['user_prenom'] = 'Nicolas';
 $_SESSION['user_email'] = 'nicolas.diemunsch@viacesi.fr';
 $_SESSION['user_role']   = 'etudiant'; // 'etudiant', 'pilote'
-
+*/
 
 
 
@@ -37,3 +39,4 @@ $router = new Router($routes);
 $page = $_GET['page'] ?? 'accueil';
 
 $router->route($page);
+ob_end_flush();

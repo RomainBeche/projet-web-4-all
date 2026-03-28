@@ -241,36 +241,29 @@
 
         <!-- Onglets -->
         <div class="login-tabs">
-            <button class="login-tab active" onclick="switchTab('etudiant', this)">
-                <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 16 16">
-                    <path d="M8.211 2.047a.5.5 0 0 0-.422 0l-7.5 3.5a.5.5 0 0 0 .025.917l7.5 3a.5.5 0 0 0 .372 0L14 7.14V13a1 1 0 0 0-1 1v2h3v-2a1 1 0 0 0-1-1V6.739l.686-.275a.5.5 0 0 0 .025-.917z"/>
-                    <path d="M4.176 9.032a.5.5 0 0 0-.656.327l-.5 1.7a.5.5 0 0 0 .294.605l4.5 1.8a.5.5 0 0 0 .372 0l4.5-1.8a.5.5 0 0 0 .294-.605l-.5-1.7a.5.5 0 0 0-.656-.327L8 10.466z"/>
-                </svg>
+            <button type="button" class="login-tab active" onclick="switchTab('etudiant', this)">
                 Étudiant
             </button>
-            <button class="login-tab" onclick="switchTab('pilote', this)">
-                <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 16 16">
-                    <path d="M3 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6"/>
-                </svg>
+            <button type="button" class="login-tab" onclick="switchTab('pilote', this)">
                 Pilote
             </button>
         </div>
 
         <!-- Panneau Étudiant -->
         <div id="panel-etudiant" class="tab-panel active">
-            <form method="POST" action="?page=login">
+            <form method="POST" action="/?page=login">
                 <input type="hidden" name="role" value="etudiant">
 
                 <div class="login-form-group">
                     <label for="email-etudiant">Adresse mail</label>
                     <input type="email" id="email-etudiant" name="email"
-                        placeholder="" value="{{ email ?? '' }}" required autocomplete="email">
+                        value="{{ email|default('') }}" required autocomplete="email">
                 </div>
 
                 <div class="login-form-group">
                     <label for="password-etudiant">Mot de passe</label>
                     <input type="password" id="password-etudiant" name="password"
-                        placeholder="" required autocomplete="current-password">
+                        required autocomplete="current-password">
                 </div>
 
                 <div class="login-remember">
@@ -287,26 +280,29 @@
 
                 <div class="login-actions">
                     <button type="submit" class="btn-login btn-login-primary">Se connecter</button>
-                    <a href="?page=creation-compte-etudiant" class="btn-login btn-login-outline" style="text-align:center; text-decoration:none; display:flex; align-items:center; justify-content:center;">S'inscrire</a>
+                    <a href="/?page=creation-compte-etudiant" class="btn-login btn-login-outline"
+                       style="text-align:center; text-decoration:none; display:flex; align-items:center; justify-content:center;">
+                        S'inscrire
+                    </a>
                 </div>
             </form>
         </div>
 
         <!-- Panneau Pilote -->
         <div id="panel-pilote" class="tab-panel">
-            <form method="POST" action="?page=login">
+            <form method="POST" action="/?page=login">
                 <input type="hidden" name="role" value="pilote">
 
                 <div class="login-form-group">
                     <label for="email-pilote">Adresse mail</label>
                     <input type="email" id="email-pilote" name="email"
-                        placeholder="" value="{{ email ?? '' }}" required autocomplete="email">
+                        value="{{ email|default('') }}" required autocomplete="email">
                 </div>
 
                 <div class="login-form-group">
                     <label for="password-pilote">Mot de passe</label>
                     <input type="password" id="password-pilote" name="password"
-                        placeholder="" required autocomplete="current-password">
+                        required autocomplete="current-password">
                 </div>
 
                 <div class="login-remember">
@@ -323,7 +319,10 @@
 
                 <div class="login-actions">
                     <button type="submit" class="btn-login btn-login-primary">Se connecter</button>
-                    <a href="?page=creation-compte-pilote" class="btn-login btn-login-outline" style="text-align:center; text-decoration:none; display:flex; align-items:center; justify-content:center;">S'inscrire</a>
+                    <a href="/?page=creation-compte-pilote" class="btn-login btn-login-outline"
+                       style="text-align:center; text-decoration:none; display:flex; align-items:center; justify-content:center;">
+                        S'inscrire
+                    </a>
                 </div>
             </form>
         </div>

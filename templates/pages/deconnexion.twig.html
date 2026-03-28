@@ -12,8 +12,10 @@
     </p>
 
     <div class="actions fade-in">
-        <a id="back-link" href="?page=accueil" class="btn btn-primary">Non</button>
-        <a href="?page=logout" class="btn btn-secondary">Oui</button>
+       <a id="back-link" href="?page=accueil" class="btn btn-primary">Non</a>
+       <form method="POST" action="/?page=logout">
+            <button type="submit" class="btn btn-secondary">Oui</button>
+       </form>
     </div>
 
 </main>
