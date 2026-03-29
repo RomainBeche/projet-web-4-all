@@ -8,7 +8,7 @@ class OfferDetailsController extends Controller
 {
     public function index(): void
     {
-        require_once __DIR__ . '/../../src/Models/Annonces.php';
+        require_once __DIR__ . '/../../src/Models/Annonces.php';     // TODO: REMOVE
 
         $offreId = isset($_GET['id']) ? (int)$_GET['id'] : 1;
 

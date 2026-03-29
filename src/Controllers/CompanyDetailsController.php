@@ -8,7 +8,7 @@ class CompanyDetailsController extends Controller
 {
     public function index(): void
     {
-        require_once __DIR__ . '/../../src/Models/Entreprises.php';
+        require_once __DIR__ . '/../../src/Models/Entreprises.php';     // TODO: REMOVE
 
         $id = isset($_GET['id']) ? (int)$_GET['id'] : 1;
 

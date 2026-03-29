@@ -8,14 +8,16 @@ class CompaniesController extends Controller
 {
     public function index(): void
     {
-        require_once __DIR__ . '/../../src/Models/Entreprises.php';
-        require_once __DIR__ . '/../../src/paginationEntreprises.php';
+        require_once __DIR__ . '/../../src/Models/Entreprises.php';     // TODO: REMOVE
+        
+        require_once __DIR__ . '/../../src/Pagination.php';
+        require_once __DIR__ . '/../../src/PaginationEntreprises.php';
 
-        $pagination = new \Pagination($entreprises, 8);
+        $pagination = new \PaginationEntreprises($entreprises, 8);
 
         $this->render('pages/entreprises.twig.html', [
             'currentPage' => 'entreprises',
-            'entreprises' => $pagination->getCurrentEntreprises(),
+            'entreprises' => $pagination->getCurrentElements(),
             'navLinks'    => $pagination->getNavigationLinks('?page=entreprises&')
         ]);
     }
