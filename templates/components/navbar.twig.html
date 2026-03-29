@@ -33,6 +33,18 @@
 <div id="google_translate_element" style="display:none;"></div>
 
 <script>
+    // ================ Menu burger ================
+    const navLinks = document.querySelector(".nav-links");
+    const navbar = document.querySelector(".navbar");
+    document.querySelector("#nav-toggle").addEventListener("click", function () {
+        this.classList.toggle("active");
+        navLinks.classList.toggle("mobile-menu");
+        navbar.classList.toggle("menu-open");
+    });
+
+
+    // ================ Traduction du site ================
+
     function googleTranslateElementInit() {
         new google.translate.TranslateElement(
             { pageLanguage: "fr", autoDisplay: false },

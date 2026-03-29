@@ -15,14 +15,7 @@
     {% block content %}{% endblock %}
     
     <script>
-        const navLinks = document.querySelector(".nav-links");
-        const navbar = document.querySelector(".navbar");
-        document.querySelector("#nav-toggle").addEventListener("click", function () {
-            this.classList.toggle("active");
-            navLinks.classList.toggle("mobile-menu");
-            navbar.classList.toggle("menu-open");
-        });
-
+        // Copier l'email / numéro de tel du footer dans le presse-papier
         function copyToClipboard(text) {
             navigator.clipboard.writeText(text);
             alert(text + " copié dans le presse-papier !");

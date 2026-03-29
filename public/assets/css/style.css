@@ -772,7 +772,6 @@ textarea[rows] {
 \* ============================================================ */
 
 
-
 .actions {
   display: flex;
   flex-wrap: wrap;
@@ -979,7 +978,100 @@ textarea[rows] {
 
 
 /* ============================================================ *\
-   13. PAGE — Accueil
+   13. COMPOSANT — Onglets (tabs)
+\* ============================================================ */
+
+
+.tabs {
+  display: flex;
+  gap: 0;
+  margin-bottom: 2rem;
+  border-bottom: 2px solid var(--border);
+  opacity: 0;
+  animation: fadeUp 0.45s 0.05s forwards;
+}
+
+
+.tab-link {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.6rem 1rem 0.7rem;
+  font-size: var(--fs-small);
+  font-weight: 600;
+  color: var(--muted);
+  text-decoration: none;
+  border-bottom: 2px solid transparent;
+  margin-bottom: -2px;
+  transition: color 0.2s, border-color 0.2s;
+  white-space: nowrap;
+}
+
+
+.tab-link svg {
+  width: 16px;
+  height: 16px;
+  flex-shrink: 0;
+}
+
+
+.tab-link:hover {
+  color: var(--primary);
+}
+
+
+.tab-link.active {
+  color: var(--primary);
+  border-bottom-color: var(--primary);
+}
+
+
+
+/* ============================================================ *\
+   14. RESPONSIVE — max-width: 480px
+\* ============================================================ */
+
+
+@media (max-width: 480px) {
+
+  /* Les raccourcis ont déjà été basculés en phone à 900px.
+     Ce bloc ne gère que les ajustements de layout spécifiques
+     aux très petits écrans. */
+
+  .page-wrapper {
+    padding: 1.5rem 1rem 3rem;
+  }
+
+  .profile-name {
+    font-size: var(--fs--title-phone); /* 2rem */
+  }
+
+  .error-404__title {
+    font-size: 1.25rem;
+  }
+
+  /* Sections textuelles : padding latéral réduit */
+  .offres-a-la-une > h2,
+  .suivre-candidature-text,
+  .section-why,
+  .section-stats-title {
+    padding: 0 0 0 2rem;
+  }
+
+  .paragraphe-1 {
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
+
+  .cards-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+
+
+/* ============================================================ *\
+   15. PAGE — Accueil
 \* ============================================================ */
 
 .accueil-page {
@@ -1043,7 +1135,6 @@ textarea[rows] {
   margin-bottom: 1.5rem;
   color: white;
 }
-
 
 
 .arrow-btn {
@@ -1372,8 +1463,10 @@ textarea[rows] {
 
 
 
+
+
 /* ============================================================ *\
-   14. PAGE — Annonces
+   16. PAGE — Annonces
 \* ============================================================ */
 
 .offers-page {
@@ -1412,8 +1505,10 @@ textarea[rows] {
 
 
 
+
+
 /* ============================================================ *\
-   14. PAGE — Detail Annonce
+   17. PAGE — Detail Annonce
 \* ============================================================ */
 
 .offer-page {
@@ -1613,8 +1708,23 @@ textarea[rows] {
 }
 
 
+
 /* ============================================================ *\
-   15. PAGE — Compte étudiant
+   18. PAGE — Postuler
+\* ============================================================ */
+
+.apply-page {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 2rem;
+}
+
+
+
+
+
+/* ============================================================ *\
+   19. PAGE — Compte étudiant
 \* ============================================================ */
 
 
@@ -1710,8 +1820,10 @@ textarea[rows] {
 
 
 
+
+
 /* ============================================================ *\
-   15. PAGE — Création de compte
+   20. PAGE — Création de compte
 \* ============================================================ */
 
 
@@ -1735,8 +1847,10 @@ textarea[rows] {
 
 
 
+
+
 /* ============================================================ *\
-   15. PAGE — Modification de compte
+   21. PAGE — Modification de compte
 \* ============================================================ */
 
 
@@ -1760,8 +1874,10 @@ textarea[rows] {
 
 
 
+
+
 /* ============================================================ *\
-   17. PAGE — Suppression de compte
+   22. PAGE — Suppression de compte
 \* ============================================================ */
 
 
@@ -1780,8 +1896,12 @@ textarea[rows] {
   margin-bottom: 2rem;
 }
 
+
+
+
+
 /* ============================================================ *\
-   18. PAGE — Favoris
+   23. PAGE — Favoris
 \* ============================================================ */
 
 .favorites-page {
@@ -1814,58 +1934,11 @@ textarea[rows] {
 }
 
 
-/* ============================================================ *\
-   19. COMPOSANT — Onglets (tabs)
-\* ============================================================ */
-
-
-.tabs {
-  display: flex;
-  gap: 0;
-  margin-bottom: 2rem;
-  border-bottom: 2px solid var(--border);
-  opacity: 0;
-  animation: fadeUp 0.45s 0.05s forwards;
-}
-
-
-.tab-link {
-  display: flex;
-  align-items: center;
-  gap: 0.4rem;
-  padding: 0.6rem 1rem 0.7rem;
-  font-size: var(--fs-small);
-  font-weight: 600;
-  color: var(--muted);
-  text-decoration: none;
-  border-bottom: 2px solid transparent;
-  margin-bottom: -2px;
-  transition: color 0.2s, border-color 0.2s;
-  white-space: nowrap;
-}
-
-
-.tab-link svg {
-  width: 16px;
-  height: 16px;
-  flex-shrink: 0;
-}
-
-
-.tab-link:hover {
-  color: var(--primary);
-}
-
-
-.tab-link.active {
-  color: var(--primary);
-  border-bottom-color: var(--primary);
-}
 
 
 
 /* ============================================================ *\
-   20. PAGE — Erreur 404
+   24. PAGE — Erreur 404
 \* ============================================================ */
 
 
@@ -1925,8 +1998,10 @@ spline-viewer {
 
 
 
+
+
 /* ============================================================ *\
-   21. PAGE — Liste entreprises
+   25. PAGE — Liste entreprises
 \* ============================================================ */
 
 .entreprises-page {
@@ -2095,6 +2170,10 @@ spline-viewer {
   transition: background 0.2s, color 0.2s;
 }
 
+a.bton:hover:visited {
+  color: white;
+}
+
 .bton:hover {
   background: var(--text);
   color: var(--white);
@@ -2131,8 +2210,10 @@ spline-viewer {
 
 
 
+
+
 /* ============================================================ *\
-   21. PAGE — Fiche entreprise
+   26. PAGE — Fiche entreprise
 \* ============================================================ */
 
 .entreprise-page {
@@ -2370,12 +2451,14 @@ spline-viewer {
 
 
 
+
+
 /* ============================================================ *\
-   22. PAGE — Évaluation entreprise
+   27. PAGE — Évaluation entreprise
 \* ============================================================ */
 
 .evaluation-page {
-  max-width: 800px;
+  max-width: 1400px;
   margin: 0 auto;
   padding: 2rem;
 }
@@ -2508,8 +2591,9 @@ spline-viewer {
 
 
 
+
 /* ============================================================ *\
-   23. PAGE — Mentions légales & Confidentialité
+   28. PAGE — Mentions légales & Confidentialité
 \* ============================================================ */
 
 .legal-page {
@@ -2780,49 +2864,5 @@ spline-viewer {
 @media (max-width: 600px) {
   .legal-hero {
     padding: 1.25rem;
-  }
-}
-
-
-
-
-/* ============================================================ *\
-   22. RESPONSIVE — max-width: 480px
-\* ============================================================ */
-
-
-@media (max-width: 480px) {
-
-  /* Les raccourcis ont déjà été basculés en phone à 900px.
-     Ce bloc ne gère que les ajustements de layout spécifiques
-     aux très petits écrans. */
-
-  .page-wrapper {
-    padding: 1.5rem 1rem 3rem;
-  }
-
-  .profile-name {
-    font-size: var(--fs--title-phone); /* 2rem */
-  }
-
-  .error-404__title {
-    font-size: 1.25rem;
-  }
-
-  /* Sections textuelles : padding latéral réduit */
-  .offres-a-la-une > h2,
-  .suivre-candidature-text,
-  .section-why,
-  .section-stats-title {
-    padding: 0 0 0 2rem;
-  }
-
-  .paragraphe-1 {
-    padding-left: 1rem;
-    padding-right: 1rem;
-  }
-
-  .cards-grid {
-    grid-template-columns: 1fr;
   }
 }

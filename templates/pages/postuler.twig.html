@@ -1,0 +1,25 @@
+{% extends "base.twig.html" %}
+
+{% block title %}Postuler – Web4All{% endblock %}
+
+{% block content %}
+<main class="apply-page">
+
+
+    <section class="apply-header" aria-labelledby="apply-title">
+
+        <h1 id="apply-title" class="title">Postuler pour <strong>{{ annonce.titre }}</strong> chez <strong>{{ annonce.entreprise }}</strong></h1>
+
+    </section>
+
+
+    <section>
+        <form method="POST" action="?page=postuler" enctype="multipart/form-data">
+            <input type="hidden" name="annonce_id" value="{{ annonceId }}">
+            <!-- autres champs -->
+        </form>
+    </section>
+
+
+</main>
+{% endblock %}
