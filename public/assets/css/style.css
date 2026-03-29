@@ -86,9 +86,10 @@ header {
   width: 100vw;
 }
 
-a:not(.btn):visited {
+a:visited {
   color: #000000;
 }
+
 
 
 
@@ -839,6 +840,12 @@ textarea[rows] {
 
 
 
+.btn:visited {
+  color: var(--btn-color);
+}
+
+
+
 /* Flèche SVG interne */
 .btn svg { transition: transform 0.2s; }
 .btn:hover svg { transform: translateX(4px); }
@@ -992,7 +999,8 @@ textarea[rows] {
 }
 
 
-.tab-link {
+.tab-link,
+.tab-link:visited {
   display: flex;
   align-items: center;
   gap: 0.4rem;
@@ -1849,7 +1857,8 @@ input[type="url"]:focus {
 }
 
 
-.account-menu-item {
+.account-menu-item,
+.account-menu-item:visited {
   display: block;
   padding: 0.95rem 0;
   font-size: var(--fs-body);
@@ -1969,7 +1978,26 @@ input[type="url"]:focus {
 
 
 /* ============================================================ *\
-   23. PAGE — Favoris
+   23. PAGE — Mes candidatures
+\* ============================================================ */
+
+
+.my-applications-page {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 2rem;
+}
+
+.my-applications-header {
+  margin-bottom: 2rem;
+}
+
+
+
+
+
+/* ============================================================ *\
+   24. PAGE — Favoris
 \* ============================================================ */
 
 .favorites-page {
@@ -2006,7 +2034,7 @@ input[type="url"]:focus {
 
 
 /* ============================================================ *\
-   24. PAGE — Erreur 404
+   25. PAGE — Erreur 404
 \* ============================================================ */
 
 
@@ -2069,7 +2097,7 @@ spline-viewer {
 
 
 /* ============================================================ *\
-   25. PAGE — Liste entreprises
+   26. PAGE — Liste entreprises
 \* ============================================================ */
 
 .entreprises-page {
@@ -2238,10 +2266,6 @@ spline-viewer {
   transition: background 0.2s, color 0.2s;
 }
 
-a.bton:hover:visited {
-  color: white;
-}
-
 .bton:hover {
   background: var(--text);
   color: var(--white);
@@ -2281,7 +2305,7 @@ a.bton:hover:visited {
 
 
 /* ============================================================ *\
-   26. PAGE — Fiche entreprise
+   27. PAGE — Fiche entreprise
 \* ============================================================ */
 
 .entreprise-page {
@@ -2366,7 +2390,8 @@ a.bton:hover:visited {
   color: var(--primary);
 }
 
-.avis-link-simple {
+.avis-link-simple
+.avis-link-simple:visited {
   color: var(--primary);
   text-decoration: underline;
   text-decoration-thickness: 1.5px;
@@ -2522,7 +2547,7 @@ a.bton:hover:visited {
 
 
 /* ============================================================ *\
-   27. PAGE — Évaluation entreprise
+   28. PAGE — Évaluation entreprise
 \* ============================================================ */
 
 .evaluation-page {
@@ -2661,7 +2686,7 @@ a.bton:hover:visited {
 
 
 /* ============================================================ *\
-   28. PAGE — Mentions légales & Confidentialité
+   29. PAGE — Mentions légales & Confidentialité
 \* ============================================================ */
 
 .legal-page {
@@ -2736,7 +2761,8 @@ a.bton:hover:visited {
   border-left: 2px solid var(--border);
 }
 
-.legal-nav-link {
+.legal-nav-link,
+.legal-nav-link:visited {
   padding: 0.45rem 0.9rem;
   font-size: var(--fs-small);
   color: var(--muted);
@@ -2752,6 +2778,7 @@ a.bton:hover:visited {
   color: var(--primary);
   border-left-color: var(--primary);
 }
+
 
 /* ── Contenu principal ── */
 
