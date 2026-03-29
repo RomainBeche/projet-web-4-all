@@ -9,6 +9,8 @@ use Grp5\ProjetWeb4All\Controllers\{
     OfferDetailsController,
     CompaniesController,
     CompanyDetailsController,
+    LegalController,
+
 
 };
 
@@ -33,7 +35,8 @@ return [
     'detail-annonce' => ['controller' => OfferDetailsController::class, 'action' => 'index'],
     'toggle-favori' => ['controller' => OfferDetailsController::class, 'action' => 'toggleFavorite'],
     'toggle-rappel' => ['controller' => OfferDetailsController::class, 'action' => 'toggleReminder'],
-
+    
+    'confidentialite' => ['controller' => LegalController::class, 'action' => 'index'],
 
 
     /*'login' => ['controller' => AuthController::class, 'action' => 'login'],

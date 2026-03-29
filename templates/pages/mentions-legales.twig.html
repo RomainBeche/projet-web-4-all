@@ -1,0 +1,239 @@
+{% extends "base.twig.html" %}
+
+{% block title %}Confidentialité & CGU – Web4All{% endblock %}
+
+{% block content %}
+<main class="legal-page">
+
+
+    {# ── Hero ── #}
+    <div class="legal-hero fade-in">
+        <h1 class="title">Confidentialité & CGU</h1>
+        <div class="legal-hero-meta">
+            <span class="legal-badge">
+                <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="currentColor" class="bi bi-lock-fill" viewBox="0 0 16 16">
+                    <path fill-rule="evenodd" d="M8 0a4 4 0 0 1 4 4v2.05a2.5 2.5 0 0 1 2 2.45v5a2.5 2.5 0 0 1-2.5 2.5h-7A2.5 2.5 0 0 1 2 13.5v-5a2.5 2.5 0 0 1 2-2.45V4a4 4 0 0 1 4-4m0 1a3 3 0 0 0-3 3v2h6V4a3 3 0 0 0-3-3"/>
+                </svg>
+                RGPD
+            </span>
+            <span class="legal-date">Dernière mise à jour : 1er janvier 2025</span>
+        </div>
+    </div>
+
+
+    <div class="legal-layout">
+
+
+        {# ── Sommaire ── #}
+        <aside class="legal-sidebar" aria-label="Sommaire">
+        <p class="legal-sidebar-title">Sommaire</p>
+        <nav class="legal-nav">
+            <a href="#editeur"          class="legal-nav-link">1. Éditeur du site</a>
+            <a href="#cgu"              class="legal-nav-link">2. CGU</a>
+            <a href="#confidentialite"  class="legal-nav-link">3. Données personnelles</a>
+            <a href="#droits"           class="legal-nav-link">4. Vos droits</a>
+            <a href="#cookies"          class="legal-nav-link">5. Cookies</a>
+            <a href="#securite"         class="legal-nav-link">6. Sécurité</a>
+            <a href="#responsabilite"   class="legal-nav-link">7. Responsabilité</a>
+            <a href="#contact"          class="legal-nav-link">8. Contact & DPO</a>
+        </nav>
+        </aside>
+
+
+        {# ── Contenu ── #}
+        <div class="legal-content">
+
+
+            {# 1. Éditeur #}
+            <section class="legal-section" id="editeur" aria-labelledby="title-editeur">
+                <p class="legal-section-number">01</p>
+                <h2 id="title-editeur">Éditeur du site</h2>
+                <p>Le site <strong>Web4All</strong> est édité dans le cadre d'un projet pédagogique mené par le Groupe 5, dans le contexte du Projet Fil Rouge "WEB" de la formation CPI A2 - Informatique (campus de Strasbourg).</p>
+                <div class="legal-info-block">
+                    <p><strong>Responsable de publication :</strong> Groupe 5 – Projet Web4All<br>
+                    <strong>Hébergement :</strong> Serveur local / environnement de développement<br>
+                    <strong>Contact :</strong> <a href="mailto:contact@web4all.fr">contact@web4all.fr</a></p>
+                </div>
+            </section>
+
+
+            {# 2. CGU #}
+            <section class="legal-section" id="cgu" aria-labelledby="title-cgu">
+                <p class="legal-section-number">02</p>
+                <h2 id="title-cgu">Conditions Générales d'Utilisation</h2>
+                <p>L'accès et l'utilisation du site Web4All impliquent l'acceptation pleine et entière des présentes conditions générales d'utilisation. Celles-ci peuvent être modifiées à tout moment ; il appartient à l'utilisateur de les consulter régulièrement.</p>
+
+                <h3>Accès au service</h3>
+                <p>Web4All est une plateforme de mise en relation entre étudiants et entreprises proposant des offres de stage ou d'alternance. L'accès aux fonctionnalités complètes (favoris, candidatures, évaluations) nécessite la création d'un compte.</p>
+
+                <h3>Obligations de l'utilisateur</h3>
+                <ul>
+                    <li>Fournir des informations exactes et à jour lors de l'inscription</li>
+                    <li>Ne pas usurper l'identité d'un tiers</li>
+                    <li>Ne pas publier de contenus illicites, diffamatoires ou contraires aux bonnes mœurs</li>
+                    <li>Ne pas tenter de contourner les mécanismes de sécurité du site</li>
+                    <li>Respecter les droits de propriété intellectuelle</li>
+                </ul>
+
+                <h3>Propriété intellectuelle</h3>
+                <p>L'ensemble des contenus présents sur Web4All (textes, logos, illustrations, code source) est protégé par le droit de la propriété intellectuelle. Toute reproduction, même partielle, est interdite sans autorisation préalable.</p>
+
+                <h3>Modification des CGU</h3>
+                <p>Web4All se réserve le droit de modifier les présentes CGU à tout moment. Les utilisateurs seront informés de toute modification substantielle par notification lors de leur prochaine connexion.</p>
+            </section>
+
+
+            {# 3. Données personnelles #}
+            <section class="legal-section" id="confidentialite" aria-labelledby="title-confidentialite">
+                <p class="legal-section-number">03</p>
+                <h2 id="title-confidentialite">Données personnelles</h2>
+                <p>Web4All collecte et traite des données personnelles dans le respect du Règlement Général sur la Protection des Données (RGPD – Règlement UE 2016/679) et de la loi Informatique et Libertés.</p>
+
+                <h3>Données collectées</h3>
+                <ul>
+                    <li><strong>Données d'identification :</strong> prénom, nom, adresse e-mail</li>
+                    <li><strong>Données de profil :</strong> formation, niveau d'études, CV & Lettre de Motivation (optionnels)</li>
+                    <li><strong>Données d'usage :</strong> offres consultées, favoris, candidatures déposées</li>
+                    <li><strong>Données techniques :</strong> adresse IP, type de navigateur, pages visitées</li>
+                </ul>
+
+                <h3>Finalités du traitement</h3>
+                <ul>
+                    <li>Gestion des comptes utilisateurs et authentification</li>
+                    <li>Mise en relation avec les entreprises partenaires</li>
+                    <li>Amélioration de l'expérience utilisateur et personnalisation</li>
+                    <li>Envoi de notifications liées aux candidatures (rappels)</li>
+                    <li>Statistiques d'usage anonymisées</li>
+                </ul>
+
+                <h3>Base légale</h3>
+                <p>Les traitements reposent sur l'exécution d'un contrat (création de compte), le consentement de l'utilisateur (cookies analytiques), ou l'intérêt légitime de la plateforme (sécurité, prévention de la fraude).</p>
+
+                <h3>Durée de conservation</h3>
+                <p>Les données sont conservées pendant toute la durée d'activité du compte. En cas de suppression du compte, les données sont effacées sous 30 jours, à l'exception des données nécessaires au respect d'obligations légales (3 ans maximum).</p>
+            </section>
+
+
+            {# 4. Droits #}
+            <section class="legal-section" id="droits" aria-labelledby="title-droits">
+                <p class="legal-section-number">04</p>
+                <h2 id="title-droits">Vos droits</h2>
+                <p>Conformément au RGPD, vous disposez des droits suivants concernant vos données personnelles :</p>
+                <ul>
+                    <li><strong>Droit d'accès :</strong> obtenir une copie des données vous concernant</li>
+                    <li><strong>Droit de rectification :</strong> corriger des données inexactes ou incomplètes</li>
+                    <li><strong>Droit à l'effacement :</strong> demander la suppression de vos données</li>
+                    <li><strong>Droit à la portabilité :</strong> recevoir vos données dans un format structuré</li>
+                    <li><strong>Droit d'opposition :</strong> vous opposer à certains traitements</li>
+                    <li><strong>Droit à la limitation :</strong> suspendre temporairement un traitement</li>
+                </ul>
+                <p>Pour exercer ces droits, rendez-vous dans <a href="?page=compte">votre espace compte</a> ou contactez notre DPO à l'adresse indiquée en section 8. Vous disposez également du droit d'introduire une réclamation auprès de la <a href="https://www.cnil.fr" target="_blank" rel="noopener">CNIL</a>.</p>
+            </section>
+
+
+            {# 5. Cookies #}
+            <section class="legal-section" id="cookies" aria-labelledby="title-cookies">
+                <p class="legal-section-number">05</p>
+                <h2 id="title-cookies">Politique de cookies</h2>
+                <p>Web4All utilise des cookies et technologies similaires pour assurer le bon fonctionnement du site et améliorer votre expérience. Un cookie est un petit fichier texte stocké sur votre appareil.</p>
+
+                <div class="legal-table-wrapper">
+                    <table class="legal-table">
+                        <thead>
+                        <tr>
+                            <th>Nom</th>
+                            <th>Type</th>
+                            <th>Finalité</th>
+                            <th>Durée</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr>
+                            <td><code>PHPSESSID</code></td>
+                            <td>Strictement nécessaire</td>
+                            <td>Session utilisateur (authentification, favoris, rappels)</td>
+                            <td>Session</td>
+                        </tr>
+                        <tr>
+                            <td><code>w4a_lang</code></td>
+                            <td>Fonctionnel</td>
+                            <td>Mémorisation de la langue choisie</td>
+                            <td>30 jours</td>
+                        </tr>
+                        <tr>
+                            <td><code>w4a_filters</code></td>
+                            <td>Fonctionnel</td>
+                            <td>Mémorisation des filtres de recherche</td>
+                            <td>7 jours</td>
+                        </tr>
+                        <tr>
+                            <td><code>_ga</code></td>
+                            <td>Analytique</td>
+                            <td>Statistiques d'audience anonymisées (Google Analytics)</td>
+                            <td>2 ans</td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <p>Les cookies strictement nécessaires ne peuvent pas être refusés car ils garantissent le fonctionnement du service. Vous pouvez désactiver les cookies analytiques depuis les paramètres de votre navigateur ou via notre bandeau de consentement.</p>
+            </section>
+
+
+            {# 6. Sécurité #}
+            <section class="legal-section" id="securite" aria-labelledby="title-securite">
+                <p class="legal-section-number">06</p>
+                <h2 id="title-securite">Sécurité</h2>
+                <p>Web4All met en œuvre des mesures techniques et organisationnelles appropriées pour protéger vos données contre tout accès non autorisé, perte, destruction ou divulgation.</p>
+                <ul>
+                    <li>Mots de passe hachés (bcrypt) — jamais stockés en clair</li>
+                    <li>Sessions PHP sécurisées avec régénération d'identifiant à la connexion</li>
+                    <li>Protection contre les injections SQL via requêtes préparées (PDO)</li>
+                    <li>Protection CSRF sur tous les formulaires sensibles</li>
+                    <li>Connexion HTTPS en production</li>
+                </ul>
+                <p>En cas de violation de données susceptible d'engendrer un risque pour vos droits, vous en serez informé dans les meilleurs délais conformément à l'article 34 du RGPD.</p>
+            </section>
+
+
+            {# 7. Responsabilité #}
+            <section class="legal-section" id="responsabilite" aria-labelledby="title-responsabilite">
+                <p class="legal-section-number">07</p>
+                <h2 id="title-responsabilite">Limitation de responsabilité</h2>
+                <p>Web4All est une plateforme de mise en relation à visée pédagogique. Elle ne saurait être tenue responsable des contenus publiés par les entreprises partenaires, ni des suites données aux candidatures.</p>
+                <p>Web4All s'efforce d'assurer la disponibilité du service mais ne garantit pas une accessibilité ininterrompue. Des interruptions pour maintenance peuvent survenir sans préavis.</p>
+                <p>Les liens vers des sites tiers présents sur la plateforme n'engagent pas la responsabilité de Web4All quant à leurs contenus ou pratiques en matière de données personnelles.</p>
+            </section>
+
+
+            {# 8. Contact #}
+            <section class="legal-section" id="contact" aria-labelledby="title-contact">
+                <p class="legal-section-number">08</p>
+                <h2 id="title-contact">Contact & DPO</h2>
+                <p>Pour toute question relative à la présente politique ou pour exercer vos droits, vous pouvez contacter notre délégué à la protection des données :</p>
+
+                <div class="legal-contact-card">
+                    <div class="legal-contact-icon" aria-hidden="true">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="currentColor" viewBox="0 0 16 16">
+                        <path d="M0 4a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2zm2-1a1 1 0 0 0-1 1v.217l7 4.2 7-4.2V4a1 1 0 0 0-1-1zm13 2.383-4.708 2.825L15 11.105zm-.034 6.876-5.64-3.471L8 9.583l-1.326-.795-5.64 3.47A1 1 0 0 0 2 13h12a1 1 0 0 0 .966-.741M1 11.105l4.708-2.897L1 5.383z"/>
+                        </svg>
+                    </div>
+                    <div>
+                        <strong>Délégué à la Protection des Données – Web4All</strong>
+                        <p>E-mail : <a href="mailto:dpo@web4all.fr">dpo@web4all.fr</a><br>
+                        Délai de réponse : 30 jours maximum (RGPD, art. 12)</p>
+                    </div>
+                </div>
+
+                <p style="margin-top: 1.5rem;">Vous pouvez également adresser une réclamation à la <strong>CNIL</strong> (Commission Nationale de l'Informatique et des Libertés) : <a href="https://www.cnil.fr/fr/plaintes" target="_blank" rel="noopener">cnil.fr/fr/plaintes</a>.</p>
+            </section>
+
+
+        </div>
+
+
+    </div>
+
+
+</main>
+{% endblock %}
