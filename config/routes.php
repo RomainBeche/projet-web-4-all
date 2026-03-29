@@ -17,6 +17,7 @@ use Grp5\ProjetWeb4All\Controllers\{
 return [
     'accueil' => ['controller' => HomeController::class, 'action' => 'index'],
 
+    'login' => ['controller' => AccountController::class, 'action' => 'login'],
     'compte' => ['controller' => AccountController::class, 'action' => 'index'],
     'modification-compte' => ['controller' => AccountController::class, 'action' => 'edit'],
     'modification-compte-validation' => ['controller' => AccountController::class, 'action' => 'editValidation'],
@@ -39,8 +40,7 @@ return [
     'confidentialite' => ['controller' => LegalController::class, 'action' => 'index'],
 
 
-    /*'login' => ['controller' => AuthController::class, 'action' => 'login'],
-    'logout' => ['controller' => AuthController::class, 'action' => 'logout'],
+    /*'logout' => ['controller' => AuthController::class, 'action' => 'logout'],
     'deconnexion' => ['controller' => AccountController::class, 'action' => 'logoutConfirmation'],
     'suppression-compte-1' => ['controller' => AccountController::class, 'action' => 'deleteConfirmation'],
     'suppression-compte-2' => ['controller' => AccountController::class, 'action' => 'delete'],
