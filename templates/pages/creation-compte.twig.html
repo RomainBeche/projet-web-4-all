@@ -38,7 +38,8 @@
   <section aria-label="Formulaire d'inscription {{ type }}">
     
 
-    <form id="registerForm" class="register-form" novalidate>
+    <form id="registerForm" class="register-form" method="POST" action="/?page=creation-compte&type={{ type }}" novalidate>
+    <input type="hidden" name="type" value="{{ type }}">
 
       <div class="fields-grid fade-in" style="animation-delay:.1s">
         <div class="field">
@@ -92,7 +93,7 @@
                 valid = false;
             }
         });
-        if (valid) window.location.href = '?page=creation-compte-validation';
+        if (valid) this.submit();
     });
 </script>
 {% endblock %}
