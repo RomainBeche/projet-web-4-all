@@ -77,10 +77,47 @@ class AccountController extends Controller
     {
         $this->requireLogin();
 
+        $dotenv = parse_ini_file(__DIR__ . '/../../.env');
+        $pdo = new \PDO(
+            "pgsql:host={$dotenv['DB_HOST']};port={$dotenv['DB_PORT']};dbname={$dotenv['DB_NAME']}",
+            $dotenv['DB_USER'],
+            $dotenv['DB_PASSWORD']
+        );
+
+        $userId   = $_SESSION['user_id'];
+        $userRole = $_SESSION['user_role'];
+
+        $nom      = trim($_POST['nom'] ?? '');
+        $prenom   = trim($_POST['prenom'] ?? '');
+        $email    = trim($_POST['email'] ?? '');
+        $password = $_POST['password'] ?? '';
+
+        // Mise à jour dans etudiant ou pilote
+        if ($userRole === 'etudiant') {
+           $stmt = $pdo->prepare("UPDATE etudiant SET nom = :nom, prenom = :prenom, email_publique = :email WHERE id_compte = :id");
+        } else {
+            $stmt = $pdo->prepare("UPDATE pilote SET nom = :nom, prenom = :prenom, email_publique = :email WHERE id_compte = :id");
+        }
+        $stmt->execute([':nom' => $nom, ':prenom' => $prenom, ':email' => $email, ':id' => $userId]);
+
+        // Mise à jour email dans compte
+        $stmt = $pdo->prepare("UPDATE compte SET email_publique = :email WHERE id_compte = :id");
+        $stmt->execute([':email' => $email, ':id' => $userId]);
+
+        // Mise à jour mot de passe si renseigné
+        if (!empty($password)) {
+            $hash = password_hash($password, PASSWORD_DEFAULT);
+            $stmt = $pdo->prepare("UPDATE compte SET mot_de_passe = :hash WHERE id_compte = :id");
+            $stmt->execute([':hash' => $hash, ':id' => $userId]);
+        }
+
+        // Mise à jour de la session
+        $_SESSION['user_email'] = $email;
+
         $this->render('pages/modification-compte-validation.twig.html', [
-            'user_nom'    => $_SESSION['user_nom'] ?? '',
-            'user_prenom' => $_SESSION['user_prenom'] ?? '',
-            'user_role'   => $_SESSION['user_role'] ?? '',
+            'user_nom'    => $nom,
+            'user_prenom' => $prenom,
+            'user_role'   => $userRole,
         ]);
     }
 
@@ -164,15 +201,38 @@ class AccountController extends Controller
         $this->render('pages/suppression-compte-1.twig.html');
     }
 
-    // Delete account and redirect
-    public function delete(): void
+        // Delete account and redirect
+        public function delete(): void
     {
         $this->requireLogin();
 
-        // TODO: actually delete account from DB
+        $dotenv = parse_ini_file(__DIR__ . '/../../.env');
+        $pdo = new \PDO(
+            "pgsql:host={$dotenv['DB_HOST']};port={$dotenv['DB_PORT']};dbname={$dotenv['DB_NAME']}",
+            $dotenv['DB_USER'],
+            $dotenv['DB_PASSWORD']
+        );
 
+        $userId   = $_SESSION['user_id'];
+        $userRole = $_SESSION['user_role'];
+
+        // Supprime d'abord dans la table du rôle (etudiant ou pilote)
+        if ($userRole === 'etudiant') {
+            $stmt = $pdo->prepare("DELETE FROM etudiant WHERE id_compte = :id");
+            $stmt->execute([':id' => $userId]);
+        } elseif ($userRole === 'pilote') {
+            $stmt = $pdo->prepare("DELETE FROM pilote WHERE id_compte = :id");
+            $stmt->execute([':id' => $userId]);
+        }
+
+        // Supprime ensuite dans la table compte
+        $stmt = $pdo->prepare("DELETE FROM compte WHERE id_compte = :id");
+        $stmt->execute([':id' => $userId]);
+
+        // Détruit la session
+        $_SESSION = [];
         session_destroy();
-        header('Location: /?page=accueil');
+        header('Location: /?page=login');
         exit;
     }
 
