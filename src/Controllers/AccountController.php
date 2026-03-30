@@ -12,12 +12,31 @@ class AccountController extends Controller
     {
         $this->requireLogin();
 
-        $this->render('pages/compte.twig.html', [
-            'user_nom'    => $_SESSION['user_nom'] ?? '',
-            'user_prenom' => $_SESSION['user_prenom'] ?? '',
-            'user_role'   => $_SESSION['user_role'] ?? '',
-            'user_email'  => $_SESSION['user_email'] ?? '',
-        ]);
+    $dotenv = parse_ini_file(__DIR__ . '/../../.env');
+    $pdo = new \PDO(
+        "pgsql:host={$dotenv['DB_HOST']};port={$dotenv['DB_PORT']};dbname={$dotenv['DB_NAME']}",
+        $dotenv['DB_USER'],
+        $dotenv['DB_PASSWORD']
+    );
+
+    $userRole = $_SESSION['user_role'];
+    $userId   = $_SESSION['user_id'];
+
+    if ($userRole === 'etudiant') {
+        $stmt = $pdo->prepare("SELECT * FROM etudiant WHERE id_compte = :id");
+    } else {
+        $stmt = $pdo->prepare("SELECT * FROM pilote WHERE id_compte = :id");
+    }
+
+    $stmt->execute([':id' => $userId]);
+    $user = $stmt->fetch(\PDO::FETCH_ASSOC);
+
+    $this->render('pages/compte.twig.html', [
+        'user_nom'    => $user['nom'] ?? '',
+        'user_prenom' => $user['prenom'] ?? '',
+        'user_role'   => $userRole,
+        'user_email'  => $user['email_publique'] ?? '',
+    ]);
     }
 
 
