@@ -2244,7 +2244,6 @@ spline-viewer {
   border-radius: var(--radius);
   border: 2px solid transparent;
   box-shadow: 0 6px 20px rgba(0, 0, 0, 0.06);
-  cursor: pointer;
   height: 100%;
 }
 
