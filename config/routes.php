@@ -25,6 +25,8 @@ return [
     'modification-compte-validation' => ['controller' => AccountController::class, 'action' => 'editValidation'],
     'deconnexion' => ['controller' => AccountController::class, 'action' => 'logout'],
     'suppression-compte' => ['controller' => AccountController::class, 'action' => 'delete'],
+    'suppression-compte-1' => ['controller' => AccountController::class, 'action' => 'deleteConfirmation'],
+    'suppression-compte-2' => ['controller' => AccountController::class, 'action' => 'delete'],
     
     'creation-compte' => ['controller' => RegistrationController::class, 'action' => 'index'],
     
@@ -53,8 +55,6 @@ return [
 
     /*'logout' => ['controller' => AuthController::class, 'action' => 'logout'],
     'deconnexion' => ['controller' => AccountController::class, 'action' => 'logoutConfirmation'],
-    'suppression-compte-1' => ['controller' => AccountController::class, 'action' => 'deleteConfirmation'],
-    'suppression-compte-2' => ['controller' => AccountController::class, 'action' => 'delete'],
     'modification-compte-validation' => ['controller' => AccountController::class, 'action' => 'editValidation'],
     'login' => ['controller' => AccountController::class,'action' => 'login'],
     'logout' => ['controller' => AccountController::class, 'action' => 'logout'],

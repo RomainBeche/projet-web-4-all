@@ -224,15 +224,19 @@ public function mesElevesCreation(): void
             $hash = password_hash($password, PASSWORD_DEFAULT);
 
             // 1. Insertion dans compte
+            // Récupère le prochain id disponible
+            $maxId = $pdo->query("SELECT COALESCE(MAX(id_compte), 0) + 1 FROM compte")->fetchColumn();
+
             $stmt = $pdo->prepare("
-                INSERT INTO compte (email_publique, mot_de_passe, role, niveau_permission)
-                VALUES (:email, :password, 'etudiant', 1)
-                RETURNING id_compte
-            ");
-            $stmt->execute([
-                ':email'    => $email,
-                ':password' => $hash,
-            ]);
+            INSERT INTO compte (id_compte, email_publique, mot_de_passe, role, niveau_permission)
+            VALUES (:id, :email, :password, 'etudiant', 1)
+            RETURNING id_compte
+        ");
+        $stmt->execute([
+            ':id'       => $maxId,
+            ':email'    => $email,
+            ':password' => $hash,
+        ]);
             $newCompte = $stmt->fetch(\PDO::FETCH_ASSOC);
             $newIdCompte = $newCompte['id_compte'];
 
