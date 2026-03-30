@@ -2,7 +2,12 @@
 
 {% block title %}Postuler – Web4All{% endblock %}
 
+{% block scripts %}
+    <script src="/js/verifyForm.js"></script>
+{% endblock %}
+
 {% block content %}
+
 <main class="apply-page">
 
     <section class="apply-header" aria-labelledby="apply-title">
@@ -12,7 +17,7 @@
     <section class="page-wrapper">
 
         <form method="POST" action="?page=postuler" enctype="multipart/form-data">
-            <input type="hidden" name="annonce_id" value="{{ annonceId }}">
+            <input type="hidden" name="annonce_id" value="{{ annonce.id }}">
 
             <div class="form-section">
 
@@ -116,16 +121,5 @@
 
 </main>
 
-
-{% block scripts %}
-<script>
-    function updateFileName(input, targetId) {
-        const label = document.getElementById(targetId);
-        label.textContent = input.files.length > 0
-            ? input.files[0].name
-            : 'Aucun fichier sélectionné';
-    }
-</script>
-{% endblock %}
 
 {% endblock %}
