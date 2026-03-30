@@ -22,7 +22,6 @@
         box-shadow: 0 4px 24px rgba(99, 91, 255, 0.07);
     }
 
-    /* Onglets */
     .login-tabs {
         display: flex;
         gap: 0.5rem;
@@ -53,12 +52,6 @@
         border-bottom: 2px solid #635bff;
     }
 
-    .login-tab svg {
-        width: 16px;
-        height: 16px;
-    }
-
-    /* Formulaire */
     .login-form-group {
         margin-bottom: 1.2rem;
     }
@@ -89,12 +82,11 @@
         background: #fff;
     }
 
-    /* Toggle rester connecté */
     .login-remember {
         display: flex;
         align-items: center;
         justify-content: space-between;
-        margin-bottom: 0.5rem;
+        margin-bottom: 1.5rem;
     }
 
     .login-remember span {
@@ -143,26 +135,11 @@
         transform: translateX(20px);
     }
 
-    /* Mot de passe oublié */
-    .login-forgot {
-        text-align: center;
-        margin-bottom: 1.5rem;
-    }
-
-    .login-forgot a {
-        font-size: 0.8rem;
-        color: #999;
-        text-decoration: underline;
-        text-underline-offset: 2px;
-    }
-
-    /* Boutons */
     .login-actions {
         display: flex;
         gap: 0.75rem;
     }
 
-    /* Alertes */
     .login-alert {
         display: flex;
         align-items: center;
@@ -185,14 +162,12 @@
         border: 1px solid #b2f2c9;
     }
 
-    /* Panneau onglet */
     .tab-panel { display: none; }
     .tab-panel.active { display: block; }
 </style>
 {% endblock %}
 
 {% block content %}
-
 <div class="login-wrapper">
     <div class="login-card">
 
@@ -214,7 +189,6 @@
         </div>
         {% endif %}
 
-        <!-- Onglets -->
         <div class="login-tabs">
             <button type="button" class="login-tab active" onclick="switchTab('etudiant', this)">
                 Étudiant
@@ -228,19 +202,16 @@
         <div id="panel-etudiant" class="tab-panel active">
             <form method="POST" action="/?page=login">
                 <input type="hidden" name="role" value="etudiant">
-
                 <div class="login-form-group">
                     <label for="email-etudiant">Adresse mail</label>
                     <input type="email" id="email-etudiant" name="email"
                         value="{{ email|default('') }}" required autocomplete="email">
                 </div>
-
                 <div class="login-form-group">
                     <label for="password-etudiant">Mot de passe</label>
                     <input type="password" id="password-etudiant" name="password"
                         required autocomplete="current-password">
                 </div>
-
                 <div class="login-remember">
                     <span>Rester connecté-e</span>
                     <label class="toggle-switch">
@@ -248,17 +219,8 @@
                         <span class="toggle-slider"></span>
                     </label>
                 </div>
-
-                <div class="login-forgot">
-                    <a href="#">Mot de passe oublié ?</a>
-                </div>
-
                 <div class="login-actions">
                     <button type="submit" class="btn btn-primary">Se connecter</button>
-                    <a href="/?page=creation-compte-etudiant" class="btn btn-outline-primary"
-                       style="text-align:center; text-decoration:none; display:flex; align-items:center; justify-content:center;">
-                        S'inscrire
-                    </a>
                 </div>
             </form>
         </div>
@@ -267,19 +229,16 @@
         <div id="panel-pilote" class="tab-panel">
             <form method="POST" action="/?page=login">
                 <input type="hidden" name="role" value="pilote">
-
                 <div class="login-form-group">
                     <label for="email-pilote">Adresse mail</label>
                     <input type="email" id="email-pilote" name="email"
                         value="{{ email|default('') }}" required autocomplete="email">
                 </div>
-
                 <div class="login-form-group">
                     <label for="password-pilote">Mot de passe</label>
                     <input type="password" id="password-pilote" name="password"
                         required autocomplete="current-password">
                 </div>
-
                 <div class="login-remember">
                     <span>Rester connecté-e</span>
                     <label class="toggle-switch">
@@ -287,24 +246,14 @@
                         <span class="toggle-slider"></span>
                     </label>
                 </div>
-
-                <div class="login-forgot">
-                    <a href="#">Mot de passe oublié ?</a>
-                </div>
-
                 <div class="login-actions">
                     <button type="submit" class="btn btn-primary">Se connecter</button>
-                    <a href="/?page=creation-compte-pilote" class="btn btn-outline-primary"
-                       style="text-align:center; text-decoration:none; display:flex; align-items:center; justify-content:center;">
-                        S'inscrire
-                    </a>
                 </div>
             </form>
         </div>
 
     </div>
 </div>
-
 {% endblock %}
 
 {% block scripts %}
