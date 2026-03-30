@@ -36,15 +36,14 @@
           {% for entreprise in entreprises %}
           <li>
             <article class="card">
-              <div class="card-logo" aria-hidden="true">{{ entreprise.Logo }}</div>
-              <h2 class="card-name">{{ entreprise.Nom_entreprise }}</h2>
+              <h2 class="card-name">{{ entreprises.nom }}</h2>
               <p class="card-sector">{{ entreprise.Secteur }}</p>
               <p class="card-rating">
                 {{ entreprise.Rating }} ★
                 <span>{{ entreprise.Nombre_avis }} avis</span>
               </p>
               <div class="entreprise-card-footer">
-                <a href="?page=detail-entreprise&id={{ entreprise.id }}" class="bton">Découvrir</a>
+                <a href="?page=detail-entreprise&id={{ entreprise.id_entreprise }}" class="bton">Découvrir</a>
                 <span class="offers">{{ entreprise.Nombre_offres }} offres</span>
               </div>
             </article>

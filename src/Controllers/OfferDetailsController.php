@@ -15,7 +15,7 @@ class OfferDetailsController extends Controller
         // Recherche de l'annonce par ID
         $annonce = null;
         foreach ($annonces as $a) {
-            if ($a['id'] === $offreId) {
+            if ($a['id_annonce'] === $offreId) {
                 $annonce = $a;
                 break;
             }
