@@ -9,6 +9,7 @@ class CompanyDetailsController extends Controller
     public function index(): void
     {
         require_once __DIR__ . '/../../src/Models/Entreprises.php';
+<<<<<<< Updated upstream
 
         $entrepriseId = isset($_GET['id']) ? (int)$_GET['id'] : 1;
 
@@ -21,14 +22,17 @@ class CompanyDetailsController extends Controller
             }
         }
 
+=======
+ 
+>>>>>>> Stashed changes
         // Entreprise introuvable → 404
-        if ($entreprise === null) {
+        if ($entreprise === null || !in_array($entreprise, $entreprises)) {
             $this->render('pages/404.twig.html');
             return;
         }
  
         $this->render('pages/detail-entreprise.twig.html', [
-            'entreprise' => $entreprise,
+            'entreprises' => $entreprises,
         ]);
     }
 }
