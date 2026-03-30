@@ -8,6 +8,8 @@ class RateCompanyController extends Controller
 {
     public function index(): void
     {
+        $this->requireLogin();
+        
         $this->render('pages/evaluation-entreprise.twig.html');
     }
 }

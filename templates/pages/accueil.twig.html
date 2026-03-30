@@ -18,7 +18,7 @@
     <h1 id="hero-title" class="title">Trouvez votre prochaine opportunité dès <strong>aujourd'hui</strong> !</h1>
 
     <a href="?page=annonces" class="btn btn-white">
-      Afficher les offres
+      Afficher les annonces
       <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
         <path fill-rule="evenodd" d="M1 8a.5.5 0 0 1 .5-.5h11.793l-3.147-3.146a.5.5 0 0 1 .708-.708l4 4a.5.5 0 0 1 0 .708l-4 4a.5.5 0 0 1-.708-.708L13.293 8.5H1.5A.5.5 0 0 1 1 8"/>
       </svg>
@@ -32,21 +32,21 @@
 
   <section class="offres-a-la-une" aria-labelledby="offres-title">
 
-    <h2 id="offres-title" class="home-section-title">Offres à la une</h2>
+    <h2 id="offres-title" class="home-section-title">Annonces à la une</h2>
 
     <div class="swiper">
       <div class="swiper-wrapper">
         {% for annonce in annonces|slice(0, 8) %}
         <article class="swiper-slide">
-          <a href="?page=detail-annonce&id={{ annonce.id }}" class="card-link {{ annonce.type }}">
-            <p class="badge {{ annonce.type }}">
+          <a href="?page=detail-annonce&id={{ annonce.id_annonce }}" class="card-link {{ annonce.type|lower }}">
+            <p class="badge {{ annonce.type|lower }}">
               {{ annonce.type|capitalize }}
             </p>
             <h3 class="card-title">{{ annonce.titre }}</h3>
-            <p class="offre-detail">{{ annonce.entreprise }}</p>
+            <p class="offre-detail">{{ annonce.entreprise_nom }}</p>
             <p class="offre-detail">{{ annonce.lieu }}</p>
             <p class="offre-detail offre-detail--duration">{{ annonce.duree }}</p>
-            <div class="card-button {{ annonce.type }}" aria-hidden="true">
+            <div class="card-button {{ annonce.type|lower }}" aria-hidden="true">
               <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
                 <path fill-rule="evenodd" d="M1 8a.5.5 0 0 1 .5-.5h11.793l-3.147-3.146a.5.5 0 0 1 .708-.708l4 4a.5.5 0 0 1 0 .708l-4 4a.5.5 0 0 1-.708-.708L13.293 8.5H1.5A.5.5 0 0 1 1 8"/>
               </svg>
