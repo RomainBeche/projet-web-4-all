@@ -8,7 +8,7 @@ class OffersController extends Controller
 {
     public function index(): void
     {
-        require_once __DIR__ . '/../../src/Models/Annonces.php';     // TODO: REMOVE
+        require_once __DIR__ . '/../../src/Models/Annonces.php';
 
         require_once __DIR__ . '/../../src/Pagination.php';
         require_once __DIR__ . '/../../src/PaginationAnnonces.php';

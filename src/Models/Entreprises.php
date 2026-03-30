@@ -4,9 +4,10 @@ require_once __DIR__ . '/../Database.php';
 
 $pdo = getConnection();
 
-$stmt = $pdo->query("SELECT * FROM entreprise");
+$stmt = $pdo->query('
+    SELECT e.* 
+    FROM public.entreprise e
+    ORDER BY e."rating" DESC
+');
 
-$entreprises = $stmt->fetch(\PDO::FETCH_ASSOC);
-
-
-
+$entreprises = $stmt->fetchALL(PDO::FETCH_ASSOC);
