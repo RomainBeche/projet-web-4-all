@@ -1,0 +1,40 @@
+{% extends "base.twig.html" %}
+{% block title %}Créer un compte étudiant – Web4All{% endblock %}
+{% block content %}
+<main class="page-wrapper">
+    <h1 class="title fade-in">Créer un compte étudiant</h1>
+
+    {% if error %}
+        <p style="color:red">{{ error }}</p>
+    {% endif %}
+
+    {% if succes %}
+        <p style="color:green">{{ succes }}</p>
+    {% endif %}
+
+    <form method="POST" action="/?page=mes-eleves-creation" class="register-form">
+        <div class="fields-grid fade-in">
+            <div class="field">
+                <label for="nom">Nom</label>
+                <input type="text" id="nom" name="nom" placeholder="Nom" required />
+            </div>
+            <div class="field">
+                <label for="prenom">Prénom</label>
+                <input type="text" id="prenom" name="prenom" placeholder="Prénom" required />
+            </div>
+            <div class="field">
+                <label for="email">Adresse mail</label>
+                <input type="email" id="email" name="email" placeholder="contact@exemple.com" required />
+            </div>
+            <div class="field">
+                <label for="password">Mot de passe</label>
+                <input type="password" id="password" name="password" placeholder="••••••••••••" required />
+            </div>
+        </div>
+        <div class="actions fade-in">
+            <button type="submit" class="btn btn-primary">Créer le compte</button>
+            <a href="?page=mes-eleves" class="btn btn-secondary">Annuler</a>
+        </div>
+    </form>
+</main>
+{% endblock %}

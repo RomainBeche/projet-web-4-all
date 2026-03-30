@@ -47,6 +47,9 @@ return [
     
     'mes-candidatures' => ['controller' => MyApplicationsController::class, 'action' => 'index'],
 
+    'mes-eleves' => ['controller' => AccountController::class, 'action' => 'mesEleves'],
+    'mes-eleves-creation' => ['controller' => AccountController::class, 'action' => 'mesElevesCreation'],
+
 
     /*'logout' => ['controller' => AuthController::class, 'action' => 'logout'],
     'deconnexion' => ['controller' => AccountController::class, 'action' => 'logoutConfirmation'],
