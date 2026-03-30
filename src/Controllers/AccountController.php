@@ -1,4 +1,5 @@
 <?php
+
 namespace Grp5\ProjetWeb4All\Controllers;
 
 use Grp5\ProjetWeb4All\Core\Controller;
@@ -11,12 +12,31 @@ class AccountController extends Controller
     {
         $this->requireLogin();
 
-        $this->render('pages/compte.twig.html', [
-            'user_nom'    => $_SESSION['user_nom'] ?? '',
-            'user_prenom' => $_SESSION['user_prenom'] ?? '',
-            'user_role'   => $_SESSION['user_role'] ?? '',
-            'user_email'  => $_SESSION['user_email'] ?? '',
-        ]);
+    $dotenv = parse_ini_file(__DIR__ . '/../../.env');
+    $pdo = new \PDO(
+        "pgsql:host={$dotenv['DB_HOST']};port={$dotenv['DB_PORT']};dbname={$dotenv['DB_NAME']}",
+        $dotenv['DB_USER'],
+        $dotenv['DB_PASSWORD']
+    );
+
+    $userRole = $_SESSION['user_role'];
+    $userId   = $_SESSION['user_id'];
+
+    if ($userRole === 'etudiant') {
+        $stmt = $pdo->prepare("SELECT * FROM etudiant WHERE id_compte = :id");
+    } else {
+        $stmt = $pdo->prepare("SELECT * FROM pilote WHERE id_compte = :id");
+    }
+
+    $stmt->execute([':id' => $userId]);
+    $user = $stmt->fetch(\PDO::FETCH_ASSOC);
+
+    $this->render('pages/compte.twig.html', [
+        'user_nom'    => $user['nom'] ?? '',
+        'user_prenom' => $user['prenom'] ?? '',
+        'user_role'   => $userRole,
+        'user_email'  => $user['email_publique'] ?? '',
+    ]);
     }
 
 
@@ -155,4 +175,88 @@ class AccountController extends Controller
         header('Location: /?page=accueil');
         exit;
     }
+
+    // Show mes eleves page
+public function mesEleves(): void
+{
+    $this->requireLogin();
+
+    if ($_SESSION['user_role'] !== 'pilote') {
+        header('Location: /?page=compte');
+        exit;
+    }
+
+    $this->render('pages/mes-eleves.twig.html', [
+        'user_role' => $_SESSION['user_role'],
+    ]);
+}
+
+// Create student account
+public function mesElevesCreation(): void
+{
+    $this->requireLogin();
+
+    if ($_SESSION['user_role'] !== 'pilote') {
+        header('Location: /?page=compte');
+        exit;
+    }
+
+    $error  = null;
+    $succes = null;
+
+    if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+        $nom      = trim($_POST['nom'] ?? '');
+        $prenom   = trim($_POST['prenom'] ?? '');
+        $email    = trim($_POST['email'] ?? '');
+        $password = $_POST['password'] ?? '';
+
+        if (empty($nom) || empty($prenom) || empty($email) || empty($password)) {
+            $error = "Tous les champs sont obligatoires.";
+        } else {
+            $dotenv = parse_ini_file(__DIR__ . '/../../.env');
+            $pdo = new \PDO(
+                "pgsql:host={$dotenv['DB_HOST']};port={$dotenv['DB_PORT']};dbname={$dotenv['DB_NAME']}",
+                $dotenv['DB_USER'],
+                $dotenv['DB_PASSWORD']
+            );
+
+            // Hash du mot de passe
+            $hash = password_hash($password, PASSWORD_DEFAULT);
+
+            // 1. Insertion dans compte
+            $stmt = $pdo->prepare("
+                INSERT INTO compte (email_publique, mot_de_passe, role, niveau_permission)
+                VALUES (:email, :password, 'etudiant', 1)
+                RETURNING id_compte
+            ");
+            $stmt->execute([
+                ':email'    => $email,
+                ':password' => $hash,
+            ]);
+            $newCompte = $stmt->fetch(\PDO::FETCH_ASSOC);
+            $newIdCompte = $newCompte['id_compte'];
+
+            // 2. Insertion dans etudiant
+            $stmt = $pdo->prepare("
+                INSERT INTO etudiant (nom, prenom, email_publique, id_compte, id_compte_pilote)
+                VALUES (:nom, :prenom, :email, :id_compte, :id_compte_pilote)
+            ");
+            $stmt->execute([
+                ':nom'             => $nom,
+                ':prenom'          => $prenom,
+                ':email'           => $email,
+                ':id_compte'       => $newIdCompte,
+                ':id_compte_pilote' => $_SESSION['user_id'],
+            ]);
+
+            $succes = "Le compte étudiant de $prenom $nom a été créé avec succès.";
+        }
+    }
+
+    $this->render('pages/mes-eleves-creation.twig.html', [
+        'user_role' => $_SESSION['user_role'],
+        'error'     => $error,
+        'succes'    => $succes,
+    ]);
+}
 }

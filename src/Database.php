@@ -1,4 +1,5 @@
 <?php
+
 function getConnection(): PDO {
     $dotenv = parse_ini_file(__DIR__ . '/../.env');
 

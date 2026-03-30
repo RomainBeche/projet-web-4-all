@@ -12,6 +12,7 @@ use Grp5\ProjetWeb4All\Controllers\{
     RateCompanyController,
     LegalController,
     ApplyController,
+    MyApplicationsController,
 
 };
 
@@ -40,10 +41,14 @@ return [
     'toggle-favori' => ['controller' => OfferDetailsController::class, 'action' => 'toggleFavorite'],
     'toggle-rappel' => ['controller' => OfferDetailsController::class, 'action' => 'toggleReminder'],
     
-    'confidentialite' => ['controller' => LegalController::class, 'action' => 'index'],
+    'mentions-legales' => ['controller' => LegalController::class, 'action' => 'index'],
     
     'postuler' => ['controller' => ApplyController::class, 'action' => 'index'],
     
+    'mes-candidatures' => ['controller' => MyApplicationsController::class, 'action' => 'index'],
+
+    'mes-eleves' => ['controller' => AccountController::class, 'action' => 'mesEleves'],
+    'mes-eleves-creation' => ['controller' => AccountController::class, 'action' => 'mesElevesCreation'],
 
 
     /*'logout' => ['controller' => AuthController::class, 'action' => 'logout'],

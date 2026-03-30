@@ -29,12 +29,12 @@
 
     {# Spécifique étudiant #}
     {% if user_role == 'etudiant' %}
-      <a href="#" class="account-menu-item">Mes candidatures</a>
+      <a href="?page=mes-candidatures" class="account-menu-item">Mes candidatures</a>
     {% endif %}
 
     {# Spécifique pilote #}
     {% if user_role == 'pilote' %}
-      <a href="#" class="account-menu-item">Mes élèves</a>
+      <a href="?page=mes-eleves" class="account-menu-item">Mes élèves</a>
       <a href="#" class="account-menu-item">Mes annonces</a>
     {% endif %}
 
