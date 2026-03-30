@@ -8,9 +8,35 @@
 
     <h1 class="title my-applications-header">Mes candidatures</h1>
 
-    <section>
+    {% if candidatures is empty %}
+    <p class="my-applications-empty">Vous n'avez pas encore soumis de candidature.</p>
+    
+    {% else %}
+    <div class="my-applications-grid">
 
-    </section>
+        {% for candidature in candidatures %}
+        <article>
+
+            <a href="?page=detail-annonce&id={{ annonce.id }}" class="card-link {{ candidature.type }}">
+                <p class="badge {{ annonce.type }}">
+                    {{ annonce.type|capitalize }}
+                </p>
+                <h2 class="card-title">{{ candidature.id_.titre }}</h2>
+                <p class="offre-detail">{{ candidature.entreprise }}</p>
+                <p class="offre-detail">{{ candidature.lieu }}</p>
+                <p class="offre-detail offre-detail-duration">{{ candidature.duree }}</p>
+                <div class="card-button {{ annonce.type }}">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+                        <path fill-rule="evenodd" d="M1 8a.5.5 0 0 1 .5-.5h11.793l-3.147-3.146a.5.5 0 0 1 .708-.708l4 4a.5.5 0 0 1 0 .708l-4 4a.5.5 0 0 1-.708-.708L13.293 8.5H1.5A.5.5 0 0 1 1 8"/>
+                    </svg>
+                </div>
+            </a>
+
+        </article>
+        {% endfor %}
+
+    </div>
+    {% endif %}
 
     
 </main>

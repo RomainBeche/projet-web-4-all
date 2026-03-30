@@ -8,7 +8,7 @@ class HomeController extends Controller
 {
     public function index(): void
     {
-        require_once __DIR__ . '/../../src/Models/Annonces.php';     // TODO: REMOVE
+        require_once __DIR__ . '/../../src/Models/Annonces.php';
 
         $this->render('pages/accueil.twig.html', [
             'annonces' => $annonces,

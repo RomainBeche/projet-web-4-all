@@ -13,6 +13,7 @@ use Grp5\ProjetWeb4All\Controllers\{
     LegalController,
     ApplyController,
     MyApplicationsController,
+    MyApplicationController,
 
 };
 
@@ -33,24 +34,26 @@ return [
 
     'annonces' => ['controller' => OffersController::class, 'action' => 'index'],
     'detail-annonce' => ['controller' => OfferDetailsController::class, 'action' => 'index'],
+    'toggle-favori' => ['controller' => OfferDetailsController::class, 'action' => 'toggleFavorite'],
+    'toggle-rappel' => ['controller' => OfferDetailsController::class, 'action' => 'toggleReminder'],
     
     'entreprises' => ['controller' => CompaniesController::class, 'action' => 'index'],
     'detail-entreprise' => ['controller' => CompanyDetailsController::class, 'action' => 'index'],
     'evaluation-entreprise' => ['controller' => RateCompanyController::class, 'action' => 'index'],
-
-    'detail-annonce' => ['controller' => OfferDetailsController::class, 'action' => 'index'],
-    'toggle-favori' => ['controller' => OfferDetailsController::class, 'action' => 'toggleFavorite'],
-    'toggle-rappel' => ['controller' => OfferDetailsController::class, 'action' => 'toggleReminder'],
     
     'mentions-legales' => ['controller' => LegalController::class, 'action' => 'index'],
     
     'postuler' => ['controller' => ApplyController::class, 'action' => 'index'],
+    'postuler-store'  => ['controller' => MyApplicationController::class, 'action' => 'store'],
     
     'mes-candidatures' => ['controller' => MyApplicationsController::class, 'action' => 'index'],
+    'ma-candidature'  => ['controller' => MyApplicationController::class, 'action' => 'index'],
 
     'mes-eleves' => ['controller' => AccountController::class, 'action' => 'mesEleves'],
     'mes-eleves-creation' => ['controller' => AccountController::class, 'action' => 'mesElevesCreation'],
 
+
+    
 
     /*'logout' => ['controller' => AuthController::class, 'action' => 'logout'],
     'deconnexion' => ['controller' => AccountController::class, 'action' => 'logoutConfirmation'],

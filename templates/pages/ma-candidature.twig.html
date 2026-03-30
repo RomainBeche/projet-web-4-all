@@ -1,0 +1,88 @@
+{% extends "base.twig.html" %}
+
+{% block title %}Ma candidature – Web4All{% endblock %}
+
+{% block content %}
+<main class="my-application-page">
+
+    <section class="my-application-header" aria-labelledby="my-application-title">
+        <h1 id="my-application-title" class="title">
+            Candidature pour <strong>{{ annonce.titre }}</strong>
+            chez <strong>{{ annonce.entreprise }}</strong>
+        </h1>
+    </section>
+
+    <section class="page-wrapper">
+
+        <div class="form-section">
+            <div class="fields-grid">
+
+                <div class="field">
+                    <label>Intitulé de la formation / école</label>
+                    <input type="text" value="{{ candidature.formation }}" disabled />
+                </div>
+
+                <div class="field">
+                    <label>Niveau d'études</label>
+                    <input type="text" value="{{ candidature.niveau }}" disabled />
+                </div>
+
+                <div class="field">
+                    <label>Date de début disponible</label>
+                    <input type="text" value="{{ candidature.date_debut }}" disabled />
+                </div>
+
+                <div class="field">
+                    <label>Durée souhaitée (semaines)</label>
+                    <input type="text" value="{{ candidature.duree }}" disabled />
+                </div>
+
+                <div class="field">
+                    <label>CV (PDF)</label>
+                    {% if candidature.cv_url %}
+                        <a href="{{ candidature.cv_url }}" target="_blank" class="btn btn-outline-primary">
+                            Consulter le CV
+                        </a>
+                    {% else %}
+                        <p class="text-muted">Aucun CV déposé.</p>
+                    {% endif %}
+                </div>
+
+                <div class="field">
+                    <label>Lettre de motivation (PDF)</label>
+                    {% if candidature.lettre_motivation_url %}
+                        <a href="{{ candidature.lettre_motivation_url }}" target="_blank" class="btn btn-outline-primary">
+                            Consulter la lettre
+                        </a>
+                    {% else %}
+                        <p class="text-muted">Aucune lettre déposée.</p>
+                    {% endif %}
+                </div>
+
+                {% if candidature.portfolio %}
+                <div class="field">
+                    <label>Portfolio / GitHub</label>
+                    <a href="{{ candidature.portfolio }}" target="_blank" class="btn btn-outline-primary">
+                        Voir le portfolio
+                    </a>
+                </div>
+                {% endif %}
+
+                {% if candidature.message %}
+                <div class="field">
+                    <label>Message complémentaire</label>
+                    <textarea rows="5" disabled>{{ candidature.message }}</textarea>
+                </div>
+                {% endif %}
+
+            </div>
+        </div>
+
+        <div class="actions">
+            <button type="button" class="btn btn-outline-primary" onclick="history.back()">Retour</button>
+        </div>
+
+    </section>
+
+</main>
+{% endblock %}
