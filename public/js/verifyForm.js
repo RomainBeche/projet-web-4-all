@@ -27,7 +27,7 @@ document.querySelector('form').addEventListener('submit', function (e) {
         }
     });
 
-    // 🔹 File validation (CV + Lettre)
+    // Validation (CV + Lettre)
     const maxSize = 2 * 1024 * 1024; // 2MB
 
     const cv = document.getElementById('cv').files[0];
@@ -57,7 +57,7 @@ document.querySelector('form').addEventListener('submit', function (e) {
         try {
             const url = new URL(portfolio);
 
-            // Optional: enforce GitHub
+            // On vérifie si il y a bien "github.com" dans la string de l'url entrée
             if (!url.hostname.includes("github.com")) {
                 errors.push("Le lien doit être un GitHub valide.");
             }
@@ -67,7 +67,7 @@ document.querySelector('form').addEventListener('submit', function (e) {
         }
     }
 
-    // 🔹 Date validation (not in the past)
+    // Validation de la date (on ne veut pas qu'il y ait une date au passé)
     const dateInput = document.getElementById('date_debut').value;
     if (dateInput) {
         const selectedDate = new Date(dateInput);
@@ -79,7 +79,7 @@ document.querySelector('form').addEventListener('submit', function (e) {
         }
     }
 
-    // 🔹 Duration validation
+    // Valider la durée
     const duree = document.getElementById('duree').value;
     if (duree && duree <= 0) {
         errors.push("La durée doit être supérieure à 0.");
