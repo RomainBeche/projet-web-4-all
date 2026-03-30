@@ -34,8 +34,8 @@ return [
 
     'annonces' => ['controller' => OffersController::class, 'action' => 'index'],
     'detail-annonce' => ['controller' => OfferDetailsController::class, 'action' => 'index'],
-    'toggle-favori' => ['controller' => OfferDetailsController::class, 'action' => 'toggleFavorite'],
-    'toggle-rappel' => ['controller' => OfferDetailsController::class, 'action' => 'toggleReminder'],
+    'toggle-favori' => ['controller' => FavoritesController::class, 'action' => 'toggle'],
+    // 'toggle-rappel' => ['controller' => FavoritesController::class, 'action' => 'toggleRappel'],
     
     'entreprises' => ['controller' => CompaniesController::class, 'action' => 'index'],
     'detail-entreprise' => ['controller' => CompanyDetailsController::class, 'action' => 'index'],
@@ -51,6 +51,8 @@ return [
 
     'mes-eleves' => ['controller' => AccountController::class, 'action' => 'mesEleves'],
     'mes-eleves-creation' => ['controller' => AccountController::class, 'action' => 'mesElevesCreation'],
+
+
 
 
     

@@ -22,7 +22,7 @@ class CompanyDetailsController extends Controller
         }
 
         // Entreprise introuvable → 404
-        if ($entreprise === null) {
+        if (!$entreprise) {
             $this->render('pages/404.twig.html');
             return;
         }
