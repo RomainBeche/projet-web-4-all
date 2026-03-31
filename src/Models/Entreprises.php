@@ -7,7 +7,7 @@ $pdo = getConnection();
 $stmt = $pdo->query('
     SELECT e.* 
     FROM public.entreprise e
-    ORDER BY e."rating" DESC
+    ORDER BY COALESCE(e."rating", -1) DESC
 ');
 
 $entreprises = $stmt->fetchALL(PDO::FETCH_ASSOC);
