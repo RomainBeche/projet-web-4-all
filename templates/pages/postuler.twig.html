@@ -16,8 +16,8 @@
 
     <section class="page-wrapper">
 
-        <form method="POST" action="?page=postuler" enctype="multipart/form-data">
-            <input type="hidden" name="annonce_id" value="{{ annonce.id }}">
+        <form method="POST" action="?page=postuler&id={{ annonceId }}" enctype="multipart/form-data">
+            <input type="hidden" name="annonce_id" value="{{ annonceId }}">
 
             <div class="form-section">
 

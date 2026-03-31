@@ -22,36 +22,6 @@
         box-shadow: 0 4px 24px rgba(99, 91, 255, 0.07);
     }
 
-    .login-tabs {
-        display: flex;
-        gap: 0.5rem;
-        margin-bottom: 1.5rem;
-        border-bottom: 2px solid #ebebf5;
-        padding-bottom: 0;
-    }
-
-    .login-tab {
-        display: flex;
-        align-items: center;
-        gap: 0.4rem;
-        padding: 0.6rem 1.2rem;
-        border: none;
-        background: none;
-        cursor: pointer;
-        font-size: 0.95rem;
-        font-weight: 500;
-        color: #999;
-        border-bottom: 2px solid transparent;
-        margin-bottom: -2px;
-        transition: color 0.2s, border-color 0.2s;
-        font-family: inherit;
-    }
-
-    .login-tab.active {
-        color: #635bff;
-        border-bottom: 2px solid #635bff;
-    }
-
     .login-form-group {
         margin-bottom: 1.2rem;
     }
@@ -137,7 +107,7 @@
 
     .login-actions {
         display: flex;
-        gap: 0.75rem;
+        justify-content: center;
     }
 
     .login-alert {
@@ -161,9 +131,6 @@
         color: #27ae60;
         border: 1px solid #b2f2c9;
     }
-
-    .tab-panel { display: none; }
-    .tab-panel.active { display: block; }
 </style>
 {% endblock %}
 
@@ -189,68 +156,28 @@
         </div>
         {% endif %}
 
-        <div class="login-tabs">
-            <button type="button" class="login-tab active" onclick="switchTab('etudiant', this)">
-                Étudiant
-            </button>
-            <button type="button" class="login-tab" onclick="switchTab('pilote', this)">
-                Pilote
-            </button>
-        </div>
-
-        <!-- Panneau Étudiant -->
-        <div id="panel-etudiant" class="tab-panel active">
-            <form method="POST" action="/?page=login">
-                <input type="hidden" name="role" value="etudiant">
-                <div class="login-form-group">
-                    <label for="email-etudiant">Adresse mail</label>
-                    <input type="email" id="email-etudiant" name="email"
-                        value="{{ email|default('') }}" required autocomplete="email">
-                </div>
-                <div class="login-form-group">
-                    <label for="password-etudiant">Mot de passe</label>
-                    <input type="password" id="password-etudiant" name="password"
-                        required autocomplete="current-password">
-                </div>
-                <div class="login-remember">
-                    <span>Rester connecté-e</span>
-                    <label class="toggle-switch">
-                        <input type="checkbox" name="remember">
-                        <span class="toggle-slider"></span>
-                    </label>
-                </div>
-                <div class="login-actions">
-                    <button type="submit" class="btn btn-primary">Se connecter</button>
-                </div>
-            </form>
-        </div>
-
-        <!-- Panneau Pilote -->
-        <div id="panel-pilote" class="tab-panel">
-            <form method="POST" action="/?page=login">
-                <input type="hidden" name="role" value="pilote">
-                <div class="login-form-group">
-                    <label for="email-pilote">Adresse mail</label>
-                    <input type="email" id="email-pilote" name="email"
-                        value="{{ email|default('') }}" required autocomplete="email">
-                </div>
-                <div class="login-form-group">
-                    <label for="password-pilote">Mot de passe</label>
-                    <input type="password" id="password-pilote" name="password"
-                        required autocomplete="current-password">
-                </div>
-                <div class="login-remember">
-                    <span>Rester connecté-e</span>
-                    <label class="toggle-switch">
-                        <input type="checkbox" name="remember">
-                        <span class="toggle-slider"></span>
-                    </label>
-                </div>
-                <div class="login-actions">
-                    <button type="submit" class="btn btn-primary">Se connecter</button>
-                </div>
-            </form>
-        </div>
+        <form method="POST" action="/?page=login">
+            <div class="login-form-group">
+                <label for="email">Adresse mail</label>
+                <input type="email" id="email" name="email"
+                    value="{{ email|default('') }}" required autocomplete="email">
+            </div>
+            <div class="login-form-group">
+                <label for="password">Mot de passe</label>
+                <input type="password" id="password" name="password"
+                    required autocomplete="current-password">
+            </div>
+            <div class="login-remember">
+                <span>Rester connecté-e</span>
+                <label class="toggle-switch">
+                    <input type="checkbox" name="remember">
+                    <span class="toggle-slider"></span>
+                </label>
+            </div>
+            <div class="login-actions">
+                <button type="submit" class="btn btn-primary">Se connecter</button>
+            </div>
+        </form>
 
     </div>
 </div>

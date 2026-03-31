@@ -1271,6 +1271,9 @@ textarea[rows] {
   color: var(--text);
   margin: 0 0 0.5rem;
   padding: 0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;  
 }
 
 
@@ -1992,6 +1995,44 @@ input[type="url"]:focus {
   margin-bottom: 2rem;
 }
 
+.my-applications-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 1.5rem;
+}
+
+.my-applications-empty {
+  text-align: center;
+  color: var(--muted);
+  font-size: var(--fs-body);
+  margin-top: 4rem;
+}
+
+@media (max-width: 600px) {
+  .my-applications-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+
+
+
+
+/* ============================================================ *\
+   23. PAGE — Ma candidature
+\* ============================================================ */
+
+
+.my-application-page {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 2rem;
+}
+
+.my-application-header {
+  margin-bottom: 2rem;
+}
+
 
 
 
@@ -2188,12 +2229,6 @@ spline-viewer {
   margin-top: 4rem;
 }
 
-.cards-container {
-  display: flex;
-  flex-direction: column;
-  gap: 1rem;
-}
-
 .cards-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
@@ -2209,7 +2244,6 @@ spline-viewer {
   border-radius: var(--radius);
   border: 2px solid transparent;
   box-shadow: 0 6px 20px rgba(0, 0, 0, 0.06);
-  cursor: pointer;
   height: 100%;
 }
 

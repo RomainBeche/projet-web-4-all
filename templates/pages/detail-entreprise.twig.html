@@ -1,6 +1,6 @@
 {% extends "base.twig.html" %}
 
-{% block title %}{{ entreprise.Nom_entreprise }} – Web4All{% endblock %}
+{% block title %}{{ entreprise.nom }} – Web4All{% endblock %}
 
 {% block content %}
 <main class="entreprise-page">
@@ -8,21 +8,17 @@
 
     <section class="entreprise-header" aria-labelledby="entreprise-title">
 
-        <div class="entreprise-avatar {{ not entreprise.Logo ? 'entreprise-avatar-placeholder' }}" aria-hidden="true">
-            {% if entreprise.Logo %}
-                <img src="{{ entreprise.Logo }}" alt="Logo {{ entreprise.Nom_entreprise }}">
-            {% else %}
-                {{ entreprise.Nom_entreprise|split(' ')[0]|slice(0,1)|upper }}
-            {% endif %}
+        <div class="entreprise-avatar entreprise-avatar-placeholder" aria-hidden="true">
+            {{ entreprise.nom|split(' ')[0]|slice(0,1)|upper }}
         </div>
 
         <div class="entreprise-name-section">
-            <h1 id="entreprise-title" class="title entreprise-title">{{ entreprise.Nom_entreprise }}</h1>
-            <p class="entreprise-sector">{{ entreprise.Secteur }}</p>
+            <h1 id="entreprise-title" class="title entreprise-title">{{ entreprise.nom }}</h1>
+            <p class="entreprise-sector">{{ entreprise.secteur }}</p>
         </div>
 
         <div class="entreprise-rating-block">
-            <div class="global-rating" aria-label="Note : {{ entreprise.Rating }} sur 5">
+            <div class="global-rating" aria-label="Note : {{ entreprise.rating }} sur 5">
 
                 <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><use href="#star"></use></svg>
                 <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><use href="#star"></use></svg>
@@ -30,7 +26,7 @@
                 <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><use href="#star"></use></svg>
                 <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><use href="#star"></use></svg>
             </div>
-            <a href="?page=evaluation-entreprise&id={{ entreprise.id }}" class="avis-link-simple">Laisser un avis</a>
+            <a href="?page=evaluation-entreprise&id={{ entreprise.id_entreprise }}" class="avis-link-simple">Laisser un avis</a>
         </div>
 
     </section>
@@ -40,7 +36,7 @@
 
         <h2 id="about-title" class="entreprise-section-title">À propos de l'entreprise</h2>
         <p class="entreprise-text">
-        {{ entreprise.Description|default('Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut tristique, massa id tristique molestie, nunc lectus iaculis odio, quis tincidunt ante odio eu libero. Phasellus blandit pretium ligula commodo lobortis. Ut congue fringilla tempus. Donec sagittis est at urna molestie, nec faucibus enim viverra. Pellentesque dignissim ut est id maximus.') }}
+        {{ entreprise.description }}
         </p>
 
         <div class="entreprise-details">
