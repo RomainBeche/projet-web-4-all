@@ -2788,6 +2788,12 @@ spline-viewer {
   box-shadow: 0 0 0 3px rgba(75, 63, 238, 0.12);
 }
 
+.rating {
+  text-align: right;
+  margin-bottom: 1rem;
+}
+
+
 /* ── Actions ── */
 
 .star-form-actions {

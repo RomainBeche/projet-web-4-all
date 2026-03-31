@@ -30,9 +30,9 @@ class CompaniesController extends Controller
             $stmt->execute([':q' => $q_entreprises]);
         } else {
             $stmt = $pdo->query('
-                SELECT e.*
-                FROM public.entreprise e
-                ORDER BY e.id_entreprise
+               SELECT e.* 
+               FROM public.entreprise e
+               ORDER BY COALESCE(e."rating", -1) DESC
             ');
         }
 
