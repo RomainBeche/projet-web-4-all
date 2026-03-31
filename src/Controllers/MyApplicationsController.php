@@ -8,17 +8,18 @@ class MyApplicationsController extends Controller
 {
     public function index(): void
     {
-        require_once __DIR__ . '/../../src/Models/Annonces.php';     // TODO: REMOVE
-        require_once __DIR__ . '/../../src/Models/Candidatures.php';     // TODO: REMOVE
-
-        $this->requireLogin();
+        require_once __DIR__ . '/../../src/Models/Annonces.php';
+        require_once __DIR__ . '/../../src/Models/Candidatures.php';
 
         require_once __DIR__ . '/../../src/Pagination.php';
         require_once __DIR__ . '/../../src/PaginationAnnonces.php';
         
-            $annoncesById = [];
+        $this->requireLogin();
+        
+        $annoncesById = [];
+
         foreach ($annonces as $annonce) {
-            $annoncesById[(int) $annonce['id']] = $annonce;
+            $annoncesById[(int) $annonce['id_annonce']] = $annonce;
         }
 
         // Enrichit chaque candidature avec les données de son annonce

@@ -2,7 +2,6 @@
 namespace Grp5\ProjetWeb4All\Controllers;
 
 use Grp5\ProjetWeb4All\Core\Controller;
-use Grp5\ProjetWeb4All\Core\Database;
 
 class MyApplicationController extends Controller
 {
