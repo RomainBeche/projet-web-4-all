@@ -14,7 +14,7 @@ class OfferDetailsController extends Controller
         require_once __DIR__ . '/../../src/Database.php';
 
         $annonceId = isset($_GET['id']) ? (int) $_GET['id'] : 0;
-        $pdo     = getConnection();
+        $pdo = getConnection();
 
         // Récupère l'annonce par son id
         $stmt = $pdo->prepare('

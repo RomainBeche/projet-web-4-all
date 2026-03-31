@@ -19,3 +19,5 @@ foreach ($annonces as &$annonce) {
     $annonce['type'] = strtolower($annonce['type'] ?? '');
 }
 unset($annonce);
+
+$search = isset($_GET['search']) ? (int)$_GET['id'] : 1;

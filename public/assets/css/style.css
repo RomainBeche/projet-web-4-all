@@ -2156,19 +2156,26 @@ spline-viewer {
   flex-wrap: wrap;
 }
 
+.search-row {
+  display: flex;
+  align-items: stretch;
+  gap: 1rem;
+}
+
 .search-wrapper {
+  display: flex;
+  gap: 1.5rem;
   flex: 1;
   max-width: 480px;
   flex-shrink: 0;
 }
 
-.search {
+.search-bar {
   display: flex;
   align-items: center;
   border: 1.5px solid var(--border);
   border-radius: var(--radius);
   background: var(--white);
-  overflow: hidden;
   transition: border-color 0.2s, box-shadow 0.2s;
   width: 100%;
   min-width: 280px;
@@ -2214,13 +2221,109 @@ spline-viewer {
   background: none;
   border: none;
   cursor: pointer;
-  color: var(--primary-light);
+  color: var(--muted);
   transition: color 0.2s;
 }
 
 .search__button:hover {
   color: var(--primary);
 }
+
+.filter-wrapper {
+  display: flex;
+}
+
+.filter-selector {
+  display: flex;
+  flex: 1;
+}
+
+.filter-button {
+  align-self: stretch;
+  height: auto;
+  display: flex;
+  flex: 1;
+  align-items: center;
+  padding: 0.65rem 0.85rem;
+  border: 1.5px solid var(--border);
+  border-radius: var(--radius);
+  font-family: var(--font-body);
+  font-size: var(--fs-body);
+  color: var(--muted);
+  outline: none;
+  -webkit-appearance: none;
+  appearance: none;
+  background: var(--white);
+  transition: border-color 0.2s, box-shadow 0.2s;
+  cursor: pointer;
+  gap: 0.85rem;
+}
+
+.filter-button:hover {
+  color: var(--primary);
+}
+
+.filter-dropdown-wrapper {
+  position: relative;
+  display: flex;
+  flex: 1;
+}
+
+.filter-dropdown {
+  display: none;
+  position: absolute;
+  top: calc(100% + 8px);
+  right: 0;
+  min-width: 220px;
+  background: var(--white);
+  border: 1.5px solid var(--border);
+  border-radius: var(--radius);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.10);
+  padding: 6px;
+  z-index: 200;
+  animation: fadeIn 0.15s ease;
+}
+
+.filter-dropdown.open {
+  display: block;
+}
+
+.filter-option {
+  display: block;
+  padding: 0.6rem 0.85rem;
+  font-size: var(--fs-body);
+  color: var(--text);
+  border-radius: 6px;
+  transition: background 0.15s;
+  white-space: nowrap;
+}
+
+.filter-option:hover {
+  background: var(--accent);
+  color: var(--primary);
+}
+
+.filter-option.active {
+  color: var(--primary);
+  font-weight: 600;
+  background: var(--primary-light);
+}
+
+.filter-option--reset {
+  display: flex;
+  color: var(--muted);
+  font-size: var(--fs-small);
+  align-items: center;
+  gap: 0.85rem
+}
+
+
+.filter-divider {
+  height: 1px;
+  background: var(--border);
+  margin: 6px 0;
+}
+
 
 .entreprises-empty {
   text-align: center;
