@@ -1,0 +1,42 @@
+{% extends "base.twig.html" %}
+{% block title %}Supprimer une entreprise – Web4All{% endblock %}
+{% block content %}
+<main class="page-wrapper">
+    <a href="?page=entreprises-gestion" class="btn btn-secondary">← Retour</a>
+    <h1 class="title fade-in">Supprimer une entreprise</h1>
+
+    {% if succes %}<p style="color:green">✅ {{ succes }}</p>{% endif %}
+
+    {% if not entreprise_selectionnee %}
+        {# Étape 1 : sélection #}
+        <form method="POST" action="/?page=suppression-entreprise">
+            <input type="hidden" name="etape" value="selection">
+            <div class="field">
+                <label for="id_entreprise">Choisir une entreprise à supprimer</label>
+                <select id="id_entreprise" name="id_entreprise" required>
+                    <option value="">-- Sélectionner --</option>
+                    {% for e in entreprises %}
+                        <option value="{{ e.id_entreprise }}">{{ e.nom }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="actions fade-in">
+                <button type="submit" class="btn btn-primary">Sélectionner</button>
+            </div>
+        </form>
+
+    {% else %}
+        {# Étape 2 : confirmation #}
+        <p class="warning">Êtes-vous sûr de vouloir supprimer <strong>{{ entreprise_selectionnee.nom }}</strong> ? Cette action est irréversible.</p>
+        <form method="POST" action="/?page=suppression-entreprise">
+            <input type="hidden" name="etape" value="suppression">
+            <input type="hidden" name="id_entreprise" value="{{ entreprise_selectionnee.id_entreprise }}">
+            <div class="actions fade-in">
+                <button type="submit" class="btn btn-primary" style="background-color:#dc3545">Oui, supprimer</button>
+                <a href="?page=suppression-entreprise" class="btn btn-secondary">Annuler</a>
+            </div>
+        </form>
+    {% endif %}
+
+</main>
+{% endblock %}

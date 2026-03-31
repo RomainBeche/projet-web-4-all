@@ -1,0 +1,64 @@
+{% extends "base.twig.html" %}
+{% block title %}Modifier une entreprise – Web4All{% endblock %}
+{% block content %}
+<main class="page-wrapper">
+    <a href="?page=entreprises-gestion" class="btn btn-secondary">← Retour</a>
+    <h1 class="title fade-in">Modifier une entreprise</h1>
+
+    {% if error %}<p style="color:red">{{ error }}</p>{% endif %}
+    {% if succes %}<p style="color:green">{{ succes }}</p>{% endif %}
+
+    {% if not entreprise_selectionnee %}
+        {# Étape 1 : sélection de l'entreprise #}
+        <form method="POST" action="/?page=modification-entreprise">
+            <input type="hidden" name="etape" value="selection">
+                <div class="field">
+                    <label for="id_entreprise">Choisir une entreprise</label>
+                    <select id="id_entreprise" name="id_entreprise" required>
+                        <option value="">-- Sélectionner --</option>
+                        {% for e in entreprises %}
+                        <option value="{{ e.id_entreprise }}">{{ e.nom }}</option>
+                    {% endfor %}
+                    </select>
+                </div>
+            <div class="actions fade-in">
+        <button type="submit" class="btn btn-primary">Sélectionner</button>
+    </div>
+</form>
+
+    {% else %}
+        {# Étape 2 : formulaire pré-rempli #}
+        <form method="POST" action="/?page=modification-entreprise" class="register-form">
+            <input type="hidden" name="etape" value="modification">
+            <input type="hidden" name="id_entreprise" value="{{ entreprise_selectionnee.id_entreprise }}">
+            <div class="fields-grid fade-in">
+                <div class="field">
+                    <label for="nom">Nom *</label>
+                    <input type="text" id="nom" name="nom" value="{{ entreprise_selectionnee.nom }}" required />
+                </div>
+                <div class="field">
+                    <label for="email">Email *</label>
+                    <input type="email" id="email" name="email" value="{{ entreprise_selectionnee.email }}" required />
+                </div>
+                <div class="field">
+                    <label for="telephone">Téléphone</label>
+                    <input type="text" id="telephone" name="telephone" value="{{ entreprise_selectionnee.telephone }}" />
+                </div>
+                <div class="field">
+                    <label for="secteur">Secteur *</label>
+                    <input type="text" id="secteur" name="secteur" value="{{ entreprise_selectionnee.secteur }}" required />
+                </div>
+                <div class="field" style="grid-column: span 2">
+                    <label for="description">Description</label>
+                    <textarea id="description" name="description" rows="4">{{ entreprise_selectionnee.description }}</textarea>
+                </div>
+            </div>
+            <div class="actions fade-in">
+                <button type="submit" class="btn btn-primary">Modifier</button>
+                <a href="?page=modification-entreprise" class="btn btn-secondary">Annuler</a>
+            </div>
+        </form>
+    {% endif %}
+
+</main>
+{% endblock %}

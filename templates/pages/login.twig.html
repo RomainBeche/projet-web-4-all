@@ -182,3 +182,14 @@
     </div>
 </div>
 {% endblock %}
+
+{% block scripts %}
+<script src="js/verifyLogin.js">
+    function switchTab(tab, btn) {
+        document.querySelectorAll('.login-tab').forEach(t => t.classList.remove('active'));
+        document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+        btn.classList.add('active');
+        document.getElementById('panel-' + tab).classList.add('active');
+    }
+</script>
+{% endblock %}

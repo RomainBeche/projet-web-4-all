@@ -29,6 +29,10 @@ return [
     'suppression-compte-2' => ['controller' => AccountController::class, 'action' => 'delete'],
     
     'creation-compte' => ['controller' => RegistrationController::class, 'action' => 'index'],
+    'entreprises-gestion' => ['controller' => AccountController::class, 'action' => 'entreprisesGestion'],
+    'creation-entreprise' => ['controller' => AccountController::class, 'action' => 'creationEntreprise'],
+    'modification-entreprise' => ['controller' => AccountController::class, 'action' => 'modificationEntreprise'],
+    'suppression-entreprise' => ['controller' => AccountController::class, 'action' => 'suppressionEntreprise'],
     
     'favoris' => ['controller' => FavoritesController::class, 'action' => 'index'],
 
@@ -51,6 +55,10 @@ return [
 
     'mes-eleves' => ['controller' => AccountController::class, 'action' => 'mesEleves'],
     'mes-eleves-creation' => ['controller' => AccountController::class, 'action' => 'mesElevesCreation'],
+    'mes-eleves-detail' => ['controller' => AccountController::class, 'action' => 'mesElevesDetail'],
+    'gestion-eleves' => ['controller' => AccountController::class, 'action' => 'gestionEleves'],
+    'modification-eleve' => ['controller' => AccountController::class, 'action' => 'modificationEleve'],
+    'suppression-eleve' => ['controller' => AccountController::class, 'action' => 'suppressionEleve'],
 
 
 

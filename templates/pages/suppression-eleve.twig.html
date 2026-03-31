@@ -1,0 +1,38 @@
+{% extends "base.twig.html" %}
+{% block title %}Supprimer un élève – Web4All{% endblock %}
+{% block content %}
+<main class="page-wrapper">
+    <a href="?page=gestion-eleves" class="btn btn-secondary">← Retour</a>
+    <h1 class="title fade-in">Supprimer un élève</h1>
+
+    {% if succes %}<p style="color:green">✅ {{ succes }}</p>{% endif %}
+
+    {% if not eleve_selectionne %}
+        <form method="POST" action="/?page=suppression-eleve">
+            <input type="hidden" name="etape" value="selection">
+            <div class="field">
+                <label for="id_compte">Choisir un élève à supprimer</label>
+                <select id="id_compte" name="id_compte" required>
+                    <option value="">-- Sélectionner --</option>
+                    {% for eleve in eleves %}
+                        <option value="{{ eleve.id_compte }}">{{ eleve.nom }} {{ eleve.prenom }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="actions fade-in">
+                <button type="submit" class="btn btn-primary">Sélectionner</button>
+            </div>
+        </form>
+    {% else %}
+        <p class="warning">⚠️ Êtes-vous sûr de vouloir supprimer <strong>{{ eleve_selectionne.prenom }} {{ eleve_selectionne.nom }}</strong> ? Cette action est irréversible.</p>
+        <form method="POST" action="/?page=suppression-eleve">
+            <input type="hidden" name="etape" value="suppression">
+            <input type="hidden" name="id_compte" value="{{ eleve_selectionne.id_compte }}">
+            <div class="actions fade-in">
+                <button type="submit" class="btn btn-primary" style="background-color:#dc3545">🗑️ Oui, supprimer</button>
+                <a href="?page=suppression-eleve" class="btn btn-secondary">Annuler</a>
+            </div>
+        </form>
+    {% endif %}
+</main>
+{% endblock %}
