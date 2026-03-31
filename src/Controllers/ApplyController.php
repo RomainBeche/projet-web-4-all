@@ -2,7 +2,8 @@
 namespace Grp5\ProjetWeb4All\Controllers;
 
 use Grp5\ProjetWeb4All\Core\Controller;
-use Grp5\ProjetWeb4All\Core\Database;
+
+require_once __DIR__ . '/../Database.php';
 
 class ApplyController extends Controller
 {
@@ -17,12 +18,12 @@ class ApplyController extends Controller
             $cv = $_FILES['cv'] ?? null;
             $lettre = $_FILES['lettre'] ?? null;
 
-            // 🔒 Validate files exist
+            
             if (!$cv || !$lettre) {
                 die("Fichiers manquants.");
             }
 
-            // 🔒 Extract safe info
+            
             $cvExt = strtolower(pathinfo($cv['name'], PATHINFO_EXTENSION));
             $lettreExt = strtolower(pathinfo($lettre['name'], PATHINFO_EXTENSION));
 
@@ -35,7 +36,7 @@ class ApplyController extends Controller
                 die("La lettre doit être un PDF.");
             }
 
-            // 🔒 Validate size (INDIVIDUAL)
+            
             if ($cv['size'] > $maxSize) {
                 die("Le CV dépasse 2MB.");
             }
@@ -44,7 +45,7 @@ class ApplyController extends Controller
                 die("La lettre dépasse 2MB.");
             }
 
-            // 🔒 Validate MIME type (IMPORTANT)
+            
             $finfo = new \finfo(FILEINFO_MIME_TYPE);
 
             $cvMime = $finfo->file($cv['tmp_name']);
@@ -58,13 +59,13 @@ class ApplyController extends Controller
                 die("La lettre n'est pas un vrai PDF.");
             }
 
-            // 🔒 Generate SAFE filenames (no user input)
+            
             $cvName = uniqid('cv_', true) . '.pdf';
             $lettreName = uniqid('lettre_', true) . '.pdf';
 
             $uploadDir = __DIR__ . '/../../public/uploads/';
 
-            // 🔒 Move files
+           
             if (!move_uploaded_file($cv['tmp_name'], $uploadDir . $cvName)) {
                 die("Erreur upload CV.");
             }
@@ -73,7 +74,7 @@ class ApplyController extends Controller
                 die("Erreur upload lettre.");
             }
 
-            // ✅ Safe redirect
+           
             header('Location: ?page=annonces');
             exit;
         }
@@ -87,17 +88,20 @@ class ApplyController extends Controller
         }
 
         // Fetch annonce from DB
-        $pdo  = Database::getInstance();
-        $stmt = $pdo->prepare("
-            SELECT a.*, e.nom AS entreprise
-            FROM annonce a
-            JOIN entreprise e ON e.id_entreprise = a.id_entreprise
-            WHERE a.id_offre = :id
-        ");
+        $pdo = getConnection();
+
+        $stmt = $pdo->prepare('
+            SELECT a.*, e.nom AS entreprise_nom
+            FROM public.annonce a
+            LEFT JOIN public.entreprise e 
+                ON a.id_entreprise_appartient = e.id_entreprise
+            WHERE a.id_annonce = :id
+        ');
+
         $stmt->execute([':id' => $annonceId]);
+
         $annonce = $stmt->fetch(\PDO::FETCH_ASSOC);
 
-        $annonce = null;
         foreach ($annonces as $a) {
             if ((int) $a['id'] === $annonceId) {
                 $annonce = $a;
