@@ -72,37 +72,49 @@ class AccountController extends Controller
         ]);
     }
 
-    // Edit account validation
     public function editValidation(): void
     {
         $this->requireLogin();
-
         $dotenv = parse_ini_file(__DIR__ . '/../../.env');
         $pdo = new \PDO(
             "pgsql:host={$dotenv['DB_HOST']};port={$dotenv['DB_PORT']};dbname={$dotenv['DB_NAME']}",
             $dotenv['DB_USER'],
             $dotenv['DB_PASSWORD']
         );
-
         $userId   = $_SESSION['user_id'];
         $userRole = $_SESSION['user_role'];
-
         $nom      = trim($_POST['nom'] ?? '');
         $prenom   = trim($_POST['prenom'] ?? '');
         $email    = trim($_POST['email'] ?? '');
         $password = $_POST['password'] ?? '';
 
-        // Mise à jour dans etudiant ou pilote
-        if ($userRole === 'etudiant') {
-           $stmt = $pdo->prepare("UPDATE etudiant SET nom = :nom, prenom = :prenom, email_publique = :email WHERE id_compte = :id");
-        } else {
-            $stmt = $pdo->prepare("UPDATE pilote SET nom = :nom, prenom = :prenom, email_publique = :email WHERE id_compte = :id");
-        }
-        $stmt->execute([':nom' => $nom, ':prenom' => $prenom, ':email' => $email, ':id' => $userId]);
+        // Récupère l'email actuel
+        $stmt = $pdo->prepare("SELECT email_publique FROM compte WHERE id_compte = :id");
+        $stmt->execute([':id' => $userId]);
+        $currentEmail = $stmt->fetchColumn();
 
-        // Mise à jour email dans compte
-        $stmt = $pdo->prepare("UPDATE compte SET email_publique = :email WHERE id_compte = :id");
-        $stmt->execute([':email' => $email, ':id' => $userId]);
+        // Mise à jour dans etudiant ou pilote
+        if ($email !== $currentEmail) {
+            if ($userRole === 'etudiant') {
+                $stmt = $pdo->prepare("UPDATE etudiant SET nom = :nom, prenom = :prenom, email_publique = :email WHERE id_compte = :id");
+            } else {
+                $stmt = $pdo->prepare("UPDATE pilote SET nom = :nom, prenom = :prenom, email_publique = :email WHERE id_compte = :id");
+            }
+            $stmt->execute([':nom' => $nom, ':prenom' => $prenom, ':email' => $email, ':id' => $userId]);
+        } else {
+            if ($userRole === 'etudiant') {
+                $stmt = $pdo->prepare("UPDATE etudiant SET nom = :nom, prenom = :prenom WHERE id_compte = :id");
+            } else {
+                $stmt = $pdo->prepare("UPDATE pilote SET nom = :nom, prenom = :prenom WHERE id_compte = :id");
+            }
+            $stmt->execute([':nom' => $nom, ':prenom' => $prenom, ':id' => $userId]);
+        }
+
+        // Mise à jour email dans compte uniquement si l'email a changé
+        if ($email !== $currentEmail) {
+            $stmt = $pdo->prepare("UPDATE compte SET email_publique = :email WHERE id_compte = :id");
+            $stmt->execute([':email' => $email, ':id' => $userId]);
+        }
 
         // Mise à jour mot de passe si renseigné
         if (!empty($password)) {
@@ -236,21 +248,6 @@ class AccountController extends Controller
         exit;
     }
 
-    // Show mes eleves page
-public function mesEleves(): void
-{
-    $this->requireLogin();
-
-    if ($_SESSION['user_role'] !== 'pilote') {
-        header('Location: /?page=compte');
-        exit;
-    }
-
-    $this->render('pages/mes-eleves.twig.html', [
-        'user_role' => $_SESSION['user_role'],
-    ]);
-}
-
 // Create student account
 public function mesElevesCreation(): void
 {
@@ -321,6 +318,87 @@ public function mesElevesCreation(): void
         'user_role' => $_SESSION['user_role'],
         'error'     => $error,
         'succes'    => $succes,
+    ]);
+}
+
+    // Liste des élèves du pilote
+public function mesEleves(): void
+{
+    $this->requireLogin();
+
+    if ($_SESSION['user_role'] !== 'pilote') {
+        header('Location: /?page=compte');
+        exit;
+    }
+
+    $dotenv = parse_ini_file(__DIR__ . '/../../.env');
+    $pdo = new \PDO(
+        "pgsql:host={$dotenv['DB_HOST']};port={$dotenv['DB_PORT']};dbname={$dotenv['DB_NAME']}",
+        $dotenv['DB_USER'],
+        $dotenv['DB_PASSWORD']
+    );
+
+    // Récupère tous les étudiants du pilote connecté
+    $stmt = $pdo->prepare("
+        SELECT * FROM etudiant 
+        WHERE id_compte_pilote = :id_pilote
+    ");
+    $stmt->execute([':id_pilote' => $_SESSION['user_id']]);
+    $eleves = $stmt->fetchAll(\PDO::FETCH_ASSOC);
+
+    $this->render('pages/mes-eleves.twig.html', [
+        'user_role' => $_SESSION['user_role'],
+        'eleves'    => $eleves,
+    ]);
+}
+
+// Détail d'un élève avec ses candidatures
+public function mesElevesDetail(): void
+{
+    $this->requireLogin();
+
+    if ($_SESSION['user_role'] !== 'pilote') {
+        header('Location: /?page=compte');
+        exit;
+    }
+
+    $id_compte_etudiant = (int)($_GET['id'] ?? 0);
+    if ($id_compte_etudiant === 0) {
+        header('Location: /?page=mes-eleves');
+        exit;
+    }
+
+    $dotenv = parse_ini_file(__DIR__ . '/../../.env');
+    $pdo = new \PDO(
+        "pgsql:host={$dotenv['DB_HOST']};port={$dotenv['DB_PORT']};dbname={$dotenv['DB_NAME']}",
+        $dotenv['DB_USER'],
+        $dotenv['DB_PASSWORD']
+    );
+
+    // Récupère les infos de l'étudiant
+    $stmt = $pdo->prepare("SELECT * FROM etudiant WHERE id_compte = :id");
+    $stmt->execute([':id' => $id_compte_etudiant]);
+    $eleve = $stmt->fetch(\PDO::FETCH_ASSOC);
+
+    if (!$eleve) {
+        header('Location: /?page=mes-eleves');
+        exit;
+    }
+
+    // Récupère les candidatures de l'étudiant avec les infos de l'annonce
+    $stmt = $pdo->prepare("
+        SELECT candidature.*, annonce.titre, annonce.lieu, annonce.type, annonce.duree
+        FROM candidature
+        JOIN annonce ON candidature.id_offre = annonce.id_annonce
+        WHERE candidature.id_compte = :id
+    ");
+    $stmt->execute([':id' => $id_compte_etudiant]);
+    $candidatures = $stmt->fetchAll(\PDO::FETCH_ASSOC);
+
+    $this->render('pages/mes-eleves-detail.twig.html', [
+        'user_role'    => $_SESSION['user_role'],
+        'eleve'        => $eleve,
+        'candidatures' => $candidatures,
     ]);
 }
 }
