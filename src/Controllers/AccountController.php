@@ -627,4 +627,154 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && ($_POST['etape'] ?? '') === 'suppre
         'succes'                  => $succes,
     ]);
 }
+
+public function gestionEleves(): void
+{
+    $this->requireLogin();
+    if ($_SESSION['user_role'] !== 'pilote') {
+        header('Location: /?page=compte');
+        exit;
+    }
+    $this->render('pages/gestion-eleves.twig.html', [
+        'user_role' => $_SESSION['user_role'],
+    ]);
+}
+
+public function modificationEleve(): void
+{
+    $this->requireLogin();
+    if ($_SESSION['user_role'] !== 'pilote') {
+        header('Location: /?page=compte');
+        exit;
+    }
+
+    $dotenv = parse_ini_file(__DIR__ . '/../../.env');
+    $pdo = new \PDO(
+        "pgsql:host={$dotenv['DB_HOST']};port={$dotenv['DB_PORT']};dbname={$dotenv['DB_NAME']}",
+        $dotenv['DB_USER'],
+        $dotenv['DB_PASSWORD']
+    );
+
+    $error  = null;
+    $succes = null;
+    $eleve_selectionne = null;
+
+    // Récupère les étudiants du pilote connecté
+    $stmt = $pdo->prepare("SELECT * FROM etudiant WHERE id_compte_pilote = :id");
+    $stmt->execute([':id' => $_SESSION['user_id']]);
+    $eleves = $stmt->fetchAll(\PDO::FETCH_ASSOC);
+
+    // Étape 1 : sélection
+    if ($_SERVER['REQUEST_METHOD'] === 'POST' && ($_POST['etape'] ?? '') === 'selection') {
+        $stmt = $pdo->prepare("SELECT * FROM etudiant WHERE id_compte = :id AND id_compte_pilote = :id_pilote");
+        $stmt->execute([':id' => (int)$_POST['id_compte'], ':id_pilote' => $_SESSION['user_id']]);
+        $eleve_selectionne = $stmt->fetch(\PDO::FETCH_ASSOC);
+    }
+
+    // Étape 2 : modification
+    if ($_SERVER['REQUEST_METHOD'] === 'POST' && ($_POST['etape'] ?? '') === 'modification') {
+        $id_compte = (int)$_POST['id_compte'];
+        $nom       = trim($_POST['nom'] ?? '');
+        $prenom    = trim($_POST['prenom'] ?? '');
+        $email     = trim($_POST['email'] ?? '');
+
+        if (empty($nom) || empty($prenom) || empty($email)) {
+            $error = "Tous les champs sont obligatoires.";
+            $stmt = $pdo->prepare("SELECT * FROM etudiant WHERE id_compte = :id");
+            $stmt->execute([':id' => $id_compte]);
+            $eleve_selectionne = $stmt->fetch(\PDO::FETCH_ASSOC);
+        } else {
+            // Récupère l'email actuel
+            $stmt = $pdo->prepare("SELECT email_publique FROM compte WHERE id_compte = :id");
+            $stmt->execute([':id' => $id_compte]);
+            $currentEmail = $stmt->fetchColumn();
+
+            // Met à jour etudiant
+            $stmt = $pdo->prepare("UPDATE etudiant SET nom = :nom, prenom = :prenom, email_publique = :email WHERE id_compte = :id");
+            $stmt->execute([':nom' => $nom, ':prenom' => $prenom, ':email' => $email, ':id' => $id_compte]);
+
+            // Met à jour compte si email changé
+            if ($email !== $currentEmail) {
+                $stmt = $pdo->prepare("UPDATE compte SET email_publique = :email WHERE id_compte = :id");
+                $stmt->execute([':email' => $email, ':id' => $id_compte]);
+            }
+
+            $succes = "Compte de $prenom $nom mis à jour avec succès !";
+        }
+    }
+
+    $this->render('pages/modification-eleve.twig.html', [
+        'user_role'         => $_SESSION['user_role'],
+        'eleves'            => $eleves,
+        'eleve_selectionne' => $eleve_selectionne,
+        'error'             => $error,
+        'succes'            => $succes,
+    ]);
+}
+
+public function suppressionEleve(): void
+{
+    $this->requireLogin();
+    if ($_SESSION['user_role'] !== 'pilote') {
+        header('Location: /?page=compte');
+        exit;
+    }
+
+    $dotenv = parse_ini_file(__DIR__ . '/../../.env');
+    $pdo = new \PDO(
+        "pgsql:host={$dotenv['DB_HOST']};port={$dotenv['DB_PORT']};dbname={$dotenv['DB_NAME']}",
+        $dotenv['DB_USER'],
+        $dotenv['DB_PASSWORD']
+    );
+
+    $succes = null;
+    $eleve_selectionne = null;
+
+    // Récupère les étudiants du pilote connecté
+    $stmt = $pdo->prepare("SELECT * FROM etudiant WHERE id_compte_pilote = :id");
+    $stmt->execute([':id' => $_SESSION['user_id']]);
+    $eleves = $stmt->fetchAll(\PDO::FETCH_ASSOC);
+
+    // Étape 1 : sélection
+    if ($_SERVER['REQUEST_METHOD'] === 'POST' && ($_POST['etape'] ?? '') === 'selection') {
+        $stmt = $pdo->prepare("SELECT * FROM etudiant WHERE id_compte = :id AND id_compte_pilote = :id_pilote");
+        $stmt->execute([':id' => (int)$_POST['id_compte'], ':id_pilote' => $_SESSION['user_id']]);
+        $eleve_selectionne = $stmt->fetch(\PDO::FETCH_ASSOC);
+    }
+
+    // Étape 2 : suppression
+    if ($_SERVER['REQUEST_METHOD'] === 'POST' && ($_POST['etape'] ?? '') === 'suppression') {
+        $id_compte = (int)$_POST['id_compte'];
+
+        // Supprime les candidatures
+        $stmt = $pdo->prepare("DELETE FROM candidature WHERE id_compte = :id");
+        $stmt->execute([':id' => $id_compte]);
+
+        // Supprime les favoris
+        $stmt = $pdo->prepare("DELETE FROM favori WHERE id_compte = :id");
+        $stmt->execute([':id' => $id_compte]);
+
+        // Supprime l'étudiant
+        $stmt = $pdo->prepare("DELETE FROM etudiant WHERE id_compte = :id AND id_compte_pilote = :id_pilote");
+        $stmt->execute([':id' => $id_compte, ':id_pilote' => $_SESSION['user_id']]);
+
+        // Supprime le compte
+        $stmt = $pdo->prepare("DELETE FROM compte WHERE id_compte = :id");
+        $stmt->execute([':id' => $id_compte]);
+
+        $succes = "Compte étudiant supprimé avec succès !";
+
+        // Recharge la liste
+        $stmt = $pdo->prepare("SELECT * FROM etudiant WHERE id_compte_pilote = :id");
+        $stmt->execute([':id' => $_SESSION['user_id']]);
+        $eleves = $stmt->fetchAll(\PDO::FETCH_ASSOC);
+    }
+
+    $this->render('pages/suppression-eleve.twig.html', [
+        'user_role'         => $_SESSION['user_role'],
+        'eleves'            => $eleves,
+        'eleve_selectionne' => $eleve_selectionne,
+        'succes'            => $succes,
+    ]);
+}
 }

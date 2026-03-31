@@ -1,0 +1,52 @@
+{% extends "base.twig.html" %}
+{% block title %}Modifier un élève – Web4All{% endblock %}
+{% block content %}
+<main class="page-wrapper">
+    <a href="?page=gestion-eleves" class="btn btn-secondary">← Retour</a>
+    <h1 class="title fade-in">Modifier un élève</h1>
+
+    {% if error %}<p style="color:red">❌ {{ error }}</p>{% endif %}
+    {% if succes %}<p style="color:green">✅ {{ succes }}</p>{% endif %}
+
+    {% if not eleve_selectionne %}
+        <form method="POST" action="/?page=modification-eleve">
+            <input type="hidden" name="etape" value="selection">
+            <div class="field">
+                <label for="id_compte">Choisir un élève</label>
+                <select id="id_compte" name="id_compte" required>
+                    <option value="">-- Sélectionner --</option>
+                    {% for eleve in eleves %}
+                        <option value="{{ eleve.id_compte }}">{{ eleve.nom }} {{ eleve.prenom }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="actions fade-in">
+                <button type="submit" class="btn btn-primary">Sélectionner</button>
+            </div>
+        </form>
+    {% else %}
+        <form method="POST" action="/?page=modification-eleve" class="register-form">
+            <input type="hidden" name="etape" value="modification">
+            <input type="hidden" name="id_compte" value="{{ eleve_selectionne.id_compte }}">
+            <div class="fields-grid fade-in">
+                <div class="field">
+                    <label for="nom">Nom *</label>
+                    <input type="text" id="nom" name="nom" value="{{ eleve_selectionne.nom }}" required />
+                </div>
+                <div class="field">
+                    <label for="prenom">Prénom *</label>
+                    <input type="text" id="prenom" name="prenom" value="{{ eleve_selectionne.prenom }}" required />
+                </div>
+                <div class="field">
+                    <label for="email">Email *</label>
+                    <input type="email" id="email" name="email" value="{{ eleve_selectionne.email_publique }}" required />
+                </div>
+            </div>
+            <div class="actions fade-in">
+                <button type="submit" class="btn btn-primary">Modifier</button>
+                <a href="?page=modification-eleve" class="btn btn-secondary">Annuler</a>
+            </div>
+        </form>
+    {% endif %}
+</main>
+{% endblock %}
