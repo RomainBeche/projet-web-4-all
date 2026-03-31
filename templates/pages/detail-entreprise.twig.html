@@ -19,13 +19,16 @@
 
         <div class="entreprise-rating-block">
             <div class="global-rating" aria-label="Note : {{ entreprise.rating }} sur 5">
-
-                <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><use href="#star"></use></svg>
-                <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><use href="#star"></use></svg>
-                <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><use href="#star"></use></svg>
-                <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><use href="#star"></use></svg>
-                <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><use href="#star"></use></svg>
+                {% set rounded = entreprise.rating|round %}
+                {% for i in range(1, 5) %}
+                {% if i <= rounded %}
+                    <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><use href="#star"></use></svg>
+                {% else %}
+                    <svg class="icon star-empty" viewBox="0 0 24 24" aria-hidden="true"><use href="#star"></use></svg>
+                {% endif %}
+                {% endfor %}
             </div>
+
             <a href="?page=evaluation-entreprise&id={{ entreprise.id_entreprise }}" class="avis-link-simple">Laisser un avis</a>
         </div>
 
@@ -36,7 +39,7 @@
 
         <h2 id="about-title" class="entreprise-section-title">À propos de l'entreprise</h2>
         <p class="entreprise-text">
-        {{ entreprise.description }}
+        {{ entreprise.description|default('Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut tristique, massa id tristique molestie, nunc lectus iaculis odio, quis tincidunt ante odio eu libero. Phasellus blandit pretium ligula commodo lobortis. Ut congue fringilla tempus. Donec sagittis est at urna molestie, nec faucibus enim viverra. Pellentesque dignissim ut est id maximus.') }}
         </p>
 
         <div class="entreprise-details">
@@ -84,8 +87,37 @@
 
 
     <section class="entreprise-offers" aria-labelledby="offers-title">
-            <h2 id="offers-title" class="entreprise-section-title">Annonces en ligne</h2>
-            {# TODO: liste des offres #}
+
+        <h2 id="offers-title" class="entreprise-section-title">Annonces en ligne</h2>
+            
+        {% if annonces is empty %}
+
+        <p class="offers-empty">Aucune offre disponible pour l'instant… Revenez bientôt !</p>
+
+        {% else %}
+
+        <ul class="offers-grid" role="list">
+            {% for annonce in annonces %}
+            <li>
+            <article>
+                <a href="?page=detail-annonce&id={{ annonce.id_annonce }}" class="card-link {{ annonce.type|lower }}">
+                <p class="badge {{ annonce.type|lower }}">{{ annonce.type|capitalize }}</p>
+                <h2 class="card-title">{{ annonce.titre }}</h2>
+                <p class="offre-detail">{{ annonce.entreprise_nom }}</p>
+                <p class="offre-detail">{{ annonce.lieu }}</p>
+                <p class="offre-detail offre-detail--duration">{{ annonce.duree }}</p>
+                <div class="card-button {{ annonce.type|lower }}" aria-hidden="true">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16" aria-hidden="true">
+                    <path fill-rule="evenodd" d="M1 8a.5.5 0 0 1 .5-.5h11.793l-3.147-3.146a.5.5 0 0 1 .708-.708l4 4a.5.5 0 0 1 0 .708l-4 4a.5.5 0 0 1-.708-.708L13.293 8.5H1.5A.5.5 0 0 1 1 8"/>
+                    </svg>
+                </div>
+                </a>
+            </article>
+            </li>
+            {% endfor %}
+        </ul>
+        {% endif %}
+
     </section>
 
 

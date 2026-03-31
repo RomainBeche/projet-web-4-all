@@ -10,20 +10,115 @@
 
     <h1 id="offers-title" class="title">Un stage, une alternance ? <strong>À bout de doigts !</strong></h1>
 
-    <div class="search-wrapper">
-      <div class="search" role="search">
-        <input type|lower="text" id="search-input" class="search__input" placeholder="Bouygues Telecom...">
-        <button class="search__button" aria-label="Lancer la recherche">
-          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16" aria-hidden="true">
-            <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001q.044.06.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1 1 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0"/>
-          </svg>
-        </button>
-      </div>
+    <div class="search-row">
+
+
+      <form method="GET" action="" role="search" class="search-wrapper">
+
+        <div class="search-bar" >
+
+          <input type="text" id="search-input" name="q" class="search__input" placeholder="Stage Lyon..." value="{{ searchQuery ?? '' }}">
+          <input type="hidden" name="page" value="annonces">
+          {% if searchQuery %}
+          <a href="?page=annonces" class="search__button" aria-label="Effacer la recherche">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="red" class="bi bi-x-lg" viewBox="0 0 16 16">
+              <path d="M2.146 2.854a.5.5 0 1 1 .708-.708L8 7.293l5.146-5.147a.5.5 0 0 1 .708.708L8.707 8l5.147 5.146a.5.5 0 0 1-.708.708L8 8.707l-5.146 5.147a.5.5 0 0 1-.708-.708L7.293 8z"/>
+            </svg>
+          </a>
+          {% else %}
+          <button class="search__button" aria-label="Lancer la recherche">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16" aria-hidden="true">
+              <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001q.044.06.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1 1 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0"/>
+            </svg>
+          </button>
+          {% endif %}
+
+        </div>
+
+      </form>
+
+      <form action="" class="filter-wrapper">
+        <div class="filter-selector">
+
+          <div class="filter-dropdown-wrapper">
+
+            <button class="filter-button" id="filter-toggle" type="button" aria-haspopup="listbox" aria-expanded="false">
+              {% if sortLabel is defined and sortLabel %}
+                {{ sortLabel }}
+              {% else %}
+                Filtrer
+              {% endif %}
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-filter" viewBox="0 0 16 16">
+                <path d="M6 10.5a.5.5 0 0 1 .5-.5h3a.5.5 0 0 1 0 1h-3a.5.5 0 0 1-.5-.5m-2-3a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7a.5.5 0 0 1-.5-.5m-2-3a.5.5 0 0 1 .5-.5h11a.5.5 0 0 1 0 1h-11a.5.5 0 0 1-.5-.5"/>
+              </svg>
+            </button>
+
+            <ul class="filter-dropdown" role="listbox" id="filter-menu">
+              <li>
+                <a href="?page=annonces&q={{ searchQuery|url_encode }}&sort=duree"
+                  class="filter-option {{ sort == 'duree' ? 'active' }}"
+                  role="option">
+                  Trier par durée
+                </a>
+              </li>
+              <li>
+                <a href="?page=annonces&q={{ searchQuery|url_encode }}&sort=likes"
+                  class="filter-option {{ sort == 'likes' ? 'active' }}"
+                  role="option">
+                  Annonces les plus likées
+                </a>
+              </li>
+              <li>
+                <a href="?page=annonces&q={{ searchQuery|url_encode }}&sort=candidatures"
+                  class="filter-option {{ sort == 'candidatures' ? 'active' }}"
+                  role="option">
+                  Plus de candidatures
+                </a>
+              </li>
+              {% if sort is defined and sort %}
+              <li class="filter-divider"></li>
+              <li>
+                <a href="?page=annonces&q={{ searchQuery|url_encode }}&sort={{ sort }}&dir={{ dir == 'DESC' ? 'ASC' : 'DESC' }}"
+                  class="filter-option filter-option--reset">
+                  {% if dir == 'DESC' %}
+                    <div>
+                      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-chevron-compact-up" viewBox="0 0 16 16">
+                        <path fill-rule="evenodd" d="M7.776 5.553a.5.5 0 0 1 .448 0l6 3a.5.5 0 1 1-.448.894L8 6.56 2.224 9.447a.5.5 0 1 1-.448-.894z"/> 
+                      </svg>
+                    </div>
+                    <div>
+                      Ordre croissant
+                    </div>
+                  {% else %}
+                    <div>
+                      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-chevron-compact-down" viewBox="0 0 16 16">
+                        <path fill-rule="evenodd" d="M1.553 6.776a.5.5 0 0 1 .67-.223L8 9.44l5.776-2.888a.5.5 0 1 1 .448.894l-6 3a.5.5 0 0 1-.448 0l-6-3a.5.5 0 0 1-.223-.67"/>
+                      </svg>
+                    </div>
+                    <div>
+                      Ordre décroissant
+                    </div>
+                  {% endif %}
+                </a>
+                <a href="?page=annonces&q={{ searchQuery|url_encode }}"
+                  class="filter-option filter-option--reset">
+                  Réinitialiser
+                </a>
+              </li>
+              {% endif %}
+            </ul>
+
+          </div>
+        </div>
+      </form>
+
+
     </div>
 
   </section>
 
-  <section aria-labelledby="offers-title">
+
+  <section>
 
     {% if annonces is empty %}
 
@@ -53,11 +148,29 @@
       </ul>
       {{ navLinks|raw }}
 
-
     {% endif %}
 
   </section>
 
 
 </main>
+
+{% block scripts %}
+<script>
+const toggle = document.getElementById('filter-toggle');
+const menu   = document.getElementById('filter-menu');
+
+toggle?.addEventListener('click', (e) => {
+  e.stopPropagation();
+  const isOpen = menu.classList.toggle('open');
+  toggle.setAttribute('aria-expanded', isOpen);
+});
+
+document.addEventListener('click', () => {
+  menu?.classList.remove('open');
+  toggle?.setAttribute('aria-expanded', 'false');
+});
+</script>
+{% endblock %}
+
 {% endblock %}

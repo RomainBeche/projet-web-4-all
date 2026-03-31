@@ -72,37 +72,49 @@ class AccountController extends Controller
         ]);
     }
 
-    // Edit account validation
     public function editValidation(): void
     {
         $this->requireLogin();
-
         $dotenv = parse_ini_file(__DIR__ . '/../../.env');
         $pdo = new \PDO(
             "pgsql:host={$dotenv['DB_HOST']};port={$dotenv['DB_PORT']};dbname={$dotenv['DB_NAME']}",
             $dotenv['DB_USER'],
             $dotenv['DB_PASSWORD']
         );
-
         $userId   = $_SESSION['user_id'];
         $userRole = $_SESSION['user_role'];
-
         $nom      = trim($_POST['nom'] ?? '');
         $prenom   = trim($_POST['prenom'] ?? '');
         $email    = trim($_POST['email'] ?? '');
         $password = $_POST['password'] ?? '';
 
-        // Mise à jour dans etudiant ou pilote
-        if ($userRole === 'etudiant') {
-           $stmt = $pdo->prepare("UPDATE etudiant SET nom = :nom, prenom = :prenom, email_publique = :email WHERE id_compte = :id");
-        } else {
-            $stmt = $pdo->prepare("UPDATE pilote SET nom = :nom, prenom = :prenom, email_publique = :email WHERE id_compte = :id");
-        }
-        $stmt->execute([':nom' => $nom, ':prenom' => $prenom, ':email' => $email, ':id' => $userId]);
+        // Récupère l'email actuel
+        $stmt = $pdo->prepare("SELECT email_publique FROM compte WHERE id_compte = :id");
+        $stmt->execute([':id' => $userId]);
+        $currentEmail = $stmt->fetchColumn();
 
-        // Mise à jour email dans compte
-        $stmt = $pdo->prepare("UPDATE compte SET email_publique = :email WHERE id_compte = :id");
-        $stmt->execute([':email' => $email, ':id' => $userId]);
+        // Mise à jour dans etudiant ou pilote
+        if ($email !== $currentEmail) {
+            if ($userRole === 'etudiant') {
+                $stmt = $pdo->prepare("UPDATE etudiant SET nom = :nom, prenom = :prenom, email_publique = :email WHERE id_compte = :id");
+            } else {
+                $stmt = $pdo->prepare("UPDATE pilote SET nom = :nom, prenom = :prenom, email_publique = :email WHERE id_compte = :id");
+            }
+            $stmt->execute([':nom' => $nom, ':prenom' => $prenom, ':email' => $email, ':id' => $userId]);
+        } else {
+            if ($userRole === 'etudiant') {
+                $stmt = $pdo->prepare("UPDATE etudiant SET nom = :nom, prenom = :prenom WHERE id_compte = :id");
+            } else {
+                $stmt = $pdo->prepare("UPDATE pilote SET nom = :nom, prenom = :prenom WHERE id_compte = :id");
+            }
+            $stmt->execute([':nom' => $nom, ':prenom' => $prenom, ':id' => $userId]);
+        }
+
+        // Mise à jour email dans compte uniquement si l'email a changé
+        if ($email !== $currentEmail) {
+            $stmt = $pdo->prepare("UPDATE compte SET email_publique = :email WHERE id_compte = :id");
+            $stmt->execute([':email' => $email, ':id' => $userId]);
+        }
 
         // Mise à jour mot de passe si renseigné
         if (!empty($password)) {
@@ -236,21 +248,6 @@ class AccountController extends Controller
         exit;
     }
 
-    // Show mes eleves page
-public function mesEleves(): void
-{
-    $this->requireLogin();
-
-    if ($_SESSION['user_role'] !== 'pilote') {
-        header('Location: /?page=compte');
-        exit;
-    }
-
-    $this->render('pages/mes-eleves.twig.html', [
-        'user_role' => $_SESSION['user_role'],
-    ]);
-}
-
 // Create student account
 public function mesElevesCreation(): void
 {
@@ -321,6 +318,463 @@ public function mesElevesCreation(): void
         'user_role' => $_SESSION['user_role'],
         'error'     => $error,
         'succes'    => $succes,
+    ]);
+}
+
+    // Liste des élèves du pilote
+public function mesEleves(): void
+{
+    $this->requireLogin();
+
+    if ($_SESSION['user_role'] !== 'pilote') {
+        header('Location: /?page=compte');
+        exit;
+    }
+
+    $dotenv = parse_ini_file(__DIR__ . '/../../.env');
+    $pdo = new \PDO(
+        "pgsql:host={$dotenv['DB_HOST']};port={$dotenv['DB_PORT']};dbname={$dotenv['DB_NAME']}",
+        $dotenv['DB_USER'],
+        $dotenv['DB_PASSWORD']
+    );
+
+    // Récupère tous les étudiants du pilote connecté
+    $stmt = $pdo->prepare("
+        SELECT * FROM etudiant 
+        WHERE id_compte_pilote = :id_pilote
+    ");
+    $stmt->execute([':id_pilote' => $_SESSION['user_id']]);
+    $eleves = $stmt->fetchAll(\PDO::FETCH_ASSOC);
+
+    $this->render('pages/mes-eleves.twig.html', [
+        'user_role' => $_SESSION['user_role'],
+        'eleves'    => $eleves,
+    ]);
+}
+
+// Détail d'un élève avec ses candidatures
+public function mesElevesDetail(): void
+{
+    $this->requireLogin();
+
+    if ($_SESSION['user_role'] !== 'pilote') {
+        header('Location: /?page=compte');
+        exit;
+    }
+
+    $id_compte_etudiant = (int)($_GET['id'] ?? 0);
+    if ($id_compte_etudiant === 0) {
+        header('Location: /?page=mes-eleves');
+        exit;
+    }
+
+    $dotenv = parse_ini_file(__DIR__ . '/../../.env');
+    $pdo = new \PDO(
+        "pgsql:host={$dotenv['DB_HOST']};port={$dotenv['DB_PORT']};dbname={$dotenv['DB_NAME']}",
+        $dotenv['DB_USER'],
+        $dotenv['DB_PASSWORD']
+    );
+
+    // Récupère les infos de l'étudiant
+    $stmt = $pdo->prepare("SELECT * FROM etudiant WHERE id_compte = :id");
+    $stmt->execute([':id' => $id_compte_etudiant]);
+    $eleve = $stmt->fetch(\PDO::FETCH_ASSOC);
+
+    if (!$eleve) {
+        header('Location: /?page=mes-eleves');
+        exit;
+    }
+
+    // Récupère les candidatures de l'étudiant avec les infos de l'annonce
+    $stmt = $pdo->prepare("
+        SELECT candidature.*, annonce.titre, annonce.lieu, annonce.type, annonce.duree
+        FROM candidature
+        JOIN annonce ON candidature.id_offre = annonce.id_annonce
+        WHERE candidature.id_compte = :id
+    ");
+    $stmt->execute([':id' => $id_compte_etudiant]);
+    $candidatures = $stmt->fetchAll(\PDO::FETCH_ASSOC);
+
+    $this->render('pages/mes-eleves-detail.twig.html', [
+        'user_role'    => $_SESSION['user_role'],
+        'eleve'        => $eleve,
+        'candidatures' => $candidatures,
+    ]);
+}
+
+public function entreprisesGestion(): void
+{
+    $this->requireLogin();
+
+    if ($_SESSION['user_role'] !== 'pilote') {
+        header('Location: /?page=compte');
+        exit;
+    }
+
+    $this->render('pages/entreprises-gestion.twig.html', [
+        'user_role' => $_SESSION['user_role'],
+    ]);
+}
+
+public function creationEntreprise(): void
+{
+    $this->requireLogin();
+    if ($_SESSION['user_role'] !== 'pilote') {
+        header('Location: /?page=compte');
+        exit;
+    }
+
+    $error  = null;
+    $succes = null;
+
+    if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+        $nom         = trim($_POST['nom'] ?? '');
+        $description = trim($_POST['description'] ?? '');
+        $email       = trim($_POST['email'] ?? '');
+        $telephone   = trim($_POST['telephone'] ?? '');
+        $secteur     = trim($_POST['secteur'] ?? '');
+        $numero_rue  = trim($_POST['numero_rue'] ?? '');
+        $nom_rue     = trim($_POST['nom_rue'] ?? '');
+        $nom_ville   = trim($_POST['nom_ville'] ?? '');
+        $code_postal = trim($_POST['code_postal'] ?? '');
+
+        if (empty($nom) || empty($email) || empty($secteur) || empty($nom_rue) || empty($nom_ville)) {
+            $error = "Tous les champs obligatoires doivent être remplis.";
+        } else {
+            $dotenv = parse_ini_file(__DIR__ . '/../../.env');
+            $pdo = new \PDO(
+                "pgsql:host={$dotenv['DB_HOST']};port={$dotenv['DB_PORT']};dbname={$dotenv['DB_NAME']}",
+                $dotenv['DB_USER'],
+                $dotenv['DB_PASSWORD']
+            );
+
+            // 1. Vérifie si la ville existe, sinon la crée
+            $stmt = $pdo->prepare("SELECT id_ville FROM ville WHERE nom = :nom AND code_postal = :cp");
+            $stmt->execute([':nom' => $nom_ville, ':cp' => $code_postal]);
+            $ville = $stmt->fetch(\PDO::FETCH_ASSOC);
+
+            if ($ville) {
+                $id_ville = $ville['id_ville'];
+            } else {
+                $maxVilleId = $pdo->query("SELECT COALESCE(MAX(id_ville), 0) + 1 FROM ville")->fetchColumn();
+                $stmt = $pdo->prepare("INSERT INTO ville (id_ville, nom, code_postal) VALUES (:id, :nom, :cp)");
+                $stmt->execute([':id' => $maxVilleId, ':nom' => $nom_ville, ':cp' => $code_postal]);
+                $id_ville = $maxVilleId;
+            }
+
+            // 2. Crée l'adresse
+            $maxAdresseId = $pdo->query("SELECT COALESCE(MAX(id_adresse), 0) + 1 FROM adresse")->fetchColumn();
+            $stmt = $pdo->prepare("INSERT INTO adresse (id_adresse, numero_rue, nom_rue, id_ville) VALUES (:id, :numero, :rue, :ville)");
+            $stmt->execute([':id' => $maxAdresseId, ':numero' => $numero_rue, ':rue' => $nom_rue, ':ville' => $id_ville]);
+
+            // 3. Crée l'entreprise
+            $maxEntrepriseId = $pdo->query("SELECT COALESCE(MAX(id_entreprise), 0) + 1 FROM entreprise")->fetchColumn();
+            $stmt = $pdo->prepare("
+                INSERT INTO entreprise (id_entreprise, nom, description, email, telephone, secteur, id_compte, id_adresse)
+                VALUES (:id, :nom, :description, :email, :telephone, :secteur, :id_compte, :id_adresse)
+            ");
+            $stmt->execute([
+                ':id'          => $maxEntrepriseId,
+                ':nom'         => $nom,
+                ':description' => $description,
+                ':email'       => $email,
+                ':telephone'   => $telephone,
+                ':secteur'     => $secteur,
+                ':id_compte'   => $_SESSION['user_id'],
+                ':id_adresse'  => $maxAdresseId,
+            ]);
+
+            $succes = "L'entreprise \"$nom\" a été créée avec succès !";
+        }
+    }
+
+    $this->render('pages/creation-entreprise.twig.html', [
+        'user_role' => $_SESSION['user_role'],
+        'error'     => $error,
+        'succes'    => $succes,
+    ]);
+}
+
+public function modificationEntreprise(): void
+{
+    $this->requireLogin();
+    if ($_SESSION['user_role'] !== 'pilote') {
+        header('Location: /?page=compte');
+        exit;
+    }
+
+    $dotenv = parse_ini_file(__DIR__ . '/../../.env');
+    $pdo = new \PDO(
+        "pgsql:host={$dotenv['DB_HOST']};port={$dotenv['DB_PORT']};dbname={$dotenv['DB_NAME']}",
+        $dotenv['DB_USER'],
+        $dotenv['DB_PASSWORD']
+    );
+
+    $error  = null;
+    $succes = null;
+    $entreprise_selectionnee = null;
+
+    // Récupère toutes les entreprises
+    $entreprises = $pdo->query("SELECT * FROM entreprise")->fetchAll(\PDO::FETCH_ASSOC);
+
+    // Étape 1 : sélection via POST
+    if ($_SERVER['REQUEST_METHOD'] === 'POST' && ($_POST['etape'] ?? '') === 'modification') {
+    $stmt = $pdo->prepare("SELECT * FROM entreprise WHERE id_entreprise = :id");
+    $stmt->execute([':id' => (int)$_POST['id_entreprise']]);
+    $entreprise_selectionnee = $stmt->fetch(\PDO::FETCH_ASSOC);
+}
+
+    // Étape 2 : modification via POST
+    if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+        $id_entreprise = (int)($_POST['id_entreprise'] ?? 0);
+        $nom           = trim($_POST['nom'] ?? '');
+        $description   = trim($_POST['description'] ?? '');
+        $email         = trim($_POST['email'] ?? '');
+        $telephone     = trim($_POST['telephone'] ?? '');
+        $secteur       = trim($_POST['secteur'] ?? '');
+
+        if (empty($nom) || empty($email) || empty($secteur)) {
+            $error = "Tous les champs obligatoires doivent être remplis.";
+            $stmt = $pdo->prepare("SELECT * FROM entreprise WHERE id_entreprise = :id");
+            $stmt->execute([':id' => $id_entreprise]);
+            $entreprise_selectionnee = $stmt->fetch(\PDO::FETCH_ASSOC);
+        } else {
+            $stmt = $pdo->prepare("
+                UPDATE entreprise 
+                SET nom = :nom, description = :description, email = :email, telephone = :telephone, secteur = :secteur
+                WHERE id_entreprise = :id
+            ");
+            $stmt->execute([
+                ':nom'         => $nom,
+                ':description' => $description,
+                ':email'       => $email,
+                ':telephone'   => $telephone,
+                ':secteur'     => $secteur,
+                ':id'          => $id_entreprise,
+            ]);
+            $succes = "Entreprise mise à jour avec succès !";
+        }
+    }
+
+    $this->render('pages/modification-entreprise.twig.html', [
+        'user_role'               => $_SESSION['user_role'],
+        'entreprises'             => $entreprises,
+        'entreprise_selectionnee' => $entreprise_selectionnee,
+        'error'                   => $error,
+        'succes'                  => $succes,
+    ]);
+}
+
+public function suppressionEntreprise(): void
+{
+    $this->requireLogin();
+    if ($_SESSION['user_role'] !== 'pilote') {
+        header('Location: /?page=compte');
+        exit;
+    }
+
+    $dotenv = parse_ini_file(__DIR__ . '/../../.env');
+    $pdo = new \PDO(
+        "pgsql:host={$dotenv['DB_HOST']};port={$dotenv['DB_PORT']};dbname={$dotenv['DB_NAME']}",
+        $dotenv['DB_USER'],
+        $dotenv['DB_PASSWORD']
+    );
+
+    $succes = null;
+    $entreprise_selectionnee = null;
+
+    // Récupère toutes les entreprises
+    $entreprises = $pdo->query("SELECT * FROM entreprise")->fetchAll(\PDO::FETCH_ASSOC);
+
+    // Étape 1 : sélection
+    if ($_SERVER['REQUEST_METHOD'] === 'POST' && ($_POST['etape'] ?? '') === 'selection') {
+        $stmt = $pdo->prepare("SELECT * FROM entreprise WHERE id_entreprise = :id");
+        $stmt->execute([':id' => (int)$_POST['id_entreprise']]);
+        $entreprise_selectionnee = $stmt->fetch(\PDO::FETCH_ASSOC);
+    }
+
+    // Étape 2 : suppression
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && ($_POST['etape'] ?? '') === 'suppression') {
+    $id_entreprise = (int)$_POST['id_entreprise'];
+    
+    // Supprime d'abord les candidatures liées aux annonces de cette entreprise
+    $stmt = $pdo->prepare("
+        DELETE FROM candidature 
+        WHERE id_offre IN (
+            SELECT id_annonce FROM annonce WHERE id_entreprise_appartient = :id
+        )
+    ");
+    $stmt->execute([':id' => $id_entreprise]);
+
+    // Supprime ensuite les annonces liées
+    $stmt = $pdo->prepare("DELETE FROM annonce WHERE id_entreprise_appartient = :id");
+    $stmt->execute([':id' => $id_entreprise]);
+
+    // Supprime enfin l'entreprise
+    $stmt = $pdo->prepare("DELETE FROM entreprise WHERE id_entreprise = :id");
+    $stmt->execute([':id' => $id_entreprise]);
+
+    $succes = "Entreprise et ses annonces supprimées avec succès !";
+
+    // Recharge la liste
+    $entreprises = $pdo->query("SELECT * FROM entreprise")->fetchAll(\PDO::FETCH_ASSOC);
+}
+
+    $this->render('pages/suppression-entreprise.twig.html', [
+        'user_role'               => $_SESSION['user_role'],
+        'entreprises'             => $entreprises,
+        'entreprise_selectionnee' => $entreprise_selectionnee,
+        'succes'                  => $succes,
+    ]);
+}
+
+public function gestionEleves(): void
+{
+    $this->requireLogin();
+    if ($_SESSION['user_role'] !== 'pilote') {
+        header('Location: /?page=compte');
+        exit;
+    }
+    $this->render('pages/gestion-eleves.twig.html', [
+        'user_role' => $_SESSION['user_role'],
+    ]);
+}
+
+public function modificationEleve(): void
+{
+    $this->requireLogin();
+    if ($_SESSION['user_role'] !== 'pilote') {
+        header('Location: /?page=compte');
+        exit;
+    }
+
+    $dotenv = parse_ini_file(__DIR__ . '/../../.env');
+    $pdo = new \PDO(
+        "pgsql:host={$dotenv['DB_HOST']};port={$dotenv['DB_PORT']};dbname={$dotenv['DB_NAME']}",
+        $dotenv['DB_USER'],
+        $dotenv['DB_PASSWORD']
+    );
+
+    $error  = null;
+    $succes = null;
+    $eleve_selectionne = null;
+
+    // Récupère les étudiants du pilote connecté
+    $stmt = $pdo->prepare("SELECT * FROM etudiant WHERE id_compte_pilote = :id");
+    $stmt->execute([':id' => $_SESSION['user_id']]);
+    $eleves = $stmt->fetchAll(\PDO::FETCH_ASSOC);
+
+    // Étape 1 : sélection
+    if ($_SERVER['REQUEST_METHOD'] === 'POST' && ($_POST['etape'] ?? '') === 'selection') {
+        $stmt = $pdo->prepare("SELECT * FROM etudiant WHERE id_compte = :id AND id_compte_pilote = :id_pilote");
+        $stmt->execute([':id' => (int)$_POST['id_compte'], ':id_pilote' => $_SESSION['user_id']]);
+        $eleve_selectionne = $stmt->fetch(\PDO::FETCH_ASSOC);
+    }
+
+    // Étape 2 : modification
+    if ($_SERVER['REQUEST_METHOD'] === 'POST' && ($_POST['etape'] ?? '') === 'modification') {
+        $id_compte = (int)$_POST['id_compte'];
+        $nom       = trim($_POST['nom'] ?? '');
+        $prenom    = trim($_POST['prenom'] ?? '');
+        $email     = trim($_POST['email'] ?? '');
+
+        if (empty($nom) || empty($prenom) || empty($email)) {
+            $error = "Tous les champs sont obligatoires.";
+            $stmt = $pdo->prepare("SELECT * FROM etudiant WHERE id_compte = :id");
+            $stmt->execute([':id' => $id_compte]);
+            $eleve_selectionne = $stmt->fetch(\PDO::FETCH_ASSOC);
+        } else {
+            // Récupère l'email actuel
+            $stmt = $pdo->prepare("SELECT email_publique FROM compte WHERE id_compte = :id");
+            $stmt->execute([':id' => $id_compte]);
+            $currentEmail = $stmt->fetchColumn();
+
+            // Met à jour etudiant
+            $stmt = $pdo->prepare("UPDATE etudiant SET nom = :nom, prenom = :prenom, email_publique = :email WHERE id_compte = :id");
+            $stmt->execute([':nom' => $nom, ':prenom' => $prenom, ':email' => $email, ':id' => $id_compte]);
+
+            // Met à jour compte si email changé
+            if ($email !== $currentEmail) {
+                $stmt = $pdo->prepare("UPDATE compte SET email_publique = :email WHERE id_compte = :id");
+                $stmt->execute([':email' => $email, ':id' => $id_compte]);
+            }
+
+            $succes = "Compte de $prenom $nom mis à jour avec succès !";
+        }
+    }
+
+    $this->render('pages/modification-eleve.twig.html', [
+        'user_role'         => $_SESSION['user_role'],
+        'eleves'            => $eleves,
+        'eleve_selectionne' => $eleve_selectionne,
+        'error'             => $error,
+        'succes'            => $succes,
+    ]);
+}
+
+public function suppressionEleve(): void
+{
+    $this->requireLogin();
+    if ($_SESSION['user_role'] !== 'pilote') {
+        header('Location: /?page=compte');
+        exit;
+    }
+
+    $dotenv = parse_ini_file(__DIR__ . '/../../.env');
+    $pdo = new \PDO(
+        "pgsql:host={$dotenv['DB_HOST']};port={$dotenv['DB_PORT']};dbname={$dotenv['DB_NAME']}",
+        $dotenv['DB_USER'],
+        $dotenv['DB_PASSWORD']
+    );
+
+    $succes = null;
+    $eleve_selectionne = null;
+
+    // Récupère les étudiants du pilote connecté
+    $stmt = $pdo->prepare("SELECT * FROM etudiant WHERE id_compte_pilote = :id");
+    $stmt->execute([':id' => $_SESSION['user_id']]);
+    $eleves = $stmt->fetchAll(\PDO::FETCH_ASSOC);
+
+    // Étape 1 : sélection
+    if ($_SERVER['REQUEST_METHOD'] === 'POST' && ($_POST['etape'] ?? '') === 'selection') {
+        $stmt = $pdo->prepare("SELECT * FROM etudiant WHERE id_compte = :id AND id_compte_pilote = :id_pilote");
+        $stmt->execute([':id' => (int)$_POST['id_compte'], ':id_pilote' => $_SESSION['user_id']]);
+        $eleve_selectionne = $stmt->fetch(\PDO::FETCH_ASSOC);
+    }
+
+    // Étape 2 : suppression
+    if ($_SERVER['REQUEST_METHOD'] === 'POST' && ($_POST['etape'] ?? '') === 'suppression') {
+        $id_compte = (int)$_POST['id_compte'];
+
+        // Supprime les candidatures
+        $stmt = $pdo->prepare("DELETE FROM candidature WHERE id_compte = :id");
+        $stmt->execute([':id' => $id_compte]);
+
+        // Supprime les favoris
+        $stmt = $pdo->prepare("DELETE FROM favori WHERE id_compte = :id");
+        $stmt->execute([':id' => $id_compte]);
+
+        // Supprime l'étudiant
+        $stmt = $pdo->prepare("DELETE FROM etudiant WHERE id_compte = :id AND id_compte_pilote = :id_pilote");
+        $stmt->execute([':id' => $id_compte, ':id_pilote' => $_SESSION['user_id']]);
+
+        // Supprime le compte
+        $stmt = $pdo->prepare("DELETE FROM compte WHERE id_compte = :id");
+        $stmt->execute([':id' => $id_compte]);
+
+        $succes = "Compte étudiant supprimé avec succès !";
+
+        // Recharge la liste
+        $stmt = $pdo->prepare("SELECT * FROM etudiant WHERE id_compte_pilote = :id");
+        $stmt->execute([':id' => $_SESSION['user_id']]);
+        $eleves = $stmt->fetchAll(\PDO::FETCH_ASSOC);
+    }
+
+    $this->render('pages/suppression-eleve.twig.html', [
+        'user_role'         => $_SESSION['user_role'],
+        'eleves'            => $eleves,
+        'eleve_selectionne' => $eleve_selectionne,
+        'succes'            => $succes,
     ]);
 }
 }

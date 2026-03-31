@@ -15,8 +15,9 @@ $annonces = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
 // Parse les tags jsonb --> tableau PHP
 foreach ($annonces as &$annonce) {
-    if (!empty($annonce['tags'])) {
-        $annonce['tags'] = json_decode($annonce['tags'], true) ?? [];
-    }
+    $annonce['tags'] = json_decode($annonce['tags'] ?? '[]', true);
+    $annonce['type'] = strtolower($annonce['type'] ?? '');
 }
 unset($annonce);
+
+$search = isset($_GET['search']) ? (int)$_GET['id'] : 1;

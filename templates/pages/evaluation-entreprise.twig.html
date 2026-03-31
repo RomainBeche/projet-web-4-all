@@ -1,25 +1,25 @@
 {% extends "base.twig.html" %}
 
-{% block title %}Évaluer {{ Nom_entreprise }} – Web4All{% endblock %}
+{% block title %}Évaluer {{ entreprise.nom }} – Web4All{% endblock %}
 
 {% block content %}
-
 <main class="evaluation-page">
-
 
   <div id="bannerimage"></div>
 
   <section>
+    <h1 class="entreprise-title">Évaluer {{ entreprise.nom }}</h1>
+    <h2 class="entreprise-sector">{{ entreprise.secteur }}</h2>
 
-    <h1 class="entreprise-title">Évaluer {{ Nom_entreprise }}</h1>
-    <h2 class="entreprise-sector">{{ Secteur }}</h2>
-    <p class="rating">Note globale</p>
-
+    <p class="rating">
+      Note globale : <strong>{{ entreprise.rating }}/5</strong>
+      ({{ entreprise.nombre_avis }} avis)
+    </p>
   </section>
 
-  <section>
 
-    <form class="star-form" method="get">
+  <section>
+    <form class="star-form" method="post">
 
       <div class="star-rating">
         <input type="radio" id="note_5" name="star-rating" value="5">
@@ -39,31 +39,104 @@
       </div>
 
       <div class="comment">
-        <textarea id="comment" name="comment" rows="6" placeholder="Partagez votre expérience avec cette entreprise ..."></textarea>
+        <textarea id="comment" name="comment" rows="6"
+          placeholder="Partagez votre expérience avec cette entreprise ..."></textarea>
       </div>
 
+      <input type="hidden" name="id" value="{{ entreprise.id_entreprise }}">
+
       <div class="actions">
-        <button type="submit" title="Envoyer" class="btn btn-primary">Soumettre</button>
-        <button type="reset" title="Effacer" class="btn btn-outline-primary">Effacer</button>
+        <button type="submit" class="btn btn-primary">Soumettre</button>
+        <button type="reset" class="btn btn-outline-primary">Effacer</button>
       </div>
 
     </form>
-
   </section>
 
-  
 </main>
 
-  
-
-
 <svg xmlns="http://www.w3.org/2000/svg"
-       style="position:absolute; width:0; height:0; overflow:hidden"
-       aria-hidden="true" focusable="false">
-    <symbol id="star" viewBox="0 0 24 24">
+     style="position:absolute; width:0; height:0; overflow:hidden"
+     aria-hidden="true" focusable="false">
+  <symbol id="star" viewBox="0 0 24 24">
     <path fill="currentColor"
-        d="m10 15-5.9 3 1.1-6.5L.5 7 7 6 10 0l3 6 6.5 1-4.7 4.5 1.1 6.5z"/>
-    </symbol>
+      d="m10 15-5.9 3 1.1-6.5L.5 7 7 6 10 0l3 6 6.5 1-4.7 4.5 1.1 6.5z"/>
+  </symbol>
 </svg>
+
+
+{# Modale "non connecté" #}
+<div id="modal-login" class="modal-overlay" style="display:none;">
+  <div class="modal-box">
+    <h2>Connexion requise</h2>
+    <p>Vous devez être connecté pour laisser un avis.</p>
+    <div class="modal-actions">
+      <a href="?page=login" class="btn btn-primary">Se connecter</a>
+      <button onclick="closeModal('modal-login')" class="btn btn-outline-primary">Fermer</button>
+    </div>
+  </div>
+</div>
+
+{# Modale "avis enregistré" #}
+<div id="modal-success" class="modal-overlay" style="display:none;">
+  <div class="modal-box">
+    <h2>Merci pour votre avis !</h2>
+    <p>Votre évaluation a bien été enregistrée.</p>
+    <div class="modal-actions">
+      <a href="?page=accueil" class="btn btn-primary">Retour à l'accueil</a>
+    </div>
+  </div>
+</div>
+
+{# Modale "erreur" #}
+<div id="modal-error" class="modal-overlay" style="display:none;">
+  <div class="modal-box">
+    <h2>Erreur</h2>
+    <p>Une erreur est survenue lors de l'enregistrement de votre évaluation.</p>
+    <div class="modal-actions">
+      <button onclick="closeModal('modal-error')" class="btn btn-outline-primary">Fermer</button>
+    </div>
+  </div>
+</div>
+
+{% if notLoggedIn %}
+  <script>
+    document.getElementById('modal-login').style.display = 'flex';
+  </script>
+{% endif %}
+
+{% if success %}
+<script>
+  document.getElementById('modal-success').style.display = 'flex';
+</script>
+{% endif %}
+
+{% if error %}
+<script>
+  document.getElementById('modal-error').style.display = 'flex';
+</script>
+{% endif %}
+
+
+<script>
+  function closeModal(modalId) {
+    document.getElementById(modalId).style.display = 'none';
+  }
+
+  document.getElementById('modal-login').addEventListener('click', function(e) {
+    if (e.target === this) closeModal('modal-login');
+  });
+
+  document.getElementById('modal-error').addEventListener('click', function(e) {
+    if (e.target === this) closeModal('modal-error');
+  });
+
+  // La modale succès ne se ferme pas en cliquant dehors
+  document.getElementById('modal-success').addEventListener('click', function(e) {
+    e.stopPropagation();
+  });
+</script>
+
+
 
 {% endblock %}

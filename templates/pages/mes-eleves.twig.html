@@ -1,9 +1,58 @@
 {% extends "base.twig.html" %}
+{% block head %}
+<style>
+    .table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 1.5rem;
+    }
+    .table th, .table td {
+        padding: 1rem 1.5rem;
+        text-align: left;
+        border-bottom: 1px solid #e0e0f0;
+    }
+    .table th {
+        font-weight: 600;
+        color: #555;
+    }
+    .table tr:hover {
+        background-color: #f8f8ff;
+    }
+</style>
+{% endblock %}
 {% block title %}Mes élèves – Web4All{% endblock %}
 {% block content %}
 <main class="page-wrapper">
     <h1 class="title fade-in">Mes élèves</h1>
-    <a href="?page=mes-eleves-creation" class="btn btn-primary">+ Créer un compte étudiant</a>
+    <a href="?page=mes-eleves-creation" class="btn btn-primary">+ Ajouter un étudiant</a>
+
+    {% if eleves is empty %}
+        <p>Vous n'avez pas encore d'élèves.</p>
+    {% else %}
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Nom</th>
+                    <th>Prénom</th>
+                    <th>Email</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for eleve in eleves %}
+                <tr>
+                    <td>{{ eleve.nom }}</td>
+                    <td>{{ eleve.prenom }}</td>
+                    <td>{{ eleve.email_publique }}</td>
+                    <td>
+                        <a href="?page=mes-eleves-detail&id={{ eleve.id_compte }}" class="btn btn-secondary">
+                            Voir les candidatures
+                        </a>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    {% endif %}
 </main>
 {% endblock %}
-

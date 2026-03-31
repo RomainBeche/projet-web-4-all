@@ -1,37 +1,51 @@
 {% extends "base.twig.html" %}
-
+ 
 {% block title %}Les entreprises – Web4All{% endblock %}
-
+ 
 {% block content %}
 <main class="entreprises-page">
-
-  <section aria-labelledby="entreprises-title">
-
-    <div class="entreprises-header">
-
-      <h1 id="entreprises-title" class="title">Les entreprises</h1>
-
-      <div class="search-wrapper">
-
-        <div class="search" role="search">
-          <input type="text" id="search-entreprise" class="search__input" placeholder="Bouygues Telecom...">
+ 
+ 
+  <section class="entreprises-header" aria-labelledby="entreprises-title">
+ 
+    <h1 id="entreprises-title" class="title">Les entreprises</h1>
+ 
+    <div class="search-row">
+ 
+      <form method="GET" action="" role="search" class="search-wrapper">
+        <div class="search-bar" >
+ 
+          <input type="text" id="search-input" name="q" class="search__input" placeholder="Orange..." value="{{ searchQuery ?? '' }}">
+          <input type="hidden" name="page" value="entreprises">
+          {% if searchQuery %}
+          <a href="?page=entreprises" class="search__button" aria-label="Effacer la recherche">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="red" class="bi bi-x-lg" viewBox="0 0 16 16">
+              <path d="M2.146 2.854a.5.5 0 1 1 .708-.708L8 7.293l5.146-5.147a.5.5 0 0 1 .708.708L8.707 8l5.147 5.146a.5.5 0 0 1-.708.708L8 8.707l-5.146 5.147a.5.5 0 0 1-.708-.708L7.293 8z"/>
+            </svg>
+          </a>
+          {% else %}
           <button class="search__button" aria-label="Lancer la recherche">
             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16" aria-hidden="true">
               <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001q.044.06.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1 1 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0"/>
             </svg>
           </button>
+          {% endif %}
+ 
         </div>
-
-      </div>
-
+      </form>
+ 
     </div>
-
+ 
+  </section>
+ 
+  <section>
+ 
     {% if entreprises is empty %}
+ 
       <p class="entreprises-empty">Aucune entreprise disponible pour l'instant… Revenez bientôt !</p>
-
+ 
     {% else %}
-      <div class="cards-container">
-
+    
         <ul class="cards-grid" role="list">
           {% for entreprise in entreprises %}
           <li>
@@ -51,11 +65,12 @@
           {% endfor %}
         </ul>
         {{ navLinks|raw }}
-        
-      </div>
+ 
     {% endif %}
-
+ 
   </section>
-
+ 
+ 
 </main>
 {% endblock %}
+ 

@@ -29,13 +29,17 @@ return [
     'suppression-compte-2' => ['controller' => AccountController::class, 'action' => 'delete'],
     
     'creation-compte' => ['controller' => RegistrationController::class, 'action' => 'index'],
+    'entreprises-gestion' => ['controller' => AccountController::class, 'action' => 'entreprisesGestion'],
+    'creation-entreprise' => ['controller' => AccountController::class, 'action' => 'creationEntreprise'],
+    'modification-entreprise' => ['controller' => AccountController::class, 'action' => 'modificationEntreprise'],
+    'suppression-entreprise' => ['controller' => AccountController::class, 'action' => 'suppressionEntreprise'],
     
     'favoris' => ['controller' => FavoritesController::class, 'action' => 'index'],
 
     'annonces' => ['controller' => OffersController::class, 'action' => 'index'],
     'detail-annonce' => ['controller' => OfferDetailsController::class, 'action' => 'index'],
-    'toggle-favori' => ['controller' => OfferDetailsController::class, 'action' => 'toggleFavorite'],
-    'toggle-rappel' => ['controller' => OfferDetailsController::class, 'action' => 'toggleReminder'],
+    'toggle-favori' => ['controller' => FavoritesController::class, 'action' => 'toggle'],
+    // 'toggle-rappel' => ['controller' => FavoritesController::class, 'action' => 'toggleRappel'],
     
     'entreprises' => ['controller' => CompaniesController::class, 'action' => 'index'],
     'detail-entreprise' => ['controller' => CompanyDetailsController::class, 'action' => 'index'],
@@ -51,6 +55,12 @@ return [
 
     'mes-eleves' => ['controller' => AccountController::class, 'action' => 'mesEleves'],
     'mes-eleves-creation' => ['controller' => AccountController::class, 'action' => 'mesElevesCreation'],
+    'mes-eleves-detail' => ['controller' => AccountController::class, 'action' => 'mesElevesDetail'],
+    'gestion-eleves' => ['controller' => AccountController::class, 'action' => 'gestionEleves'],
+    'modification-eleve' => ['controller' => AccountController::class, 'action' => 'modificationEleve'],
+    'suppression-eleve' => ['controller' => AccountController::class, 'action' => 'suppressionEleve'],
+
+
 
 
     

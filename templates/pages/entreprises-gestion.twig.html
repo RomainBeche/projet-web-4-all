@@ -1,0 +1,12 @@
+{% extends "base.twig.html" %}
+{% block title %}Gestion des entreprises – Web4All{% endblock %}
+{% block content %}
+<main class="page-wrapper">
+    <h1 class="title fade-in">Entreprises</h1>
+    <nav class="account-menu" aria-label="Gestion des entreprises">
+        <a href="?page=creation-entreprise" class="account-menu-item">Créer une entreprise</a>
+        <a href="?page=modification-entreprise" class="account-menu-item">Modifier une entreprise</a>
+        <a href="?page=suppression-entreprise" class="account-menu-item danger">Supprimer une entreprise</a>
+    </nav>
+</main>
+{% endblock %}
