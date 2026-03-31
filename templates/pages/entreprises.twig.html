@@ -1,20 +1,20 @@
 {% extends "base.twig.html" %}
-
+ 
 {% block title %}Les entreprises – Web4All{% endblock %}
-
+ 
 {% block content %}
 <main class="entreprises-page">
-
-
+ 
+ 
   <section class="entreprises-header" aria-labelledby="entreprises-title">
-
+ 
     <h1 id="entreprises-title" class="title">Les entreprises</h1>
-
+ 
     <div class="search-row">
-
+ 
       <form method="GET" action="" role="search" class="search-wrapper">
         <div class="search-bar" >
-
+ 
           <input type="text" id="search-input" name="q" class="search__input" placeholder="Orange..." value="{{ searchQuery ?? '' }}">
           <input type="hidden" name="page" value="entreprises">
           {% if searchQuery %}
@@ -30,20 +30,20 @@
             </svg>
           </button>
           {% endif %}
-
+ 
         </div>
       </form>
-
+ 
     </div>
-
+ 
   </section>
-
+ 
   <section>
-
+ 
     {% if entreprises is empty %}
-
+ 
       <p class="entreprises-empty">Aucune entreprise disponible pour l'instant… Revenez bientôt !</p>
-
+ 
     {% else %}
     
         <ul class="cards-grid" role="list">
@@ -65,11 +65,12 @@
           {% endfor %}
         </ul>
         {{ navLinks|raw }}
-
+ 
     {% endif %}
-
+ 
   </section>
-
-
+ 
+ 
 </main>
 {% endblock %}
+ 
