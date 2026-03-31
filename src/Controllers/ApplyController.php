@@ -12,6 +12,7 @@ class ApplyController extends Controller
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
             $allowedTypes = array('pdf');
+            var_dump($_FILES);
             $cv = $_FILES['cv'] ?? null;
             $lettre = $_FILES['lettre'] ?? null;
 
