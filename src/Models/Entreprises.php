@@ -21,9 +21,9 @@ if ($q_entreprises !== '') {
     $stmt->execute([':q' => $q_entreprises]);
 } else {
     $stmt = $pdo->query('
-        SELECT e.*
+        SELECT e.* 
         FROM public.entreprise e
-        ORDER BY e.id_entreprise
+        ORDER BY COALESCE(e."rating", -1) DESC
     ');
 }
 
