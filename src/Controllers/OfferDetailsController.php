@@ -23,6 +23,7 @@ class OfferDetailsController extends Controller
             LEFT JOIN public.entreprise e ON a.id_entreprise_appartient = e.id_entreprise
             WHERE a.id_annonce = :id
         ');
+        
         $stmt->execute([':id' => $annonceId]);
         $annonce = $stmt->fetch(PDO::FETCH_ASSOC);
 
@@ -41,6 +42,7 @@ class OfferDetailsController extends Controller
             SELECT 1 FROM public.favori
             WHERE id_compte = :c AND id_annonce = :a
         ');
+
         $check->execute([':c' => $_SESSION['user_id'] ?? 0, ':a' => $annonceId]);
         $annonce['isFavorite']  = (bool) $check->fetch();
         $annonce['hasReminder'] = false;
