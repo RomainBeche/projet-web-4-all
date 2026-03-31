@@ -51,6 +51,7 @@ return [
 
     'mes-eleves' => ['controller' => AccountController::class, 'action' => 'mesEleves'],
     'mes-eleves-creation' => ['controller' => AccountController::class, 'action' => 'mesElevesCreation'],
+    'mes-eleves-detail' => ['controller' => AccountController::class, 'action' => 'mesElevesDetail'],
 
 
 
