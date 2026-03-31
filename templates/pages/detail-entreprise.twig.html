@@ -8,26 +8,13 @@
 
     <section class="entreprise-header" aria-labelledby="entreprise-title">
 
-<<<<<<< Updated upstream
         <div class="entreprise-avatar entreprise-avatar-placeholder" aria-hidden="true">
             {{ entreprise.nom|split(' ')[0]|slice(0,1)|upper }}
-=======
-        <div class="entreprise-avatar {{ not entreprise.Logo ? 'entreprise-avatar-placeholder' }}" aria-hidden="true">
-            {% if entreprise.Logo %}
-                <img src="{{ entreprise.Logo }}" alt="Logo {{ entreprise.Nom_entreprise }}">
-            {% else %}
-                {{ entreprise.nom|split(' ')[0]|slice(0,1)|upper }}
-            {% endif %}
->>>>>>> Stashed changes
         </div>
 
         <div class="entreprise-name-section">
             <h1 id="entreprise-title" class="title entreprise-title">{{ entreprise.nom }}</h1>
-<<<<<<< Updated upstream
             <p class="entreprise-sector">{{ entreprise.secteur }}</p>
-=======
-            <p class="entreprise-sector">{{ entreprise.Secteur }}</p>
->>>>>>> Stashed changes
         </div>
 
         <div class="entreprise-rating-block">
@@ -49,11 +36,7 @@
 
         <h2 id="about-title" class="entreprise-section-title">À propos de l'entreprise</h2>
         <p class="entreprise-text">
-<<<<<<< Updated upstream
         {{ entreprise.description }}
-=======
-        {{ entreprise.description|default('Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut tristique, massa id tristique molestie, nunc lectus iaculis odio, quis tincidunt ante odio eu libero. Phasellus blandit pretium ligula commodo lobortis. Ut congue fringilla tempus. Donec sagittis est at urna molestie, nec faucibus enim viverra. Pellentesque dignissim ut est id maximus.') }}
->>>>>>> Stashed changes
         </p>
 
         <div class="entreprise-details">

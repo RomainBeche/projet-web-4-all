@@ -28,7 +28,7 @@ class CompanyDetailsController extends Controller
         }
  
         $this->render('pages/detail-entreprise.twig.html', [
-            'entreprises' => $entreprises,
+            'entreprise' => $entreprise,
         ]);
     }
 }
