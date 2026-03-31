@@ -6,11 +6,16 @@ class RegistrationController extends Controller
 {
     public function index(): void
     {
-        $type = isset($_GET['type']) && $_GET['type'] === 'pilote' ? 'pilote' : 'etudiant';
+        $type  = isset($_GET['type']) && $_GET['type'] === 'pilote' ? 'pilote' : 'etudiant';
         $error = null;
         $succes = null;
 
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+
+            if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            var_dump($_POST);
+            die();
+
             $nom      = trim($_POST['nom'] ?? '');
             $prenom   = trim($_POST['prenom'] ?? '');
             $email    = trim($_POST['email'] ?? '');
@@ -46,26 +51,22 @@ class RegistrationController extends Controller
 
                 // Insertion dans etudiant ou pilote
                 if ($type === 'etudiant') {
-                    $maxEtudiantId = $pdo->query("SELECT COALESCE(MAX(id_etudiant), 0) + 1 FROM etudiant")->fetchColumn();
                     $stmt = $pdo->prepare("
-                        INSERT INTO etudiant (id_etudiant, id_compte, nom, prenom, email_publique, niveau_permission, role)
-                        VALUES (:id_etudiant, :id_compte, :nom, :prenom, :email, 1, 'etudiant')
+                        INSERT INTO etudiant (id_compte, nom, prenom, email_publique, niveau_permission, role)
+                        VALUES (:id_compte, :nom, :prenom, :email, 1, 'etudiant')
                     ");
                     $stmt->execute([
-                        ':id_etudiant' => $maxEtudiantId,
-                        ':id_compte'   => $maxId,
-                        ':nom'         => $nom,
-                        ':prenom'      => $prenom,
-                        ':email'       => $email,
+                        ':id_compte' => $maxId,
+                        ':nom'       => $nom,
+                        ':prenom'    => $prenom,
+                        ':email'     => $email,
                     ]);
                 } elseif ($type === 'pilote') {
-                    $maxPiloteId = $pdo->query("SELECT COALESCE(MAX(id_pilote), 0) + 1 FROM pilote")->fetchColumn();
                     $stmt = $pdo->prepare("
-                        INSERT INTO pilote (id_pilote, id_compte, nom, prenom, email_publique)
-                        VALUES (:id_pilote, :id_compte, :nom, :prenom, :email)
+                        INSERT INTO pilote (id_compte, nom, prenom, email_publique, niveau_permission, role)
+                        VALUES (:id_compte, :nom, :prenom, :email, 2, 'pilote')
                     ");
                     $stmt->execute([
-                        ':id_pilote' => $maxPiloteId,
                         ':id_compte' => $maxId,
                         ':nom'       => $nom,
                         ':prenom'    => $prenom,
