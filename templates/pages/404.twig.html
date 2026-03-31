@@ -3,7 +3,7 @@
 {% block title %}Page introuvable — Web4All{% endblock %}
 
 {% block content %}
-<main class="error-404">
+<main class="error-404" onclick="playMySong('../assets/audio/404_soundtrack.mp3');">
     <section class="error-404-content">
         <h1 class="title error-404-header">Erreur 404 - Page introuvable</h1>
         <a href="?page=accueil" class="btn btn-yellow">Retour à l'accueil</a>
@@ -13,6 +13,22 @@
         <script type="module" src="https://unpkg.com/@splinetool/viewer@1.12.72/build/spline-viewer.js"></script>
         <spline-viewer url="https://prod.spline.design/JiYdN3gwFsJ2dp2N/scene.splinecode"></spline-viewer>
     </div>
-
 </main>
+{% endblock %}
+
+{% block scripts %}
+<script>
+let audioInstance = null;
+
+function playMySong(url) {
+    if (audioInstance) return; // déjà en cours, on ne fait rien
+
+    audioInstance = document.createElement('audio');
+    audioInstance.style.display = "none";
+    audioInstance.src = url;
+    audioInstance.autoplay = true;
+    audioInstance.loop = true;
+    document.body.appendChild(audioInstance);
+}
+</script>
 {% endblock %}
