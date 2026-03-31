@@ -401,4 +401,230 @@ public function mesElevesDetail(): void
         'candidatures' => $candidatures,
     ]);
 }
+
+public function entreprisesGestion(): void
+{
+    $this->requireLogin();
+
+    if ($_SESSION['user_role'] !== 'pilote') {
+        header('Location: /?page=compte');
+        exit;
+    }
+
+    $this->render('pages/entreprises-gestion.twig.html', [
+        'user_role' => $_SESSION['user_role'],
+    ]);
+}
+
+public function creationEntreprise(): void
+{
+    $this->requireLogin();
+    if ($_SESSION['user_role'] !== 'pilote') {
+        header('Location: /?page=compte');
+        exit;
+    }
+
+    $error  = null;
+    $succes = null;
+
+    if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+        $nom         = trim($_POST['nom'] ?? '');
+        $description = trim($_POST['description'] ?? '');
+        $email       = trim($_POST['email'] ?? '');
+        $telephone   = trim($_POST['telephone'] ?? '');
+        $secteur     = trim($_POST['secteur'] ?? '');
+        $numero_rue  = trim($_POST['numero_rue'] ?? '');
+        $nom_rue     = trim($_POST['nom_rue'] ?? '');
+        $nom_ville   = trim($_POST['nom_ville'] ?? '');
+        $code_postal = trim($_POST['code_postal'] ?? '');
+
+        if (empty($nom) || empty($email) || empty($secteur) || empty($nom_rue) || empty($nom_ville)) {
+            $error = "Tous les champs obligatoires doivent être remplis.";
+        } else {
+            $dotenv = parse_ini_file(__DIR__ . '/../../.env');
+            $pdo = new \PDO(
+                "pgsql:host={$dotenv['DB_HOST']};port={$dotenv['DB_PORT']};dbname={$dotenv['DB_NAME']}",
+                $dotenv['DB_USER'],
+                $dotenv['DB_PASSWORD']
+            );
+
+            // 1. Vérifie si la ville existe, sinon la crée
+            $stmt = $pdo->prepare("SELECT id_ville FROM ville WHERE nom = :nom AND code_postal = :cp");
+            $stmt->execute([':nom' => $nom_ville, ':cp' => $code_postal]);
+            $ville = $stmt->fetch(\PDO::FETCH_ASSOC);
+
+            if ($ville) {
+                $id_ville = $ville['id_ville'];
+            } else {
+                $maxVilleId = $pdo->query("SELECT COALESCE(MAX(id_ville), 0) + 1 FROM ville")->fetchColumn();
+                $stmt = $pdo->prepare("INSERT INTO ville (id_ville, nom, code_postal) VALUES (:id, :nom, :cp)");
+                $stmt->execute([':id' => $maxVilleId, ':nom' => $nom_ville, ':cp' => $code_postal]);
+                $id_ville = $maxVilleId;
+            }
+
+            // 2. Crée l'adresse
+            $maxAdresseId = $pdo->query("SELECT COALESCE(MAX(id_adresse), 0) + 1 FROM adresse")->fetchColumn();
+            $stmt = $pdo->prepare("INSERT INTO adresse (id_adresse, numero_rue, nom_rue, id_ville) VALUES (:id, :numero, :rue, :ville)");
+            $stmt->execute([':id' => $maxAdresseId, ':numero' => $numero_rue, ':rue' => $nom_rue, ':ville' => $id_ville]);
+
+            // 3. Crée l'entreprise
+            $maxEntrepriseId = $pdo->query("SELECT COALESCE(MAX(id_entreprise), 0) + 1 FROM entreprise")->fetchColumn();
+            $stmt = $pdo->prepare("
+                INSERT INTO entreprise (id_entreprise, nom, description, email, telephone, secteur, id_compte, id_adresse)
+                VALUES (:id, :nom, :description, :email, :telephone, :secteur, :id_compte, :id_adresse)
+            ");
+            $stmt->execute([
+                ':id'          => $maxEntrepriseId,
+                ':nom'         => $nom,
+                ':description' => $description,
+                ':email'       => $email,
+                ':telephone'   => $telephone,
+                ':secteur'     => $secteur,
+                ':id_compte'   => $_SESSION['user_id'],
+                ':id_adresse'  => $maxAdresseId,
+            ]);
+
+            $succes = "L'entreprise \"$nom\" a été créée avec succès !";
+        }
+    }
+
+    $this->render('pages/creation-entreprise.twig.html', [
+        'user_role' => $_SESSION['user_role'],
+        'error'     => $error,
+        'succes'    => $succes,
+    ]);
+}
+
+public function modificationEntreprise(): void
+{
+    $this->requireLogin();
+    if ($_SESSION['user_role'] !== 'pilote') {
+        header('Location: /?page=compte');
+        exit;
+    }
+
+    $dotenv = parse_ini_file(__DIR__ . '/../../.env');
+    $pdo = new \PDO(
+        "pgsql:host={$dotenv['DB_HOST']};port={$dotenv['DB_PORT']};dbname={$dotenv['DB_NAME']}",
+        $dotenv['DB_USER'],
+        $dotenv['DB_PASSWORD']
+    );
+
+    $error  = null;
+    $succes = null;
+    $entreprise_selectionnee = null;
+
+    // Récupère toutes les entreprises
+    $entreprises = $pdo->query("SELECT * FROM entreprise")->fetchAll(\PDO::FETCH_ASSOC);
+
+    // Étape 1 : sélection via POST
+    if ($_SERVER['REQUEST_METHOD'] === 'POST' && ($_POST['etape'] ?? '') === 'modification') {
+    $stmt = $pdo->prepare("SELECT * FROM entreprise WHERE id_entreprise = :id");
+    $stmt->execute([':id' => (int)$_POST['id_entreprise']]);
+    $entreprise_selectionnee = $stmt->fetch(\PDO::FETCH_ASSOC);
+}
+
+    // Étape 2 : modification via POST
+    if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+        $id_entreprise = (int)($_POST['id_entreprise'] ?? 0);
+        $nom           = trim($_POST['nom'] ?? '');
+        $description   = trim($_POST['description'] ?? '');
+        $email         = trim($_POST['email'] ?? '');
+        $telephone     = trim($_POST['telephone'] ?? '');
+        $secteur       = trim($_POST['secteur'] ?? '');
+
+        if (empty($nom) || empty($email) || empty($secteur)) {
+            $error = "Tous les champs obligatoires doivent être remplis.";
+            $stmt = $pdo->prepare("SELECT * FROM entreprise WHERE id_entreprise = :id");
+            $stmt->execute([':id' => $id_entreprise]);
+            $entreprise_selectionnee = $stmt->fetch(\PDO::FETCH_ASSOC);
+        } else {
+            $stmt = $pdo->prepare("
+                UPDATE entreprise 
+                SET nom = :nom, description = :description, email = :email, telephone = :telephone, secteur = :secteur
+                WHERE id_entreprise = :id
+            ");
+            $stmt->execute([
+                ':nom'         => $nom,
+                ':description' => $description,
+                ':email'       => $email,
+                ':telephone'   => $telephone,
+                ':secteur'     => $secteur,
+                ':id'          => $id_entreprise,
+            ]);
+            $succes = "Entreprise mise à jour avec succès !";
+        }
+    }
+
+    $this->render('pages/modification-entreprise.twig.html', [
+        'user_role'               => $_SESSION['user_role'],
+        'entreprises'             => $entreprises,
+        'entreprise_selectionnee' => $entreprise_selectionnee,
+        'error'                   => $error,
+        'succes'                  => $succes,
+    ]);
+}
+
+public function suppressionEntreprise(): void
+{
+    $this->requireLogin();
+    if ($_SESSION['user_role'] !== 'pilote') {
+        header('Location: /?page=compte');
+        exit;
+    }
+
+    $dotenv = parse_ini_file(__DIR__ . '/../../.env');
+    $pdo = new \PDO(
+        "pgsql:host={$dotenv['DB_HOST']};port={$dotenv['DB_PORT']};dbname={$dotenv['DB_NAME']}",
+        $dotenv['DB_USER'],
+        $dotenv['DB_PASSWORD']
+    );
+
+    $succes = null;
+    $entreprise_selectionnee = null;
+
+    // Récupère toutes les entreprises
+    $entreprises = $pdo->query("SELECT * FROM entreprise")->fetchAll(\PDO::FETCH_ASSOC);
+
+    // Étape 1 : sélection
+    if ($_SERVER['REQUEST_METHOD'] === 'POST' && ($_POST['etape'] ?? '') === 'selection') {
+        $stmt = $pdo->prepare("SELECT * FROM entreprise WHERE id_entreprise = :id");
+        $stmt->execute([':id' => (int)$_POST['id_entreprise']]);
+        $entreprise_selectionnee = $stmt->fetch(\PDO::FETCH_ASSOC);
+    }
+
+    // Étape 2 : suppression
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && ($_POST['etape'] ?? '') === 'suppression') {
+    $id_entreprise = (int)$_POST['id_entreprise'];
+    
+    // Supprime d'abord les candidatures liées aux annonces de cette entreprise
+    $stmt = $pdo->prepare("
+        DELETE FROM candidature 
+        WHERE id_offre IN (
+            SELECT id_annonce FROM annonce WHERE id_entreprise_appartient = :id
+        )
+    ");
+    $stmt->execute([':id' => $id_entreprise]);
+
+    // Supprime ensuite les annonces liées
+    $stmt = $pdo->prepare("DELETE FROM annonce WHERE id_entreprise_appartient = :id");
+    $stmt->execute([':id' => $id_entreprise]);
+
+    // Supprime enfin l'entreprise
+    $stmt = $pdo->prepare("DELETE FROM entreprise WHERE id_entreprise = :id");
+    $stmt->execute([':id' => $id_entreprise]);
+
+    $succes = "Entreprise et ses annonces supprimées avec succès !";
+
+    // Recharge la liste
+    $entreprises = $pdo->query("SELECT * FROM entreprise")->fetchAll(\PDO::FETCH_ASSOC);
+}
+
+    $this->render('pages/suppression-entreprise.twig.html', [
+        'user_role'               => $_SESSION['user_role'],
+        'entreprises'             => $entreprises,
+        'entreprise_selectionnee' => $entreprise_selectionnee,
+        'succes'                  => $succes,
+    ]);
+}
 }

@@ -29,6 +29,10 @@ return [
     'suppression-compte-2' => ['controller' => AccountController::class, 'action' => 'delete'],
     
     'creation-compte' => ['controller' => RegistrationController::class, 'action' => 'index'],
+    'entreprises-gestion' => ['controller' => AccountController::class, 'action' => 'entreprisesGestion'],
+    'creation-entreprise' => ['controller' => AccountController::class, 'action' => 'creationEntreprise'],
+    'modification-entreprise' => ['controller' => AccountController::class, 'action' => 'modificationEntreprise'],
+    'suppression-entreprise' => ['controller' => AccountController::class, 'action' => 'suppressionEntreprise'],
     
     'favoris' => ['controller' => FavoritesController::class, 'action' => 'index'],
 

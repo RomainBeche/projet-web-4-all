@@ -32,11 +32,11 @@
       <a href="?page=mes-candidatures" class="account-menu-item">Mes candidatures</a>
     {% endif %}
 
-    {# Spécifique pilote #}
     {% if user_role == 'pilote' %}
-      <a href="?page=mes-eleves" class="account-menu-item">Mes élèves</a>
-      <a href="#" class="account-menu-item">Mes annonces</a>
-    {% endif %}
+    <a href="?page=mes-eleves" class="account-menu-item">Mes élèves</a>
+    <a href="?page=entreprises-gestion" class="account-menu-item">Entreprises</a>
+    <a href="#" class="account-menu-item">Mes annonces</a>
+{% endif %}
 
     {# Commun à tous les rôles #}
     <a href="?page=deconnexion" class="account-menu-item danger">Déconnexion</a>
