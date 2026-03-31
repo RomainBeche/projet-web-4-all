@@ -8,45 +8,74 @@ class ApplyController extends Controller
 {
         public function index(): void
     {
-        // requête POST (pour les fichiers)
+
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
-            $allowedTypes = array('pdf');
-            var_dump($_FILES);
+            $allowedTypes = ['pdf'];
+            $maxSize = 2 * 1024 * 1024; // 2MB
+
             $cv = $_FILES['cv'] ?? null;
             $lettre = $_FILES['lettre'] ?? null;
 
-            $nomcv = $_FILES['cv']['name']; // On récupère le nom pour obtenir les infos sur l'extension.
-            $nomlettre = $_FILES['cv']['name'];
-
-            $maxSize = 2 * 1024 * 1024; // 2 Mo
-            $cvfileSize = $_FILES['cv']['size'];
-            $lettrefileSize = $_FILES['lettre']['size'];
-
-            $cvfileType = strtolower(pathinfo($nomcv, PATHINFO_EXTENSION));
-            $lettrefileType = strtolower(pathinfo($nomlettre, PATHINFO_EXTENSION));
-
-            if (!in_array($cvfileType, $allowedTypes)) {echo "Seulement les fichiers PDF sont autorisés dans le champ CV.";}
-
-            if (!in_array($lettrefileType, $allowedTypes)) {echo "Seulement les fichiers PDF sont autorisés dans le champ Lettre de Motivation.";}
-            if ($cvfileSize > $maxSize && $lettrefileSize > $maxSize) {echo "File size exceeds the maximum limit of 2MB."; exit;}
-            
-            if ($cv && $lettre && $cv['error'] === 0 && $lettre['error'] === 0) {
-
-                $uploadDir = __DIR__ . '/../../public/uploads/';
-
-                $cvName = uniqid() . '_' . $cv['name'];
-                $lettreName = uniqid() . '_' . $lettre['name'];
-
-                move_uploaded_file($cv['tmp_name'], $uploadDir . $cvName);
-                move_uploaded_file($lettre['tmp_name'], $uploadDir . $lettreName);
-
-                //Sauvegarder dans la BDDDDD
-
-
-                header('Location: ?page=annonces');
-                exit;
+            // 🔒 Validate files exist
+            if (!$cv || !$lettre) {
+                die("Fichiers manquants.");
             }
+
+            // 🔒 Extract safe info
+            $cvExt = strtolower(pathinfo($cv['name'], PATHINFO_EXTENSION));
+            $lettreExt = strtolower(pathinfo($lettre['name'], PATHINFO_EXTENSION));
+
+            // 🔒 Validate extension
+            if (!in_array($cvExt, $allowedTypes)) {
+                die("Le CV doit être un PDF.");
+            }
+
+            if (!in_array($lettreExt, $allowedTypes)) {
+                die("La lettre doit être un PDF.");
+            }
+
+            // 🔒 Validate size (INDIVIDUAL)
+            if ($cv['size'] > $maxSize) {
+                die("Le CV dépasse 2MB.");
+            }
+
+            if ($lettre['size'] > $maxSize) {
+                die("La lettre dépasse 2MB.");
+            }
+
+            // 🔒 Validate MIME type (IMPORTANT)
+            $finfo = new \finfo(FILEINFO_MIME_TYPE);
+
+            $cvMime = $finfo->file($cv['tmp_name']);
+            $lettreMime = $finfo->file($lettre['tmp_name']);
+
+            if ($cvMime !== 'application/pdf') {
+                die("Le CV n'est pas un vrai PDF.");
+            }
+
+            if ($lettreMime !== 'application/pdf') {
+                die("La lettre n'est pas un vrai PDF.");
+            }
+
+            // 🔒 Generate SAFE filenames (no user input)
+            $cvName = uniqid('cv_', true) . '.pdf';
+            $lettreName = uniqid('lettre_', true) . '.pdf';
+
+            $uploadDir = __DIR__ . '/../../public/uploads/';
+
+            // 🔒 Move files
+            if (!move_uploaded_file($cv['tmp_name'], $uploadDir . $cvName)) {
+                die("Erreur upload CV.");
+            }
+
+            if (!move_uploaded_file($lettre['tmp_name'], $uploadDir . $lettreName)) {
+                die("Erreur upload lettre.");
+            }
+
+            // ✅ Safe redirect
+            header('Location: ?page=annonces');
+            exit;
         }
 
         // requête GET (récup dans les params)
