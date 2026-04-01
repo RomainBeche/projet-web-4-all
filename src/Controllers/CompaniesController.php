@@ -11,6 +11,7 @@ class CompaniesController extends Controller
     {
         require_once __DIR__ . '/../../src/Database.php';
         require_once __DIR__ . '/../../src/paginationEntreprises.php';
+ 
 
         $pdo   = getConnection();
         $model = new Entreprises($pdo);
@@ -28,3 +29,4 @@ class CompaniesController extends Controller
         ]);
     }
 }
+ 

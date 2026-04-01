@@ -40,7 +40,7 @@ return [
     'detail-annonce' => ['controller' => OfferDetailsController::class, 'action' => 'index'],
     'toggle-favori' => ['controller' => FavoritesController::class, 'action' => 'toggle'],
     // 'toggle-rappel' => ['controller' => FavoritesController::class, 'action' => 'toggleRappel'],
-    'creer-offre' => ['controller' => OffersController::class, 'action' => 'index'],
+    'creer-offre' => ['controller' => OffersController::class, 'action' => 'create'],
     
     'entreprises' => ['controller' => CompaniesController::class, 'action' => 'index'],
     'detail-entreprise' => ['controller' => CompanyDetailsController::class, 'action' => 'index'],

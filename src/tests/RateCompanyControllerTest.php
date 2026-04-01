@@ -33,6 +33,7 @@ function getConnection() {
     return $pdo;
 }
 
+
 class RateCompanyControllerTest extends TestCase
 {
     private function getControllerMock()

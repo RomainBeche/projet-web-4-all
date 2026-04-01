@@ -3,158 +3,181 @@
 {% block title %}Créer une offre – Web4All{% endblock %}
 
 {% block content %}
+
+
+
 <main class="page-wrapper">
 
+    
+    <h1 class="title create-offer-header fade-in">Créer une offre</h1>
 
-  <section aria-labelledby="offer-title">
 
-    <h1 id="offer-title" class="title">Créer une offre</h1>
-    <h2 class="section-title">Informations générales</h2>
-
-    <form id="offerForm" novalidate>
-
-      <div class="form-section">
-
-        <div class="fields-grid">
-
-          <div class="field">
-
-            <label for="nom">Nom de l'offre <span class="required">*</span></label>
-            <input type="text" id="nom" name="nom" required />
-
+    <form id="offerForm" method="POST" action="/?page=creer-offre" class="register-form">
+      <div class="fields-grid fade-in">
+        <div class="field">
+          <label for="titre">Titre de l'offre <span class="required">*</span></label>
+          <input type="text" placeholder="Développement WEB" id="titre" name="titre" required />
+        </div>
+        <div class="field">
+          <label for="description">Description de l'offre <span class="required">*</span></label>
+          <textarea id="description" name="description" rows="5" required></textarea>
+        </div>
+        <div class="field">
+          <label for="duree">Durée de la mission (mois ou semaines) <span class="required">*</span></label>
+          <input type="text" placeholder="12 mois" id="duree" name="duree" min="1" required />
+        </div>
+        <div class="field">
+          <label for="type">Type de contrat <span class="required">*</span></label>
+          <div class="select-wrapper">
+            <select id="type" name="type" required>
+              <option value="" disabled selected>-- Sélectionnez --</option>
+              <option>Stage</option>
+              <option>Alternance</option>
+            </select>
           </div>
-
-          <div class="field">
-
-            <label for="description">Description de l'offre <span class="required">*</span></label>
-            <textarea id="description" name="description" rows="5" required></textarea>
-
+        </div>
+        <div class="field">
+          <label for="entreprise">Choisir une entreprise <span class="required">*</span></label>
+          <div class="select-wrapper">
+            <select id="entreprise" name="entreprise" required>
+              <option value="" disabled selected>-- Sélectionnez --</option>
+              {% for e in entreprise %}
+                  <option value="{{ e.id_entreprise }}">{{ e.nom }}</option>
+              {% endfor %}
+            </select>
           </div>
-
-          <div class="field">
-
-            <label for="duree">Durée de la mission (jours) <span class="required">*</span></label>
-            <input type="number" id="duree" name="duree" min="1" required />
-
+        </div>
+        <div class="field">
+          <label for="secteur">Secteur <span class="required">*</span></label>
+          <div class="select-wrapper">
+            <select id="secteur" name="secteur" required>
+              <option value="" disabled selected>-- Sélectionnez --</option>
+              <option>Développement web</option>
+              <option>Data / IA</option>
+              <option>Cybersécurité</option>
+              <option>Réseau &amp; Systèmes</option>
+              <option>Marketing digital</option>
+            </select>
           </div>
-
-          <div class="field">
-            
-            <label for="type">Type de contrat <span class="required">*</span></label>
-
-            <div class="select-wrapper">
-
-              <select id="type" name="type" required>
-                <option value="" disabled selected>-- Sélectionnez --</option>
-                <option>Stage</option>
-                <option>Alternance</option>
-                <option>CDD</option>
-                <option>CDI</option>
-              </select>
-
+        </div>
+        <div class="field">
+          <label for="niveau">Niveau d'études requis <span class="required">*</span></label>
+          <div class="select-wrapper">
+            <select id="niveau" name="niveau" required>
+              <option value="" disabled selected>-- Sélectionnez --</option>
+              <option>Bac</option>
+              <option>Bac +2</option>
+              <option>Bac +3</option>
+              <option>Bac +4</option>
+              <option>Bac +5</option>
+            </select>
+          </div>
+        </div>
+        <div class="field">
+          <label for="lieu">Lieu <span class="required">*</span></label>
+          <input type="text" placeholder="Paris, Ile de France" id="lieu" name="lieu" min="1" required />
+        </div>
+        <div class="field">
+          <label for="remuneration">Rémunération (EURO, taux horaire) <span class="required">*</span></label>
+          <input type="number" id="remuneration" name="remuneration" min="0" step="0.01" required />
+        </div>
+        <div class="field">
+          <label for="date">Date <span class="required">*</span></label>
+          <input type="date" id="date" name="date" required />
+        </div>
+        <div class="field" id="tags-field">
+          <label>Tags <span class="required">*</span></label>
+          <div id="tags-container">
+            <div class="tag-input-row">
+              <input type="text" name="tags[]" placeholder="Ex: PHP" class="tag-input" />
             </div>
-
-          </div>
-
-          <div class="field">
-
-            <label for="competences">Domaine de compétences <span class="required">*</span></label>
-
-            <div class="select-wrapper">
-
-              <select id="competences" name="competences" required>
-                <option value="" disabled selected>-- Sélectionnez --</option>
-                <option>Développement web</option>
-                <option>Data / IA</option>
-                <option>Cybersécurité</option>
-                <option>Réseau &amp; Systèmes</option>
-                <option>Marketing digital</option>
-              </select>
-
+            <div class="tag-input-row">
+              <input type="text" name="tags[]" placeholder="Ex: MySQL" class="tag-input" />
+            </div>
+            <div class="tag-input-row">
+              <input type="text" name="tags[]" placeholder="Ex: Laravel" class="tag-input" />
             </div>
           </div>
-
-          <div class="field">
-
-            <label for="niveau">Niveau d'études requis <span class="required">*</span></label>
-
-            <div class="select-wrapper">
-
-              <select id="niveau" name="niveau" required>
-                <option value="" disabled selected>-- Sélectionnez --</option>
-                <option>Bac</option>
-                <option>Bac +2</option>
-                <option>Bac +3</option>
-                <option>Bac +4</option>
-                <option>Bac +5</option>
-              </select>
-
-            </div>
-
-          </div>
-
-          <div class="field">
-
-            <label for="localisation">Localisation (ville) <span class="required">*</span></label>
-            <input type="text" id="localisation" name="localisation" required />
-          </div>
-
-
-          <div class="field">
-
-            <label for="remuneration">Rémunération (EURO, taux horaire) <span class="required">*</span></label>
-            <input type="number" id="remuneration" name="remuneration" min="0" step="0.01" required />
-
-          </div>
-
+          <button type="button" id="add-tag-btn" class="btn-add-tag">+ Ajouter un tag</button>
+          <p id="tags-error" style="color:red; display:none;">Au moins un tag est requis.</p>
         </div>
 
+        <div class="actions fade-in">
+          <button type="submit" class="btn btn-primary">Créer</button>
+          <a href="?page=mes-annonces" class="btn btn-secondary">Annuler</a>
+        </div>
       </div>
-
-      <div class="consent-block">
-
-        <input type="checkbox" id="consent" name="consent" required />
-        <p>
-          J'accepte les CGU et déclare avoir pris connaissance de la
-          <a href="?page=mentions-legales#confidentialite">politique de protection des données</a> du site web4all.com.
-        </p>
-
-      </div>
-
-      <div class="actions">
-
-        <button type="submit" class="btn btn-primary">Créer l'offre</button>
-        <button type="button" class="btn btn-outline-primary" onclick="history.back()">Annuler</button>
-        
-      </div>
-
     </form>
 
-  </section>
 
 
 </main>
 
 {% block scripts %}
 <script>
-    document.getElementById('offerForm').addEventListener('submit', function(e) {
-        e.preventDefault();
-        const required = this.querySelectorAll('[required]');
-        let valid = true;
-        required.forEach(el => {
-            el.style.borderColor = '';
-            if (!el.value || (el.type === 'checkbox' && !el.checked)) {
-                el.style.borderColor = 'var(--error)';
-                valid = false;
+document.addEventListener('DOMContentLoaded', function () {
+    const form = document.getElementById('offerForm');
+    const addTagBtn = document.getElementById('add-tag-btn');
+    const tagsContainer = document.getElementById('tags-container');
+    const tagsError = document.getElementById('tags-error');
+
+    if (addTagBtn && !addTagBtn.dataset.bound) {
+        addTagBtn.dataset.bound = 'true';
+
+        addTagBtn.addEventListener('click', function () {
+            const row = document.createElement('div');
+            row.className = 'tag-input-row';
+
+            row.innerHTML = `
+                <input type="text" name="tags[]" placeholder="Nouveau tag" class="tag-input" />
+                <button type="button" class="btn-remove-tag">✕</button>
+            `;
+
+            tagsContainer.appendChild(row);
+
+            row.querySelector('.btn-remove-tag').addEventListener('click', function () {
+                row.remove();
+            });
+        });
+    }
+
+    if (form) {
+        form.addEventListener('submit', function (e) {
+            const tagInputs = form.querySelectorAll('input[name="tags[]"]');
+            const hasOneFilled = Array.from(tagInputs).some(input => input.value.trim() !== '');
+
+            if (!hasOneFilled) {
+                e.preventDefault();
+                if (tagsError) {
+                    tagsError.style.display = 'block';
+                }
+            } else {
+                if (tagsError) {
+                    tagsError.style.display = 'none';
+                }
             }
         });
-        if (valid) {
-            alert('Offre créée avec succès !');
-            window.location.href = '?page=mes-annonces';
-        }
-
-    });
+    }
+});
 </script>
 {% endblock %}
+
+
+<div id="modal-success" class="modal-overlay" style="display:none;">
+  <div class="modal-box">
+    <h2>Annonce créée</h2>
+    <p>{{ succes }}</p>
+    <div class="modal-actions modal-actions-center">
+      <a href="?page=accueil" class="btn btn-primary">Retour à l'accueil</a>
+    </div>
+  </div>
+</div>
+
+{% if succes %}
+<script>
+  document.getElementById('modal-success').style.display = 'flex';
+</script>
+{% endif %}
+
 
 {% endblock %}

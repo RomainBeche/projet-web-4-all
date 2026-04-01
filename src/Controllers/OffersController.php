@@ -102,7 +102,7 @@ class OffersController extends Controller
             SELECT a.*, e.nom AS entreprise_nom
             FROM public.annonce a
             LEFT JOIN public.entreprise e ON a.id_entreprise_appartient = e.id_entreprise
-            WHERE e.id_compte = :id
+            WHERE a.id_compte = :id
         ");
         $stmt->execute([':id' => $idCompte]);
         $annonces = $stmt->fetchAll(\PDO::FETCH_ASSOC);
@@ -118,4 +118,100 @@ class OffersController extends Controller
             'annonces'    => $annonces,
         ]);
     }
+        
+
+    public function create(): void
+    {
+        $this->requireLogin();
+
+        $error = null;
+        $succes = null;
+
+        require_once __DIR__ . '/../../src/Database.php';
+        $pdo = getConnection();
+
+        $stmtEntreprises = $pdo->query("SELECT id_entreprise, nom FROM entreprise ORDER BY nom ASC");
+        $entreprises = $stmtEntreprises->fetchAll(\PDO::FETCH_ASSOC);
+
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            $titre        = trim($_POST['titre'] ?? '');
+            $description  = trim($_POST['description'] ?? '');
+            $remuneration = trim($_POST['remuneration'] ?? '');
+            $date         = trim($_POST['date'] ?? '');
+            $idEntreprise = trim($_POST['entreprise'] ?? '');
+            $secteur      = trim($_POST['secteur'] ?? '');
+            $type         = trim($_POST['type'] ?? '');
+            $lieu         = trim($_POST['lieu'] ?? '');
+            $duree        = trim($_POST['duree'] ?? '');
+            $niveau       = trim($_POST['niveau'] ?? '');
+            // Récupération et nettoyage des tags
+            $tagsRaw = $_POST['tags'] ?? [];
+            $tags = array_values(
+                array_filter(
+                    array_map('trim', $tagsRaw),
+                    fn($t) => $t !== ''   // ignore les cases vides
+                )
+            );
+            $tagsJson = json_encode($tags, JSON_UNESCAPED_UNICODE);
+
+
+            if (
+                empty($titre) || empty($description) || empty($remuneration) ||
+                empty($date) || empty($idEntreprise) || empty($type) ||
+                empty($lieu) || empty($duree) || empty($niveau) || empty($tags)
+            ) {
+                $error = "Tous les champs sont obligatoires.";
+            } else {
+                $idCompte = $_SESSION['user_id'] ?? null;
+
+                if (!$idCompte) {
+                    $this->render('pages/404.twig.html');
+                    return;
+                }
+
+                $id_annonce = $pdo->query('SELECT COALESCE(MAX(id_annonce), 0) + 1 FROM annonce')->fetchColumn();
+
+                $stmt = $pdo->prepare("
+                    INSERT INTO annonce (
+                        id_annonce, titre, description, base_remuneration, date,
+                        id_entreprise_appartient, type, lieu, duree, vues,
+                        niveau, secteur, tags, id_compte
+                    )
+                    VALUES (
+                        :id_annonce, :titre, :description, :base_remuneration, :date,
+                        :id_entreprise_appartient, :type, :lieu, :duree, :vues,
+                        :niveau, :secteur, :tags, :id_compte
+                    )
+                ");
+
+                $stmt->execute([
+                    ':id_annonce'               => $id_annonce,
+                    ':titre'                    => $titre,
+                    ':description'              => $description,
+                    ':base_remuneration'        => $remuneration,
+                    ':date'                     => $date,
+                    ':id_entreprise_appartient' => $idEntreprise,
+                    ':type'                     => $type,
+                    ':lieu'                     => $lieu,
+                    ':duree'                    => $duree,
+                    ':vues'                     => 0,
+                    ':niveau'                   => $niveau,
+                    ':secteur'                  => $secteur,
+                    ':tags'                     => $tagsJson,
+                    ':id_compte'                => $idCompte,
+                ]);
+
+                $succes = "L'annonce \"$titre\" a été créée avec succès.";
+            }
+        }
+
+        $this->render('pages/creer-offre.twig.html', [
+            'currentPage' => 'creer-offre',
+            'error'       => $error,
+            'succes'      => $succes,
+            'entreprise'  => $entreprises,
+        ]);
+    }
+
+
 }
