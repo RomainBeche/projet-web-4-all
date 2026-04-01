@@ -2,92 +2,77 @@
 
 use PHPUnit\Framework\TestCase;
 use Grp5\ProjetWeb4All\Controllers\RateCompanyController;
+use Grp5\ProjetWeb4All\Models\Entreprises;
+use Grp5\ProjetWeb4All\Models\Note;
 
-// Fake DB
-function getConnection() {
+function getConnection(): PDO
+{
     $pdo = new PDO('sqlite::memory:');
+    $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+    $pdo->sqliteCreateFunction('NOW', fn() => date('Y-m-d H:i:s'));
 
-    // Add NOW() support
-    $pdo->sqliteCreateFunction('NOW', function () {
-        return date('Y-m-d H:i:s');
-    });
+    $pdo->exec("CREATE TABLE note (
+        id_entreprise INTEGER, notation INTEGER,
+        commentaire TEXT, id_compte INTEGER, date_notation TEXT
+    );");
 
-    $pdo->exec("
-        CREATE TABLE note (
-            id_entreprise INTEGER,
-            notation INTEGER,
-            commentaire TEXT,
-            id_compte INTEGER,
-            date_notation TEXT
-        );
-    ");
+    $pdo->exec("CREATE TABLE entreprise (
+        id_entreprise INTEGER PRIMARY KEY,
+        nombre_avis INTEGER DEFAULT 0, rating REAL DEFAULT 0
+    );");
 
-    $pdo->exec("
-        CREATE TABLE entreprise (
-            id_entreprise INTEGER,
-            nombre_avis INTEGER,
-            rating REAL
-        );
-    ");
+    $pdo->exec("INSERT INTO entreprise VALUES (1, 10, 4.5)");
 
     return $pdo;
 }
 
-
 class RateCompanyControllerTest extends TestCase
 {
-    private function getControllerMock()
+    private function getControllerMock(): object
     {
-        return new class extends RateCompanyController {
+        $pdo = getConnection();
+
+        return new class($pdo) extends RateCompanyController {
 
             public array $renderData = [];
+            private PDO $pdo;
+
+            public function __construct(PDO $pdo) { $this->pdo = $pdo; }
 
             protected function render(string $view, array $data = []): void
             {
-                $this->renderData = [
-                    'view' => $view,
-                    'data' => $data
-                ];
+                $this->renderData = ['view' => $view, 'data' => $data];
             }
 
-            // Full override to avoid require_once crash
             public function index(): void
             {
-                $entrepriseId = isset($_GET['id']) ? (int)$_GET['id'] : 1;
+                $entrepriseId = isset($_GET['id']) ? (int) $_GET['id'] : 0;
+                $entreprise   = (new Entreprises($this->pdo))->findById($entrepriseId);
 
-                $entreprises = [
-                    [
-                        'id_entreprise' => 1,
-                        'rating' => 4.5,
-                        'nombre_avis' => 10
-                    ]
-                ];
+                if (!$entreprise) {
+                    $this->render('pages/404.twig.html');
+                    return;
+                }
 
-                $entreprise = $entreprises[0];
-
-                $success = false;
-                $error = false;
-                $notLoggedIn = false;
+                $success = $error = $notLoggedIn = false;
 
                 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-                    $note      = (int)($_POST['star-rating'] ?? 0);
-                    $comment   = trim($_POST['comment'] ?? '');
-                    $id_compte = $_SESSION['user_id'] ?? null;
-
-                    if ($id_compte === null) {
+                    $idCompte = $_SESSION['user_id'] ?? null;
+                    if ($idCompte === null) {
                         $notLoggedIn = true;
                     } else {
-                        $inserted = $this->rate($entrepriseId, $note, $id_compte, $comment);
-
-                        if ($inserted) {
-                            $success = true;
-                        } else {
-                            $error = true;
-                        }
+                        $ok = (new Note($this->pdo))->add(
+                            $entrepriseId,
+                            $idCompte,
+                            (int) ($_POST['star-rating'] ?? 0),
+                            trim($_POST['comment'] ?? '')
+                        );
+                        $ok ? $success = true : $error = true;
+                        $entreprise = (new Entreprises($this->pdo))->findById($entrepriseId);
                     }
                 }
 
-                $this->render('test.twig', [
+                $this->render('pages/evaluation-entreprise.twig.html', [
                     'entreprise'  => $entreprise,
                     'rating'      => $entreprise['rating'],
                     'nb_avis'     => $entreprise['nombre_avis'],
@@ -107,13 +92,12 @@ class RateCompanyControllerTest extends TestCase
         $_SERVER['REQUEST_METHOD'] = 'GET';
     }
 
-    public function testIndexNotLoggedIn()
+    public function testIndexNotLoggedIn(): void
     {
         $_SERVER['REQUEST_METHOD'] = 'POST';
+        $_GET['id']           = 1;
         $_POST['star-rating'] = 5;
-        $_POST['comment'] = 'Nice';
-        $_GET['id'] = 1;
-
+        $_POST['comment']     = 'Nice';
         unset($_SESSION['user_id']);
 
         $controller = $this->getControllerMock();
@@ -121,21 +105,32 @@ class RateCompanyControllerTest extends TestCase
 
         $this->assertTrue($controller->renderData['data']['notLoggedIn']);
     }
-    public function testRateValid()
-        {
-            $controller = $this->getControllerMock();
 
-            $result = $controller->rate(1, 5, 1, 'Great');
+    public function testRateValid(): void
+    {
+        $_SERVER['REQUEST_METHOD'] = 'POST';
+        $_GET['id']           = 1;
+        $_POST['star-rating'] = 5;
+        $_POST['comment']     = 'Great';
+        $_SESSION['user_id']  = 1;
 
-            $this->assertTrue($result);
-        }
+        $controller = $this->getControllerMock();
+        $controller->index();
 
-    public function testRateInvalid()
-        {
-            $controller = $this->getControllerMock();
+        $this->assertTrue($controller->renderData['data']['success']);
+    }
 
-            $result = $controller->rate(1, 10, 1, 'Invalid');
+    public function testRateInvalid(): void
+    {
+        $_SERVER['REQUEST_METHOD'] = 'POST';
+        $_GET['id']           = 1;
+        $_POST['star-rating'] = 10;
+        $_POST['comment']     = 'Invalid';
+        $_SESSION['user_id']  = 1;
 
-            $this->assertFalse($result);
-        }
+        $controller = $this->getControllerMock();
+        $controller->index();
+
+        $this->assertTrue($controller->renderData['data']['error']);
+    }
 }
