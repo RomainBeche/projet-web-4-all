@@ -5,7 +5,7 @@ namespace Grp5\ProjetWeb4All\Controllers;
 use Grp5\ProjetWeb4All\Core\Controller;
 use Grp5\ProjetWeb4All\Models\AccountModel;
 use Grp5\ProjetWeb4All\Models\EleveModel;
-use Grp5\ProjetWeb4All\Models\EntrepriseModel;
+use Grp5\ProjetWeb4All\Models\Entreprises;
 
 class AccountController extends Controller
 {
@@ -35,6 +35,14 @@ class AccountController extends Controller
             'user_prenom' => $user['prenom'] ?? '',
             'user_role'   => $userRole,
             'user_email'  => $user['email_publique'] ?? '',
+        ]);
+
+        
+ 
+        
+  
+        $this->render('pages/mes-eleves.twig.html', [
+            
         ]);
     }
 
@@ -71,41 +79,41 @@ class AccountController extends Controller
 
 
     public function editValidation(): void
-{
-    $this->requireLogin();
+    {
+        $this->requireLogin();
 
-    $pdo          = $this->getPdo();
-    $accountModel = new AccountModel($pdo);
-    $eleveModel   = new EleveModel($pdo);
+        $pdo          = $this->getPdo();
+        $accountModel = new AccountModel($pdo);
+        $eleveModel   = new EleveModel($pdo);
 
-    $userId   = $_SESSION['user_id'];
-    $userRole = $_SESSION['user_role'];
-    $nom      = trim($_POST['nom'] ?? '');
-    $prenom   = trim($_POST['prenom'] ?? '');
-    $email    = trim($_POST['email'] ?? '');
-    $password = $_POST['password'] ?? '';
+        $userId   = $_SESSION['user_id'];
+        $userRole = $_SESSION['user_role'];
+        $nom      = trim($_POST['nom'] ?? '');
+        $prenom   = trim($_POST['prenom'] ?? '');
+        $email    = trim($_POST['email'] ?? '');
+        $password = $_POST['password'] ?? '';
 
-    $currentEmail = $accountModel->getEmailById($userId);
+        $currentEmail = $accountModel->getEmailById($userId);
 
-    if ($email !== $currentEmail) {
-        $eleveModel->updateProfil($userId, $nom, $prenom, $email, $userRole);
-        $accountModel->updateEmail($userId, $email);
-    } else {
-        $eleveModel->updateProfilSansEmail($userId, $nom, $prenom, $userRole);
+        if ($email !== $currentEmail) {
+            $eleveModel->updateProfil($userId, $nom, $prenom, $email, $userRole);
+            $accountModel->updateEmail($userId, $email);
+        } else {
+            $eleveModel->updateProfilSansEmail($userId, $nom, $prenom, $userRole);
+        }
+
+        if (!empty($password)) {
+            $accountModel->updatePassword($userId, password_hash($password, PASSWORD_DEFAULT));
+        }
+
+        $_SESSION['user_email'] = $email;
+
+        $this->render('pages/modification-compte-validation.twig.html', [
+            'user_nom'    => $nom,
+            'user_prenom' => $prenom,
+            'user_role'   => $userRole,
+        ]);
     }
-
-    if (!empty($password)) {
-        $accountModel->updatePassword($userId, password_hash($password, PASSWORD_DEFAULT));
-    }
-
-    $_SESSION['user_email'] = $email;
-
-    $this->render('pages/modification-compte-validation.twig.html', [
-        'user_nom'    => $nom,
-        'user_prenom' => $prenom,
-        'user_role'   => $userRole,
-    ]);
-}
 
 
 
@@ -297,6 +305,39 @@ class AccountController extends Controller
 
 
     // Liste des élèves du pilote
+    // public function mesEleves(): void
+    // {
+    //     $this->requireLogin();
+
+    //     if ($_SESSION['user_role'] !== 'pilote') {
+    //         header('Location: /?page=compte');
+    //         exit;
+    //     }
+
+    //     require_once __DIR__ . '/../../src/Database.php';
+    //     $pdo = getConnection();
+
+    //     $model = new EleveModel($pdo);
+    //     $q     = trim($_GET['q'] ?? '');
+
+    //     $etudiants = $q !== '' ? $model->search($q) : $model->findAll();
+
+    //     // Récupère tous les étudiants du pilote connecté
+    //     $stmt = $pdo->prepare("
+    //         SELECT * FROM etudiant 
+    //         WHERE id_compte_pilote = :id_pilote
+    //     ");
+    //     $stmt->execute([':id_pilote' => $_SESSION['user_id']]);
+    //     $eleves = $stmt->fetchAll(\PDO::FETCH_ASSOC);
+
+    //     $this->render('pages/mes-eleves.twig.html', [
+    //         'user_role' => $_SESSION['user_role'],
+    //         'eleves'    => $eleves,
+    //         'searchQuery' => $q,
+    //     ]);
+    // }
+
+
     public function mesEleves(): void
     {
         $this->requireLogin();
@@ -309,17 +350,18 @@ class AccountController extends Controller
         require_once __DIR__ . '/../../src/Database.php';
         $pdo = getConnection();
 
-        // Récupère tous les étudiants du pilote connecté
-        $stmt = $pdo->prepare("
-            SELECT * FROM etudiant 
-            WHERE id_compte_pilote = :id_pilote
-        ");
-        $stmt->execute([':id_pilote' => $_SESSION['user_id']]);
-        $eleves = $stmt->fetchAll(\PDO::FETCH_ASSOC);
+        $model = new EleveModel($pdo);
+        $q     = trim($_GET['q'] ?? '');
+        
+        $idPilote = $_SESSION['user_id'];
+        $etudiants = $q !== '' 
+            ? $model->search($q, $idPilote) 
+            : $model->getElevesByPilote($idPilote);
 
         $this->render('pages/mes-eleves.twig.html', [
             'user_role' => $_SESSION['user_role'],
-            'eleves'    => $eleves,
+            'eleves'    => $etudiants,
+            'searchQuery' => $q,
         ]);
     }
 
@@ -358,7 +400,7 @@ class AccountController extends Controller
         $stmt = $pdo->prepare("
             SELECT candidature.*, annonce.titre, annonce.lieu, annonce.type, annonce.duree
             FROM candidature
-            JOIN annonce ON candidature.id_offre = annonce.id_annonce
+            JOIN annonce ON candidature.id_annonce = annonce.id_annonce
             WHERE candidature.id_compte = :id
         ");
         $stmt->execute([':id' => $id_compte_etudiant]);
@@ -486,10 +528,10 @@ class AccountController extends Controller
 
         // Étape 1 : sélection via POST
         if ($_SERVER['REQUEST_METHOD'] === 'POST' && ($_POST['etape'] ?? '') === 'modification') {
-        $stmt = $pdo->prepare("SELECT * FROM entreprise WHERE id_entreprise = :id");
-        $stmt->execute([':id' => (int)$_POST['id_entreprise']]);
-        $entreprise_selectionnee = $stmt->fetch(\PDO::FETCH_ASSOC);
-    }
+            $stmt = $pdo->prepare("SELECT * FROM entreprise WHERE id_entreprise = :id");
+            $stmt->execute([':id' => (int)$_POST['id_entreprise']]);
+            $entreprise_selectionnee = $stmt->fetch(\PDO::FETCH_ASSOC);
+        }
 
         // Étape 2 : modification via POST
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {

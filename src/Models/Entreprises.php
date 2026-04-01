@@ -42,9 +42,7 @@ class Entreprises
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
-    /**
-     * Crée ville + adresse + entreprise (cascade)
-     */
+    // Crée entreprise + ville & adresse par cascade
     public function create(array $data, int $idCompte): void
     {
         $stmt = $this->pdo->prepare('SELECT id_ville FROM ville WHERE nom = :nom AND code_postal = :cp');
@@ -97,9 +95,7 @@ class Entreprises
         ]);
     }
 
-    /**
-     * Supprime candidatures + annonces + entreprise (cascade manuelle)
-     */
+    // Supprime candidatures + annonces + entreprise (cascade manuelle)
     public function delete(int $id): void
     {
         $this->pdo->prepare('

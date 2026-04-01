@@ -27,7 +27,7 @@ class OfferDetailsController extends Controller
         $stmt->execute([':id' => $annonceId]);
         $annonce = $stmt->fetch(PDO::FETCH_ASSOC);
 
-        // Annonce introuvable → 404
+        // Annonce introuvable : 404
         if (!$annonce) {
             $this->render('pages/404.twig.html');
             return;

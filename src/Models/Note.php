@@ -22,9 +22,7 @@ class Note
         ];
     }
 
-    /**
-     * Ajoute une note et met à jour les stats de l'entreprise
-     */
+    // Ajoute une note et met à jour les stats de l'entreprise
     public function add(int $idEntreprise, int $idCompte, int $note, string $comment = ''): bool
     {
         if ($note < 1 || $note > 5) return false;
