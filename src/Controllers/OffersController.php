@@ -114,5 +114,4 @@ class OffersController extends Controller
             'annonces'    => $annonces,
         ]);
     }
-        
 }

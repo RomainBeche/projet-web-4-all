@@ -1,5 +1,8 @@
 <?php
+
 namespace Grp5\ProjetWeb4All\Models;
+
+use PDO;
 
 class EleveModel
 {
@@ -77,5 +80,19 @@ class EleveModel
     {
         $stmt = $this->pdo->prepare("DELETE FROM favori WHERE id_compte = :id");
         $stmt->execute([':id' => $idCompte]);
+    }
+
+    // Recherche fallback ILIKE sur le nom d'étudiant
+    public function search(string $q, int $idPilote): array
+    {
+        $stmt = $this->pdo->prepare(<<<SQL
+            SELECT e.*
+            FROM public.etudiant e
+            WHERE id_compte_pilote = :id
+                AND (nom ILIKE :q OR prenom ILIKE :q OR email_publique ILIKE :q)
+            ORDER BY e.id_compte ASC
+        SQL);
+        $stmt->execute([':id' => $idPilote, ':q' => '%' . $q . '%']);
+        return $stmt->fetchAll(\PDO::FETCH_ASSOC);
     }
 }

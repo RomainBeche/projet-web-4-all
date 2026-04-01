@@ -49,9 +49,7 @@ class Candidatures
         ]);
     }
 
-    /**
-     * Toutes les candidatures d'un compte (données annonce + entreprise incluses à plat)
-     */
+    // Récupère toutes les candidatures associées à un compte
     public function findByCompte(int $idCompte): array
     {
         $stmt = $this->pdo->prepare('
@@ -68,9 +66,8 @@ class Candidatures
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
-    /**
-     * Une candidature par ID, vérifiée par id_compte (anti-accès tiers)
-     */
+    // Une candidature par ID, vérifiée par id_compte (ganranti accès sécurisé 
+    // des détails d'une candidature depuis page "ma-candidatura")
     public function findByIdAndCompte(int $id, int $idCompte): array|false
     {
         $stmt = $this->pdo->prepare('
@@ -85,9 +82,7 @@ class Candidatures
         return $stmt->fetch(PDO::FETCH_ASSOC);
     }
 
-    /**
-     * Candidatures d'un étudiant (vue pilote)
-     */
+    // Candidatures d'un étudiant (pour affichage depuis compte pilote)
     public function findByEtudiant(int $idCompte): array
     {
         $stmt = $this->pdo->prepare('

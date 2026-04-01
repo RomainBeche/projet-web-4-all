@@ -2819,7 +2819,16 @@ spline-viewer {
   padding: 2rem;
 }
 
-.my-students-header,
+.my-students-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 2rem;
+  gap: 1.5rem;
+  flex-wrap: wrap;
+}
+
+
 .my-student-header,
 .create-student-header,
 .manage-students-header,
