@@ -2,17 +2,6 @@
 ob_start();
 session_start();
 
-
-
-
-
-
-
-
-
-
-
-
 require_once __DIR__ . '/../vendor/autoload.php';
 
 use Grp5\ProjetWeb4All\Core\Router;
