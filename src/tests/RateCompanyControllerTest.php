@@ -7,7 +7,7 @@ use Grp5\ProjetWeb4All\Controllers\RateCompanyController;
 function getConnection() {
     $pdo = new PDO('sqlite::memory:');
 
-    // 👉 Add NOW() support
+    // Add NOW() support
     $pdo->sqliteCreateFunction('NOW', function () {
         return date('Y-m-d H:i:s');
     });
@@ -50,7 +50,7 @@ class RateCompanyControllerTest extends TestCase
                 ];
             }
 
-            // 🔥 FULL override to avoid require_once crash
+            // Full override to avoid require_once crash
             public function index(): void
             {
                 $entrepriseId = isset($_GET['id']) ? (int)$_GET['id'] : 1;

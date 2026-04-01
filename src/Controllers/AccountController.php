@@ -304,40 +304,6 @@ class AccountController extends Controller
 
 
 
-    // Liste des élèves du pilote
-    // public function mesEleves(): void
-    // {
-    //     $this->requireLogin();
-
-    //     if ($_SESSION['user_role'] !== 'pilote') {
-    //         header('Location: /?page=compte');
-    //         exit;
-    //     }
-
-    //     require_once __DIR__ . '/../../src/Database.php';
-    //     $pdo = getConnection();
-
-    //     $model = new EleveModel($pdo);
-    //     $q     = trim($_GET['q'] ?? '');
-
-    //     $etudiants = $q !== '' ? $model->search($q) : $model->findAll();
-
-    //     // Récupère tous les étudiants du pilote connecté
-    //     $stmt = $pdo->prepare("
-    //         SELECT * FROM etudiant 
-    //         WHERE id_compte_pilote = :id_pilote
-    //     ");
-    //     $stmt->execute([':id_pilote' => $_SESSION['user_id']]);
-    //     $eleves = $stmt->fetchAll(\PDO::FETCH_ASSOC);
-
-    //     $this->render('pages/mes-eleves.twig.html', [
-    //         'user_role' => $_SESSION['user_role'],
-    //         'eleves'    => $eleves,
-    //         'searchQuery' => $q,
-    //     ]);
-    // }
-
-
     public function mesEleves(): void
     {
         $this->requireLogin();
