@@ -3,36 +3,34 @@
 namespace Grp5\ProjetWeb4All\Controllers;
 
 use Grp5\ProjetWeb4All\Core\Controller;
+use Grp5\ProjetWeb4All\Models\Candidatures;
 
 class MyApplicationsController extends Controller
 {
     public function index(): void
     {
-        require_once __DIR__ . '/../../src/Models/Annonces.php';
-        require_once __DIR__ . '/../../src/Models/Candidatures.php';
-
-        require_once __DIR__ . '/../../src/Pagination.php';
-        require_once __DIR__ . '/../../src/PaginationAnnonces.php';
-        
         $this->requireLogin();
-        
-        $annoncesById = [];
+        require_once __DIR__ . '/../../src/Database.php';
 
-        foreach ($annonces as $annonce) {
-            $annoncesById[(int) $annonce['id_annonce']] = $annonce;
-        }
+        $model = new Candidatures(getConnection());
+        $raw   = $model->findByCompte($_SESSION['user_id']);
 
-        // Enrichit chaque candidature avec les données de son annonce
-        $candidaturesEnrichies = [];
-        foreach ($candidatures as $candidature) {
-            $idOffre = (int) $candidature['id_offre'];
-            $candidature['annonce'] = $annoncesById[$idOffre] ?? null;
-            $candidaturesEnrichies[] = $candidature;
-        }
+        // Reconstruit la clé 'annonce' attendue par la vue Twig
+        $candidatures = array_map(function ($c) {
+            $c['annonce'] = [
+                'id_annonce'    => $c['id_annonce'],
+                'titre'         => $c['titre'],
+                'lieu'          => $c['lieu'],
+                'type'          => $c['type'],
+                'duree'         => $c['annonce_duree'],
+                'entreprise_nom' => $c['entreprise_nom'],
+            ];
+            return $c;
+        }, $raw);
 
         $this->render('pages/mes-candidatures.twig.html', [
-            'currentPage'   => 'mes-candidatures',
-            'candidatures'  => $candidaturesEnrichies,
+            'currentPage'  => 'mes-candidatures',
+            'candidatures' => $candidatures,
         ]);
     }
 }

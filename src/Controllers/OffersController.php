@@ -3,6 +3,7 @@
 namespace Grp5\ProjetWeb4All\Controllers;
 
 use Grp5\ProjetWeb4All\Core\Controller;
+use Grp5\ProjetWeb4All\Models\Candidatures;
 
 class OffersController extends Controller
 {
@@ -26,7 +27,8 @@ class OffersController extends Controller
         $orderBy = match($sort) {
             'duree'        => "CAST(REGEXP_REPLACE(a.duree, '[^0-9]', '', 'g') AS INTEGER) $dir",
             'likes'        => "a.vues $dir",
-            'candidatures' => "nb_candidatures $dir",
+            'candidatures' => "(SELECT COUNT(*) FROM candidature
+                                WHERE candidature.id_annonce = a.id_annonce) $dir",
             default        => 'a.id_annonce ASC',
         };
 

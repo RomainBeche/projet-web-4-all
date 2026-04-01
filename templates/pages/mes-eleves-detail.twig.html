@@ -1,32 +1,15 @@
 {% extends "base.twig.html" %}
+
 {% block title %}Candidatures de {{ eleve.prenom }} {{ eleve.nom }} – Web4All{% endblock %}
-{% block head %}
-<style>
-    .table {
-        width: 100%;
-        border-collapse: collapse;
-        margin-top: 1.5rem;
-    }
-    .table th, .table td {
-        padding: 1rem 1.5rem;
-        text-align: left;
-        border-bottom: 1px solid #e0e0f0;
-        vertical-align: middle;
-    }
-    .table th {
-        font-weight: 600;
-        color: #555;
-    }
-    .table tr:hover {
-        background-color: #f8f8ff;
-    }
-</style>
-{% endblock %}
+
 {% block content %}
-<main class="page-wrapper">
-    <a href="?page=mes-eleves" class="btn btn-secondary">← Retour</a>
-    <h1 class="title fade-in">{{ eleve.prenom }} {{ eleve.nom }}</h1>
-    <p>{{ eleve.email_publique }}</p>
+<main class="my-student-page">
+
+
+    <div class="my-student-header">
+        <h1 class="title my-student-title fade-in">{{ eleve.nom }} {{ eleve.prenom }} </h1>
+        <p>{{ eleve.email_publique }}</p>
+    </div>
 
     {% if candidatures is empty %}
         <p>Cet étudiant n'a pas encore postulé à des offres.</p>
@@ -53,24 +36,29 @@
                     <td>{{ candidature.duree }}</td>
                     <td>{{ candidature.date_debut }}</td>
                     <td>
-                        {% if candidature.cv_url %}
-                            <a href="{{ candidature.cv_url }}" target="_blank">Voir CV</a>
+                        
+                        {% if candidature.cv %}
+                            <a href="{{ candidature.cv }}" target="_blank" class="btn btn-primary">
+                                Consulter le CV
+                            </a>
                         {% else %}
-                            —
+                            <p class="text-muted">—</p>
                         {% endif %}
                     </td>
                     <td>
-                        {% if candidature.lettre_motivation_url %}
-                            <a href="{{ candidature.lettre_motivation_url }}" target="_blank">Voir LM</a>
+                        {% if candidature.lettre %}
+                            <a href="{{ candidature.lettre }}" target="_blank" class="btn btn-primary">
+                                Consulter la lettre
+                            </a>
                         {% else %}
-                            —
+                            <p class="text-muted">—</p>
                         {% endif %}
                     </td>
                     <td>
                         {% if candidature.portfolio %}
                             <a href="{{ candidature.portfolio }}" target="_blank">Voir Portfolio</a>
                         {% else %}
-                            —
+                            <p class="text-muted">—</p>
                         {% endif %}
                     </td>
                 </tr>

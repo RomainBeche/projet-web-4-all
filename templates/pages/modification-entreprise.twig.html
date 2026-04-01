@@ -2,8 +2,9 @@
 {% block title %}Modifier une entreprise – Web4All{% endblock %}
 {% block content %}
 <main class="page-wrapper">
-    <a href="?page=entreprises-gestion" class="btn btn-secondary">← Retour</a>
-    <h1 class="title fade-in">Modifier une entreprise</h1>
+
+
+    <h1 class="title modify-company-header fade-in">Modifier une entreprise</h1>
 
     {% if error %}<p style="color:red">{{ error }}</p>{% endif %}
     {% if succes %}<p style="color:green">{{ succes }}</p>{% endif %}
@@ -59,6 +60,7 @@
             </div>
         </form>
     {% endif %}
+
 
 </main>
 {% endblock %}

@@ -17,7 +17,7 @@
 
         <div class="search-bar" >
 
-          <input type="text" id="search-input" name="q" class="search__input" placeholder="Stage Lyon..." value="{{ searchQuery ?? '' }}">
+          <input type="text" id="search-input" name="q" class="search__input" placeholder="Rechercher..." value="{{ searchQuery ?? '' }}">
           <input type="hidden" name="page" value="annonces">
           {% if searchQuery %}
           <a href="?page=annonces" class="search__button" aria-label="Effacer la recherche">

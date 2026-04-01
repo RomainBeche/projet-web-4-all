@@ -5,15 +5,10 @@ session_start();
 
 
 
-// Simulation temporaire (à supprimer quand la BDD sera prêt)
-// CHARLES : LIGNES A SUPPRIMER SI ON TEST LE LOGIN FFS.
-/*
-$_SESSION['user_id']     = 1;
-$_SESSION['user_nom']    = 'DIEMUNSH';
-$_SESSION['user_prenom'] = 'Nicolas';
-$_SESSION['user_email'] = 'nicolas.diemunsch@viacesi.fr';
-$_SESSION['user_role']   = 'etudiant'; // 'etudiant', 'pilote'
-*/
+
+
+
+
 
 
 
@@ -21,6 +16,9 @@ $_SESSION['user_role']   = 'etudiant'; // 'etudiant', 'pilote'
 require_once __DIR__ . '/../vendor/autoload.php';
 
 use Grp5\ProjetWeb4All\Core\Router;
+
+$dotenv = Dotenv\Dotenv::createImmutable(__DIR__ . '/../');
+$dotenv->load();
 
 // Initialize Twig
 $loader = new \Twig\Loader\FilesystemLoader(__DIR__ . '/../templates');

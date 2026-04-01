@@ -1648,6 +1648,7 @@ textarea[rows] {
   font-size: var(--fs-title);
   color: var(--text);
   line-height: 1.2;
+  margin-bottom: 0.5rem;
 }
 
 .profile-role {
@@ -1714,6 +1715,9 @@ textarea[rows] {
    (register-form et update-form partagent les mêmes règles)
 \* ============================================================ */
 
+.modify-account-header {
+  margin-bottom: 2rem;
+}
 
 .register-form,
 .update-form {
@@ -2780,4 +2784,65 @@ spline-viewer {
   .legal-hero {
     padding: 1.25rem;
   }
+}
+
+
+
+
+
+/* ============================================================ *\
+   27. PAGES — Gestion des elèves
+\* ============================================================ */
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 1.5rem;
+}
+.table th, .table td {
+  padding: 1rem 1.5rem;
+  text-align: left;
+  border-bottom: 1px solid #e0e0f0;
+}
+.table th {
+  font-weight: 600;
+  color: #555;
+}
+.table tr:hover {
+  background-color: #f8f8ff;
+}
+
+.my-students-page,
+.my-student-page {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 2rem;
+}
+
+.my-students-header,
+.my-student-header,
+.create-student-header,
+.manage-students-header,
+.modify-student-header,
+.delete-student-header {
+  margin-bottom: 2rem;
+}
+
+.my-student-title {
+  margin-bottom: 0.5rem;
+}
+
+
+
+
+
+/* ============================================================ *\
+   28. PAGES — Gestion des elèves
+\* ============================================================ */
+
+.manage-company-header,
+.create-offer-header,
+.modify-company-header,
+.delete-company-header {
+  margin-bottom: 2rem;
 }

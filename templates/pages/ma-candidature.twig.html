@@ -39,8 +39,8 @@
 
                 <div class="field">
                     <label>CV (PDF)</label>
-                    {% if candidature.cv_url %}
-                        <a href="{{ candidature.cv_url }}" target="_blank" class="btn btn-outline-primary">
+                    {% if candidature.cv %}
+                        <a href="{{ candidature.cv }}" target="_blank" class="btn btn-primary">
                             Consulter le CV
                         </a>
                     {% else %}
@@ -50,8 +50,8 @@
 
                 <div class="field">
                     <label>Lettre de motivation (PDF)</label>
-                    {% if candidature.lettre_motivation_url %}
-                        <a href="{{ candidature.lettre_motivation_url }}" target="_blank" class="btn btn-outline-primary">
+                    {% if candidature.lettre %}
+                        <a href="{{ candidature.lettre }}" target="_blank" class="btn btn-primary">
                             Consulter la lettre
                         </a>
                     {% else %}
@@ -62,7 +62,7 @@
                 {% if candidature.portfolio %}
                 <div class="field">
                     <label>Portfolio / GitHub</label>
-                    <a href="{{ candidature.portfolio }}" target="_blank" class="btn btn-outline-primary">
+                    <a href="{{ candidature.portfolio }}" target="_blank" class="btn btn-primary">
                         Voir le portfolio
                     </a>
                 </div>
@@ -79,6 +79,7 @@
         </div>
 
         <div class="actions">
+            <a href="?page=postuler&id= {{ candidature.id_annonce }}" type="button" class="btn btn-primary">Postuler à nouveau</a>
             <button type="button" class="btn btn-outline-primary" onclick="history.back()">Retour</button>
         </div>
 

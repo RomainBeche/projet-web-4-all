@@ -1,41 +1,26 @@
 <?php
+
 namespace Grp5\ProjetWeb4All\Controllers;
 
 use Grp5\ProjetWeb4All\Core\Controller;
+use Grp5\ProjetWeb4All\Models\Candidatures;
 
 class MyApplicationController extends Controller
 {
-
-    // Show application details (read-only)
     public function index(): void
     {
         $this->requireLogin();
+        require_once __DIR__ . '/../../src/Database.php';
 
-        $candidatureId = $_GET['id'] ?? null;
-
-        if (!$candidatureId) {
+        $candidatureId = (int) ($_GET['id'] ?? 0);
+        if ($candidatureId === 0) {
             header('Location: /?page=accueil');
             exit;
         }
 
-        $pdo = Database::getInstance();
+        $candidature = (new Candidatures(getConnection()))
+            ->findByIdAndCompte($candidatureId, $_SESSION['user_id']);
 
-        // Fetch candidature
-        $stmt = $pdo->prepare("
-            SELECT c.*, a.titre, e.nom AS entreprise
-            FROM candidature c
-            JOIN annonce a ON a.id_offre = c.id_offre
-            JOIN entreprise e ON e.id_entreprise = a.id_entreprise
-            WHERE c.id_candidature = :id
-              AND c.id_compte = :user_id
-        ");
-        $stmt->execute([
-            ':id'      => $candidatureId,
-            ':user_id' => $_SESSION['user_id'],
-        ]);
-        $candidature = $stmt->fetch(\PDO::FETCH_ASSOC);
-
-        // Prevent access to another user's application
         if (!$candidature) {
             header('Location: /?page=accueil');
             exit;

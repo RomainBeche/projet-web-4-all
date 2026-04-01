@@ -1,10 +1,14 @@
 {% extends "base.twig.html" %}
+
 {% block title %}Supprimer une entreprise – Web4All{% endblock %}
+
 {% block content %}
 <main class="page-wrapper">
-    <a href="?page=entreprises-gestion" class="btn btn-secondary">← Retour</a>
-    <h1 class="title fade-in">Supprimer une entreprise</h1>
 
+
+    <h1 class="title delete-company-header fade-in">Supprimer une entreprise</h1>
+
+    {% if error %}<p style="color:red">{{ error }}</p>{% endif %}
     {% if succes %}<p style="color:green">✅ {{ succes }}</p>{% endif %}
 
     {% if not entreprise_selectionnee %}
@@ -37,6 +41,7 @@
             </div>
         </form>
     {% endif %}
+
 
 </main>
 {% endblock %}

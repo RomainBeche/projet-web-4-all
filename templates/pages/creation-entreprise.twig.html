@@ -1,11 +1,17 @@
 {% extends "base.twig.html" %}
+
 {% block title %}Créer une entreprise – Web4All{% endblock %}
+
 {% block content %}
 <main class="page-wrapper">
-    <a href="?page=entreprises-gestion" class="btn btn-secondary">← Retour</a>
-    <h1 class="title fade-in">Créer une entreprise</h1>
+
+    
+    <h1 class="title create-offer-header fade-in">Créer une entreprise</h1>
+
     {% if error %}<p style="color:red"> {{ error }}</p>{% endif %}
     {% if succes %}<p style="color:green"> {{ succes }}</p>{% endif %}
+
+
     <form method="POST" action="/?page=creation-entreprise" class="register-form">
         <div class="fields-grid fade-in">
             <div class="field">
@@ -42,7 +48,7 @@
             </div>
             <div class="field" style="grid-column: span 2">
                 <label for="description">Description</label>
-                <textarea id="description" name="description" rows="4"></textarea>
+                <textarea id="description" name="description" rows="4" required></textarea>
             </div>
         </div>
         <div class="actions fade-in">
@@ -50,5 +56,7 @@
             <a href="?page=entreprises-gestion" class="btn btn-secondary">Annuler</a>
         </div>
     </form>
+
+
 </main>
 {% endblock %}
