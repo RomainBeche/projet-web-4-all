@@ -2,8 +2,6 @@
 
 use PHPUnit\Framework\TestCase;
 use Grp5\ProjetWeb4All\Controllers\RateCompanyController;
-use Grp5\ProjetWeb4All\Models\Entreprises;
-use Grp5\ProjetWeb4All\Models\Note;
 
 function getConnection(): PDO
 {
@@ -44,10 +42,28 @@ class RateCompanyControllerTest extends TestCase
                 $this->renderData = ['view' => $view, 'data' => $data];
             }
 
+            private function findEntreprise(int $id): array|false
+            {
+                $stmt = $this->pdo->prepare('SELECT * FROM entreprise WHERE id_entreprise = :id');
+                $stmt->execute([':id' => $id]);
+                return $stmt->fetch(PDO::FETCH_ASSOC);
+            }
+
+            private function addNote(int $entrepriseId, int $idCompte, int $note, string $comment): bool
+            {
+                if ($note < 1 || $note > 5) return false;
+
+                $stmt = $this->pdo->prepare('
+                    INSERT INTO note (id_entreprise, notation, commentaire, id_compte, date_notation)
+                    VALUES (:e, :n, :c, :u, NOW())
+                ');
+                return $stmt->execute([':e' => $entrepriseId, ':n' => $note, ':c' => $comment, ':u' => $idCompte]);
+            }
+
             public function index(): void
             {
                 $entrepriseId = isset($_GET['id']) ? (int) $_GET['id'] : 0;
-                $entreprise   = (new Entreprises($this->pdo))->findById($entrepriseId);
+                $entreprise   = $this->findEntreprise($entrepriseId);
 
                 if (!$entreprise) {
                     $this->render('pages/404.twig.html');
@@ -61,14 +77,14 @@ class RateCompanyControllerTest extends TestCase
                     if ($idCompte === null) {
                         $notLoggedIn = true;
                     } else {
-                        $ok = (new Note($this->pdo))->add(
+                        $ok = $this->addNote(
                             $entrepriseId,
                             $idCompte,
                             (int) ($_POST['star-rating'] ?? 0),
                             trim($_POST['comment'] ?? '')
                         );
                         $ok ? $success = true : $error = true;
-                        $entreprise = (new Entreprises($this->pdo))->findById($entrepriseId);
+                        $entreprise = $this->findEntreprise($entrepriseId);
                     }
                 }
 
