@@ -9,7 +9,7 @@
     <h1 class="title delete-company-header fade-in">Supprimer une entreprise</h1>
 
     {% if error %}<p style="color:red">{{ error }}</p>{% endif %}
-    {% if succes %}<p style="color:green">✅ {{ succes }}</p>{% endif %}
+    {% if succes %}<p style="color:green">{{ succes }}</p>{% endif %}
 
     {% if not entreprise_selectionnee %}
         {# Étape 1 : sélection #}
