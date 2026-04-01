@@ -94,4 +94,14 @@ class Candidatures
         $stmt->execute([':id' => $idCompte]);
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
+
+    // Utile pour supprimer une annonce si elle existe déjà
+    public function deleteByUserAndAnnonce(int $idCompte, int $idAnnonce): void
+    {
+        $stmt = $this->pdo->prepare('
+            DELETE FROM public.candidature
+            WHERE id_compte = :c AND id_annonce = :a
+        ');
+        $stmt->execute([':c' => $idCompte, ':a' => $idAnnonce]);
+    }
 }

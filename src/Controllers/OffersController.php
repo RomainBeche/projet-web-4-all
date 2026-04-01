@@ -67,6 +67,9 @@ class OffersController extends Controller
         }
         unset($annonce);
 
+        $countStmt = $pdo->query('SELECT COUNT(*) FROM public.annonce');
+        $totalAnnonces = (int) $countStmt->fetchColumn();
+
         $pagination = new \PaginationAnnonces($annonces, 8);
 
         $this->render('pages/annonces.twig.html', [
@@ -79,6 +82,7 @@ class OffersController extends Controller
             'sort'        => $sort,
             'sortLabel'   => $sortLabels[$sort] ?? null,
             'dir'         => $dir,
+            'totalAnnonces'  => $totalAnnonces,
         ]);
     }
 

@@ -3,6 +3,7 @@
 namespace Grp5\ProjetWeb4All\Controllers;
 
 use Grp5\ProjetWeb4All\Core\Controller;
+use Grp5\ProjetWeb4All\Models\Favorites;
 use PDO;
 
 class OfferDetailsController extends Controller
@@ -12,6 +13,8 @@ class OfferDetailsController extends Controller
         $this->requireLogin();
 
         require_once __DIR__ . '/../../src/Database.php';
+
+        $isEtudiant = ($_SESSION['user_role'] ?? '') === 'etudiant';
 
         $annonceId = isset($_GET['id']) ? (int) $_GET['id'] : 0;
         $pdo = getConnection();
@@ -47,8 +50,30 @@ class OfferDetailsController extends Controller
         $annonce['isFavorite']  = (bool) $check->fetch();
         $annonce['hasReminder'] = false;
 
+        // Total ajouts en favoris de l'offre
+        $countStmt = $pdo->prepare('
+            SELECT COUNT(*)
+            FROM public.favori
+            WHERE id_annonce = :a
+        ');
+        $countStmt->execute([':a' => $annonceId]);
+        $totalLikes = (int) $countStmt->fetchColumn();
+
+        // Total candidatures de l'offre
+        $countStmt = $pdo->prepare('
+            SELECT COUNT(*)
+            FROM public.candidature
+            WHERE id_annonce = :a
+        ');
+        $countStmt->execute([':a' => $annonceId]);
+        $totalCandids = (int) $countStmt->fetchColumn();
+
+
         $this->render('pages/detail-annonce.twig.html', [
             'annonce' => $annonce,
+            'isEtudiant' => $isEtudiant,
+            'totalLikes' => $totalLikes,
+            'totalCandids' => $totalCandids,
         ]);
     }
 }

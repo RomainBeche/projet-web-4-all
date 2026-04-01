@@ -10,7 +10,17 @@ class MyApplicationsController extends Controller
     public function index(): void
     {
         $this->requireLogin();
+
         require_once __DIR__ . '/../../src/Database.php';
+
+        if ($_SESSION['user_role'] !== 'etudiant') {
+            http_response_code(403);
+            $this->render('pages/erreur.twig.html', [
+                'code'    => 403,
+                'message' => 'Accès interdit.',
+            ]);
+            exit;
+        }
 
         $model = new Candidatures(getConnection());
         $raw   = $model->findByCompte($_SESSION['user_id']);

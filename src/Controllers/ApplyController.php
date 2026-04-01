@@ -30,14 +30,6 @@ class ApplyController extends Controller
 
         // Vérifie si l'utilisateur a déjà postulé
         $candidatureModel = new Candidatures($pdo);
-        if ($candidatureModel->hasApplied($_SESSION['user_id'], $annonceId)) {
-            $this->render('pages/postuler.twig.html', [
-                'annonce'   => $annonce,
-                'annonceId' => $annonceId,
-                'error'     => 'Vous avez déjà postulé à cette offre.',
-            ]);
-            return;
-        }
 
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $error = $this->store($pdo, $annonceId);
@@ -83,6 +75,9 @@ class ApplyController extends Controller
         if (!$lettreUrl) return 'La lettre de motivation doit être un fichier PDF valide (max 2 Mo).';
 
         $model = new Candidatures($pdo);
+
+        $model->deleteByUserAndAnnonce($_SESSION['user_id'], $annonceId);
+
         $model->create([
             'id_annonce' => $annonceId,
             'id_compte'  => $_SESSION['user_id'],
