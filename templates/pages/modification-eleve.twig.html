@@ -1,9 +1,12 @@
 {% extends "base.twig.html" %}
+
 {% block title %}Modifier un élève – Web4All{% endblock %}
+
 {% block content %}
 <main class="page-wrapper">
-    <a href="?page=gestion-eleves" class="btn btn-secondary">← Retour</a>
-    <h1 class="title fade-in">Modifier un élève</h1>
+
+
+    <h1 class="title modify-student-header fade-in">Modifier un élève</h1>
 
     {% if error %}<p style="color:red">❌ {{ error }}</p>{% endif %}
     {% if succes %}<p style="color:green">✅ {{ succes }}</p>{% endif %}
@@ -24,7 +27,9 @@
                 <button type="submit" class="btn btn-primary">Sélectionner</button>
             </div>
         </form>
+
     {% else %}
+
         <form method="POST" action="/?page=modification-eleve" class="register-form">
             <input type="hidden" name="etape" value="modification">
             <input type="hidden" name="id_compte" value="{{ eleve_selectionne.id_compte }}">
@@ -48,5 +53,7 @@
             </div>
         </form>
     {% endif %}
+
+
 </main>
 {% endblock %}

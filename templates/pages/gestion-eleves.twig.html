@@ -1,12 +1,18 @@
 {% extends "base.twig.html" %}
+
 {% block title %}Gestion des élèves – Web4All{% endblock %}
+
 {% block content %}
 <main class="page-wrapper">
-    <a href="?page=compte" class="btn btn-secondary">← Retour</a>
-    <h1 class="title fade-in">Gérer mes élèves</h1>
+
+
+    <h1 class="title manage-students-header fade-in">Gérer mes élèves</h1>
+
     <nav class="account-menu">
         <a href="?page=modification-eleve" class="account-menu-item">Modifier un élève</a>
         <a href="?page=suppression-eleve" class="account-menu-item danger">Supprimer un élève</a>
     </nav>
+
+
 </main>
 {% endblock %}

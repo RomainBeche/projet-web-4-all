@@ -16,22 +16,23 @@
 
         {% for candidature in candidatures %}
         <article>
+            <a href="?page=ma-candidature&id={{ candidature.id_candidature }}"
+            class="card-link {{ candidature.annonce.type|lower }}">
 
-            <a href="?page=detail-annonce&id={{ annonce.id }}" class="card-link {{ candidature.type }}">
-                <p class="badge {{ annonce.type }}">
-                    {{ annonce.type|capitalize }}
+                <p class="badge {{ candidature.annonce.type|lower }}">
+                    {{ candidature.annonce.type|capitalize }}
                 </p>
-                <h2 class="card-title">{{ candidature.id_.titre }}</h2>
-                <p class="offre-detail">{{ candidature.entreprise }}</p>
-                <p class="offre-detail">{{ candidature.lieu }}</p>
-                <p class="offre-detail offre-detail-duration">{{ candidature.duree }}</p>
-                <div class="card-button {{ annonce.type }}">
+                <h2 class="card-title">{{ candidature.annonce.titre }}</h2>
+                <p class="offre-detail">{{ candidature.annonce.entreprise_nom }}</p>
+                <p class="offre-detail">{{ candidature.annonce.lieu }}</p>
+                <p class="offre-detail offre-detail-duration">{{ candidature.annonce.duree }}</p>
+
+                <div class="card-button {{ candidature.annonce.type|lower }}">
                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
                         <path fill-rule="evenodd" d="M1 8a.5.5 0 0 1 .5-.5h11.793l-3.147-3.146a.5.5 0 0 1 .708-.708l4 4a.5.5 0 0 1 0 .708l-4 4a.5.5 0 0 1-.708-.708L13.293 8.5H1.5A.5.5 0 0 1 1 8"/>
                     </svg>
                 </div>
             </a>
-
         </article>
         {% endfor %}
 

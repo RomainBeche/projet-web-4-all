@@ -46,25 +46,25 @@
  
     {% else %}
     
-        <ul class="cards-grid" role="list">
-          {% for entreprise in entreprises %}
-          <li>
-            <article class="card">
-              <h2 class="card-name">{{ entreprise.nom }}</h2>
-              <p class="card-sector">{{ entreprise.secteur }}</p>
-              <p class="card-rating">
-                {{ entreprise.rating }} ★
-                <span>{{ entreprise.nombre_avis }} avis</span>
-              </p>
-              <div class="entreprise-card-footer">
-                <a href="?page=detail-entreprise&id={{ entreprise.id_entreprise }}" class="bton">Découvrir</a>
-                <span class="offers">{{ entreprise.nombre_offres }} offres</span>
-              </div>
-            </article>
-          </li>
-          {% endfor %}
-        </ul>
-        {{ navLinks|raw }}
+      <ul class="cards-grid" role="list">
+        {% for entreprise in entreprises %}
+        <li>
+          <article class="card">
+            <h2 class="card-name">{{ entreprise.nom }}</h2>
+            <p class="card-sector">{{ entreprise.secteur }}</p>
+            <p class="card-rating">
+              {{ entreprise.rating }} ★
+              <span>{{ entreprise.nombre_avis }} avis</span>
+            </p>
+            <div class="entreprise-card-footer">
+              <a href="?page=detail-entreprise&id={{ entreprise.id_entreprise }}" class="bton">Découvrir</a>
+              <span class="offers">{{ entreprise.nombre_offres }} offres</span>
+            </div>
+          </article>
+        </li>
+        {% endfor %}
+      </ul>
+      {{ navLinks|raw }}
  
     {% endif %}
  
@@ -73,4 +73,3 @@
  
 </main>
 {% endblock %}
- 

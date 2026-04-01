@@ -3,6 +3,7 @@
 namespace Grp5\ProjetWeb4All\Controllers;
 
 use Grp5\ProjetWeb4All\Core\Controller;
+use Grp5\ProjetWeb4All\Models\Entreprises;
 
 class CompaniesController extends Controller
 {
@@ -13,12 +14,12 @@ class CompaniesController extends Controller
         require_once __DIR__ . '/../../src/paginationEntreprises.php';
 
         $pagination = new \PaginationEntreprises($entreprises, 8);
- 
+
         $this->render('pages/entreprises.twig.html', [
             'currentPage' => 'entreprises',
-            'entreprises'    => $pagination->getCurrentElements(),
-            'navLinks'    => $pagination->getNavigationLinks('?page=entreprises&q=' . urlencode($q_entreprises) . '&'),
-            'searchQuery' => $q_entreprises,
-        ]);   
+            'entreprises' => $pagination->getCurrentElements(),
+            'navLinks'    => $pagination->getNavigationLinks('?page=entreprises&q=' . urlencode($q) . '&'),
+            'searchQuery' => $q,
+        ]);
     }
 }
