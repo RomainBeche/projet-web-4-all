@@ -81,4 +81,38 @@ class OffersController extends Controller
             'dir'         => $dir,
         ]);
     }
+
+    public function mesAnnonces(): void
+    {
+        require_once __DIR__ . '/../../src/Database.php';
+
+        $pdo = getConnection();
+        $idCompte = $_SESSION['user_id'] ?? null;
+
+        if (!$idCompte) {
+            $this->render('pages/404.twig.html');
+            return;
+        }
+
+        $stmt = $pdo->prepare("
+            SELECT a.*, e.nom AS entreprise_nom
+            FROM public.annonce a
+            LEFT JOIN public.entreprise e ON a.id_entreprise_appartient = e.id_entreprise
+            WHERE e.id_compte = :id
+        ");
+        $stmt->execute([':id' => $idCompte]);
+        $annonces = $stmt->fetchAll(\PDO::FETCH_ASSOC);
+
+        foreach ($annonces as &$annonce) {
+            $annonce['tags'] = json_decode($annonce['tags'] ?? '[]', true);
+            $annonce['type'] = strtolower($annonce['type'] ?? '');
+        }
+        unset($annonce);
+
+        $this->render('pages/mes-annonces.twig.html', [
+            'currentPage' => 'mes-annonces',
+            'annonces'    => $annonces,
+        ]);
+    }
+        
 }
