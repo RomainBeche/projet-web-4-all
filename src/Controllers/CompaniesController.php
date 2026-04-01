@@ -10,7 +10,7 @@ class CompaniesController extends Controller
         require_once __DIR__ . '/../../src/Models/Entreprises.php';
 
         require_once __DIR__ . '/../../src/Pagination.php';
-        require_once __DIR__ . '/../../src/PaginationEntreprises.php';
+        require_once __DIR__ . '/../../src/paginationEntreprises.php';
 
         $pagination = new \PaginationEntreprises($entreprises, 8);
  
