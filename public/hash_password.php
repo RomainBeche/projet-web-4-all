@@ -19,6 +19,6 @@ foreach ($comptes as $compte) {
     $hash = password_hash($compte['mot_de_passe'], PASSWORD_DEFAULT);
     $stmt = $pdo->prepare("UPDATE compte SET mot_de_passe = :hash WHERE id_compte = :id");
     $stmt->execute([':hash' => $hash, ':id' => $compte['id_compte']]);
-    echo "id {$compte['id_compte']} : mot de passe hashé ✅<br>";
+    echo "id {$compte['id_compte']} : mot de passe hashé <br>";
 }
 ?>
