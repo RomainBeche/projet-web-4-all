@@ -89,6 +89,7 @@ class OffersController extends Controller
     public function mesAnnonces(): void
     {
         require_once __DIR__ . '/../../src/Database.php';
+        require_once __DIR__ . '/../../src/PaginationAnnonces.php';
 
         $pdo = getConnection();
         $idCompte = $_SESSION['user_id'] ?? null;
@@ -113,9 +114,12 @@ class OffersController extends Controller
         }
         unset($annonce);
 
+        $pagination = new \PaginationAnnonces($annonces, 8);
+
         $this->render('pages/mes-annonces.twig.html', [
             'currentPage' => 'mes-annonces',
-            'annonces'    => $annonces,
+            'annonces'    => $pagination->getCurrentElements(),
+            'navLinks'    => $pagination->getNavigationLinks('?page=mes-annonces&')
         ]);
     }
         
