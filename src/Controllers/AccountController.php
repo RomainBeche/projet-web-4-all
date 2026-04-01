@@ -3,6 +3,9 @@
 namespace Grp5\ProjetWeb4All\Controllers;
 
 use Grp5\ProjetWeb4All\Core\Controller;
+use Grp5\ProjetWeb4All\Models\AccountModel;
+use Grp5\ProjetWeb4All\Models\EleveModel;
+use Grp5\ProjetWeb4All\Models\EntrepriseModel;
 
 class AccountController extends Controller
 {
@@ -68,62 +71,41 @@ class AccountController extends Controller
 
 
     public function editValidation(): void
-    {
-        $this->requireLogin();
-        require_once __DIR__ . '/../../src/Database.php';
-        $pdo = getConnection();
+{
+    $this->requireLogin();
 
-        $userId   = $_SESSION['user_id'];
-        $userRole = $_SESSION['user_role'];
-        $nom      = trim($_POST['nom'] ?? '');
-        $prenom   = trim($_POST['prenom'] ?? '');
-        $email    = trim($_POST['email'] ?? '');
-        $password = $_POST['password'] ?? '';
+    $pdo          = $this->getPdo();
+    $accountModel = new AccountModel($pdo);
+    $eleveModel   = new EleveModel($pdo);
 
-        // Récupère l'email actuel
-        $stmt = $pdo->prepare("SELECT email_publique FROM compte WHERE id_compte = :id");
-        $stmt->execute([':id' => $userId]);
-        $currentEmail = $stmt->fetchColumn();
+    $userId   = $_SESSION['user_id'];
+    $userRole = $_SESSION['user_role'];
+    $nom      = trim($_POST['nom'] ?? '');
+    $prenom   = trim($_POST['prenom'] ?? '');
+    $email    = trim($_POST['email'] ?? '');
+    $password = $_POST['password'] ?? '';
 
-        // Mise à jour dans etudiant ou pilote
-        if ($email !== $currentEmail) {
-            if ($userRole === 'etudiant') {
-                $stmt = $pdo->prepare("UPDATE etudiant SET nom = :nom, prenom = :prenom, email_publique = :email WHERE id_compte = :id");
-            } else {
-                $stmt = $pdo->prepare("UPDATE pilote SET nom = :nom, prenom = :prenom, email_publique = :email WHERE id_compte = :id");
-            }
-            $stmt->execute([':nom' => $nom, ':prenom' => $prenom, ':email' => $email, ':id' => $userId]);
-        } else {
-            if ($userRole === 'etudiant') {
-                $stmt = $pdo->prepare("UPDATE etudiant SET nom = :nom, prenom = :prenom WHERE id_compte = :id");
-            } else {
-                $stmt = $pdo->prepare("UPDATE pilote SET nom = :nom, prenom = :prenom WHERE id_compte = :id");
-            }
-            $stmt->execute([':nom' => $nom, ':prenom' => $prenom, ':id' => $userId]);
-        }
+    $currentEmail = $accountModel->getEmailById($userId);
 
-        // Mise à jour email dans compte uniquement si l'email a changé
-        if ($email !== $currentEmail) {
-            $stmt = $pdo->prepare("UPDATE compte SET email_publique = :email WHERE id_compte = :id");
-            $stmt->execute([':email' => $email, ':id' => $userId]);
-        }
-
-        // Mise à jour mot de passe si renseigné
-        if (!empty($password)) {
-            $hash = password_hash($password, PASSWORD_DEFAULT);
-            $stmt = $pdo->prepare("UPDATE compte SET mot_de_passe = :hash WHERE id_compte = :id");
-            $stmt->execute([':hash' => $hash, ':id' => $userId]);
-        }
-
-        // Mise à jour de la session
-        $_SESSION['user_email'] = $email;
-
-        $this->render('pages/modification-compte-validation.twig.html', [
-            'user_nom'    => $nom,
-            'user_prenom' => $prenom,
-            'user_role'   => $userRole,
-        ]);
+    if ($email !== $currentEmail) {
+        $eleveModel->updateProfil($userId, $nom, $prenom, $email, $userRole);
+        $accountModel->updateEmail($userId, $email);
+    } else {
+        $eleveModel->updateProfilSansEmail($userId, $nom, $prenom, $userRole);
     }
+
+    if (!empty($password)) {
+        $accountModel->updatePassword($userId, password_hash($password, PASSWORD_DEFAULT));
+    }
+
+    $_SESSION['user_email'] = $email;
+
+    $this->render('pages/modification-compte-validation.twig.html', [
+        'user_nom'    => $nom,
+        'user_prenom' => $prenom,
+        'user_role'   => $userRole,
+    ]);
+}
 
 
 
