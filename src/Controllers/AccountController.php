@@ -36,14 +36,6 @@ class AccountController extends Controller
             'user_role'   => $userRole,
             'user_email'  => $user['email_publique'] ?? '',
         ]);
-
-        
- 
-        
-  
-        $this->render('pages/mes-eleves.twig.html', [
-            
-        ]);
     }
 
 

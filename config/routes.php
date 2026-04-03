@@ -60,11 +60,4 @@ return [
     'gestion-eleves' => ['controller' => AccountController::class, 'action' => 'gestionEleves'],
     'modification-eleve' => ['controller' => AccountController::class, 'action' => 'modificationEleve'],
     'suppression-eleve' => ['controller' => AccountController::class, 'action' => 'suppressionEleve'],
-
-
-
-
-    
-
-
 ];
