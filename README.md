@@ -260,3 +260,9 @@ This project was a comprehensive introduction to professional web development pr
 ## Project Scope
 
 This project was developed as part of an academic block at CESI engineering school, simulating a real client/agency relationship. The team acted as the agency (Web4All), and the jury served as the client during the final technical demonstration.
+
+---
+
+## License
+
+This project was created as part of an academic assignment for the OOP Project at CESI. All rights reserved by the authors.
